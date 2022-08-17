@@ -11,6 +11,9 @@ export default function Header() {
                     align-items: center;
                     position: fixed;
                     top: 0;
+                    border-bottom: 1px solid #00000005;
+                    background: #ffffff80;
+                    backdrop-filter: blur(100px);
                 }
 
                 .header .logo {

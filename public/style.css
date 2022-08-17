@@ -24,7 +24,7 @@ main .line {
     background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTc2MSIgaGVpZ2h0PSI0NzIiIHZpZXdCb3g9IjAgMCAxNzYxIDQ3MiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTkgMTA4LjM1OWMxMDMuNjY3LTc2LjgzMyAzNzAuNS0xNzUgNjA4LjUgNDcgMjk3LjUgMjc3LjUgNDIxIDI4OC45OTkgNjE0LjUgMjk2Ljk5OSAxNTQuOCA2LjQgMzk4LjE3LTE4NSA1MDAuNS0yODEuNSIgc3Ryb2tlPSJ1cmwoI3BhaW50MF9saW5lYXJfMTAyOV8yMTA2KSIgc3Ryb2tlLXdpZHRoPSIzNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJwYWludDBfbGluZWFyXzEwMjlfMjEwNiIgeDE9Ijg4MC43NSIgeTE9IjE5IiB4Mj0iOTI4LjA5NSIgeTI9IjM3OS40OTgiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBzdG9wLWNvbG9yPSIjRkZFNUNDIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjQTFFQTlBIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PC9zdmc+);
     background-size: cover;
     background-repeat: round;
-    height: 100%;
+    /* height: 100%; */
     filter: blur(100px);
     z-index: -1;
 }
