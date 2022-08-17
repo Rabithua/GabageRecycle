@@ -26,7 +26,6 @@ export default function Home() {
           <div className='right'>
           </div>
         </div>
-
       </main>
 
       <style jsx global>{`
