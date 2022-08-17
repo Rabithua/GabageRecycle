@@ -34,7 +34,7 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         # 拷贝 .next、public文件夹和package.json文件到服务器指定目录
         source: ".next/,public/,package.json"
-        target: "~/nextjs/gabage_recycle"
+        target: "~/nodejs/gabage_recycle"
     
     # 对应第6步，重启安装依赖、后端服务2
     - name: Server Reload
@@ -44,6 +44,6 @@ jobs:
         username: ${{ secrets.REMOTE_USERNAME }}
         key: ${{ secrets.PRIVATE_KEY }}
         script: |
-          cd ~/nextjs/gabage_recycle
+          cd ~/nodejs/gabage_recycle
           npm i
           pm2 reload gabage
