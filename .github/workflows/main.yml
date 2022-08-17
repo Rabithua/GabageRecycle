@@ -8,7 +8,7 @@ on:
 jobs:
   build-and-deploy:
     # 定义job运行环境，使用linux环境
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     # 对应第2步，借助已有脚本拉取代码
     - name: Checkout
@@ -17,12 +17,13 @@ jobs:
     # 第3步的准备工作，先配置好node环境
     - uses: actions/setup-node@v2
       with:
-        node-version: '14'
+        node-version: '16'
     # 对应第3步，执行打包命令
     - name: 'Build'
       run: |
-        npm i
+        npm ci
         npm run build
+        npm run export
         
     # 对应第4、5步，配置参数登陆服务器+拷贝到指定目录
     - name: Upload
@@ -33,7 +34,7 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         # 拷贝 .next、public文件夹和package.json文件到服务器指定目录
         source: ".next/,public/,package.json"
-        target: "/nextjs/gabage_recycle"
+        target: "~/nextjs/gabage_recycle"
     
     # 对应第6步，重启安装依赖、后端服务2
     - name: Server Reload
@@ -43,6 +44,6 @@ jobs:
         username: ${{ secrets.REMOTE_USERNAME }}
         key: ${{ secrets.PRIVATE_KEY }}
         script: |
-          cd /nextjs-demo
+          cd ~/nextjs/gabage_recycle
           npm i
-          pm2 reload nextjs-dem
+          pm2 reload gabage
