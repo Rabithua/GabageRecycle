@@ -52,6 +52,7 @@ main .line {
 }
 
 .left .dsc {
+    font-family: 'YouSheBiaoTiHei';
     background: linear-gradient(161.15deg, #DAEAD9 12.73%, #C4E0C6 72.95%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
