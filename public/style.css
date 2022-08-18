@@ -1,13 +1,17 @@
 .container {
+    user-select: none;
     min-height: 100vh;
     padding: 0 0.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    opacity: 0;
+    animation: show 300ms 300ms forwards;
 }
 
 main {
+    max-width: 1200px;
     margin-top: 5rem;
     width: 100%;
     justify-content: center;
@@ -22,10 +26,10 @@ main .line {
     width: 100%;
     position: absolute;
     background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTc2MSIgaGVpZ2h0PSI0NzIiIHZpZXdCb3g9IjAgMCAxNzYxIDQ3MiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTkgMTA4LjM1OWMxMDMuNjY3LTc2LjgzMyAzNzAuNS0xNzUgNjA4LjUgNDcgMjk3LjUgMjc3LjUgNDIxIDI4OC45OTkgNjE0LjUgMjk2Ljk5OSAxNTQuOCA2LjQgMzk4LjE3LTE4NSA1MDAuNS0yODEuNSIgc3Ryb2tlPSJ1cmwoI3BhaW50MF9saW5lYXJfMTAyOV8yMTA2KSIgc3Ryb2tlLXdpZHRoPSIzNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJwYWludDBfbGluZWFyXzEwMjlfMjEwNiIgeDE9Ijg4MC43NSIgeTE9IjE5IiB4Mj0iOTI4LjA5NSIgeTI9IjM3OS40OTgiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBzdG9wLWNvbG9yPSIjRkZFNUNDIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjQTFFQTlBIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PC9zdmc+);
-    background-size: cover;
+    background-size: contain;
     background-repeat: round;
-    /* height: 100%; */
-    filter: blur(100px);
+    height: 100%;
+    filter: blur(76px);
     z-index: -1;
 }
 
@@ -49,7 +53,7 @@ main .line {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-fill-color: transparent;
+    /* text-fill-color: transparent; */
 }
 
 .left .dsc {
@@ -58,10 +62,12 @@ main .line {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-fill-color: transparent;
+    /* text-fill-color: transparent; */
 }
 
 .right {
+    opacity: 0;
+    animation: show 500ms 500ms forwards;
     width: 20rem;
     height: 20rem;
     background-size: cover;
@@ -69,7 +75,8 @@ main .line {
 }
 
 .buttons {
-    width: 80%;
+    cursor: pointer;
+    width: 60%;
     max-width: 30rem;
     font-family: 'YouSheBiaoTiHei';
     display: flex;
@@ -78,7 +85,7 @@ main .line {
 }
 
 .button {
-    padding: 0.5rem 2rem;
+    padding: 0.2rem 1rem;
     background: linear-gradient(179.86deg, #62E09F -7.21%, #07C160 105.93%);
     border-radius: 0.5rem;
     color: #ffff;
@@ -96,7 +103,7 @@ main .line {
 
 .cancel {
     margin-left: auto;
-    padding: 0.5rem 2rem;
+    padding: 0.2rem 1rem;
     background: rgba(0, 0, 0, 0.03);
     border-radius: 0.5rem;
     color: #07C160;
@@ -223,10 +230,23 @@ code {
         width: 100%;
         flex-direction: column;
     }
+
     .title {
         font-size: 3rem;
     }
+
     .buttons {
         zoom: 0.8;
+        width: 70%;
+    }
+
+}
+
+@keyframes show {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }

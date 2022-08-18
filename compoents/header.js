@@ -6,6 +6,8 @@ export default function Header() {
             <style jsx>
                 {`
                 .header {
+                    border-radius: 0rem 0rem 2rem 2rem;
+                    max-width: 1200px;
                     width: 100%;
                     display: flex;
                     align-items: center;
@@ -34,6 +36,18 @@ export default function Header() {
                     text-fill-color: transparent;
                     margin-right: 2rem;
                 }
+
+                @media (max-width: 767.98px) {
+                    .header .logo {
+                        margin: 0.5rem 1rem;
+                        width: 6rem;
+                        height: 2rem;
+                    }
+                    .header {
+                        border-radius: 0rem;
+                    }
+                }
+
                 `}
             </style>
         </div>
