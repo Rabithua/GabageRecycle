@@ -13,6 +13,7 @@ class Home extends React.Component {
   }
 
   buttonClick(tip) {
+    console.log(tip)
     var tips = this.state.tips
     var newtips = [...tips]
 
@@ -47,7 +48,10 @@ class Home extends React.Component {
           <link rel="icon" href="/favicon.ico" />
           <link rel='stylesheet' href='./style.css' />
         </Head>
-        <Header></Header>
+        <Header login={this.buttonClick.bind(this, {
+          content: '💡现在你可以假装已经登陆了！',
+          type: 'primary'
+        })}></Header>
         <main>
           <div className='line'></div>
           <div className='content'>
@@ -67,25 +71,14 @@ class Home extends React.Component {
                 })}>Cancel</div>
               </div>
             </div>
-            <div className='right'>
+            <div className='right' onClick={this.buttonClick.bind(this, {
+              content: '喵喵喵~',
+              type: 'normal'
+            })}>
             </div>
           </div>
           <Tips tips={this.state.tips} />
         </main>
-        <style jsx global>{`
-          html,
-          body {
-            padding: 0;
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-              Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-              sans-serif;
-          }
-  
-          * {
-            box-sizing: border-box;
-          }
-        `}</style>
       </div>
     )
   }

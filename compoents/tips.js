@@ -11,7 +11,9 @@ class Tips extends React.Component {
                      margin: 0.3rem;
                      padding: 0.5rem 1rem;
                      font-size: 1rem;
+                     border-radius: 5px;
                      animation: show 500ms 300ms forwards;
+                     box-shadow: 5px 5px 20px #00000005;
                  }
                  
                  .primary {
@@ -37,6 +39,7 @@ class Tips extends React.Component {
                 {Tips}
                 <style jsx>{`
             .tips {
+                align-items: end;
                 display: flex;
                 position: fixed;
                 right: 0;

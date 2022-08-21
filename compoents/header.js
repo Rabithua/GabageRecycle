@@ -1,10 +1,26 @@
-export default function Header() {
-    return (
-        <div className="header">
-            <div className="logo"></div>
-            <div className="logIn">LogIn</div>
-            <style jsx>
-                {`
+import react from "react";
+
+class Header extends react.Component {
+    constructor(props) {
+        super(props);
+        this.state = { login_txt: 'LogIn' };
+    }
+
+    login() {
+        console.log(this.props)
+        this.props.login()
+        this.setState({
+            login_txt: 'Hi,Tom'
+        })
+    }
+
+    render() {
+        return (
+            <div className="header">
+                <div className="logo"></div>
+                <div className="logIn" onClick={this.login.bind(this)}>{this.state.login_txt}</div>
+                <style jsx>
+                    {`
                 .header {
                     border-radius: 0rem 0rem 2rem 2rem;
                     max-width: 1200px;
@@ -49,7 +65,10 @@ export default function Header() {
                 }
 
                 `}
-            </style>
-        </div>
-    )
+                </style>
+            </div>
+        )
+    }
 }
+
+export default Header

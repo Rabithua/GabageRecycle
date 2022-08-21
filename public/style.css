@@ -1,3 +1,7 @@
+html {
+    background: #f5f5f5;
+}
+
 .container {
     user-select: none;
     min-height: 100vh;
@@ -12,7 +16,6 @@
 
 main {
     max-width: 1200px;
-    margin-top: 5rem;
     width: 100%;
     justify-content: center;
     padding: 0;
@@ -23,18 +26,21 @@ main {
 }
 
 main .line {
+    top: 0;
     width: 100%;
     position: absolute;
     background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTc2MSIgaGVpZ2h0PSI0NzIiIHZpZXdCb3g9IjAgMCAxNzYxIDQ3MiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTkgMTA4LjM1OWMxMDMuNjY3LTc2LjgzMyAzNzAuNS0xNzUgNjA4LjUgNDcgMjk3LjUgMjc3LjUgNDIxIDI4OC45OTkgNjE0LjUgMjk2Ljk5OSAxNTQuOCA2LjQgMzk4LjE3LTE4NSA1MDAuNS0yODEuNSIgc3Ryb2tlPSJ1cmwoI3BhaW50MF9saW5lYXJfMTAyOV8yMTA2KSIgc3Ryb2tlLXdpZHRoPSIzNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJwYWludDBfbGluZWFyXzEwMjlfMjEwNiIgeDE9Ijg4MC43NSIgeTE9IjE5IiB4Mj0iOTI4LjA5NSIgeTI9IjM3OS40OTgiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBzdG9wLWNvbG9yPSIjRkZFNUNDIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjQTFFQTlBIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PC9zdmc+);
     background-size: contain;
     background-repeat: round;
-    height: 100%;
+    height: 90%;
     filter: blur(76px);
     z-index: -1;
 }
 
 .content {
+    min-height: 100vh;
     width: 100%;
+    align-items: center;
     display: flex;
     flex-wrap: wrap-reverse;
     justify-content: center;
@@ -109,39 +115,10 @@ main .line {
     color: #07C160;
 }
 
-footer {
-    width: 100%;
-    height: 100px;
-    border-top: 1px solid #eaeaea;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-footer img {
-    margin-left: 0.5rem;
-}
-
-footer a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 a {
     color: inherit;
     text-decoration: none;
-}
-
-.title a {
-    color: #0070f3;
-    text-decoration: none;
-}
-
-.title a:hover,
-.title a:focus,
-.title a:active {
-    text-decoration: underline;
 }
 
 .title {
@@ -170,45 +147,6 @@ code {
         DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
 }
 
-.grid {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-
-    max-width: 800px;
-    margin-top: 3rem;
-}
-
-.card {
-    margin: 1rem;
-    flex-basis: 45%;
-    padding: 1.5rem;
-    text-align: left;
-    color: inherit;
-    text-decoration: none;
-    border: 1px solid #eaeaea;
-    border-radius: 10px;
-    transition: color 0.15s ease, border-color 0.15s ease;
-}
-
-.card:hover,
-.card:focus,
-.card:active {
-    color: #0070f3;
-    border-color: #0070f3;
-}
-
-.card h3 {
-    margin: 0 0 1rem 0;
-    font-size: 1.5rem;
-}
-
-.card p {
-    margin: 0;
-    font-size: 1.25rem;
-    line-height: 1.5;
-}
 
 .logo {
     height: 1em;
