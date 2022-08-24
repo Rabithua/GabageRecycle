@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React from 'react'
-import Header from '../compoents/header'
-import Tips from '../compoents/tips'
+import Header from '../compoents/header.jsx'
+import Tips from '../compoents/tips.jsx'
 
 class Home extends React.Component {
   constructor(props) {
