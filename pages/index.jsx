@@ -44,8 +44,8 @@ class Home extends React.Component {
     return (
       <div className="container" >
         <Head>
-          <title>garbage be like</title>
-          <link rel="icon" href="/favicon.ico" />
+          <title>废物回收</title>
+          <link rel="icon" href="/cat.ico" />
           <link rel='stylesheet' href='./style.css' />
         </Head>
         <Header login={this.buttonClick.bind(this, {
