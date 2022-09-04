@@ -6,7 +6,7 @@
 .pnp.js
 
 # testing
-/coverage
+/.github/workflows/main.yml
 
 # next.js
 /.next/
