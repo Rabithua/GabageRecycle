@@ -3,12 +3,13 @@ import style from "./header.module.css"
 
 class Header extends react.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = { login_txt: 'LogIn' };
     }
 
     login() {
         console.log(this.props)
+        //调用页面内方法
         this.props.login()
         this.setState({
             login_txt: 'Hi,Tom'

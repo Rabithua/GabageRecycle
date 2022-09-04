@@ -1,0 +1,31 @@
+.timer {
+    width: 100px;
+    height: 30px;
+    position: fixed;
+    bottom: 20px;
+    text-align: center;
+    border-radius: 50px;
+    background-color: #ffffff80;
+    backdrop-filter: blur(200px);
+    border: 1px solid #00000020;
+    display: flex;
+    align-items: center;
+}
+
+.progress {
+    margin: 0 auto;
+    width: 0;
+    animation: progress 3000ms alternate-reverse ease-in-out infinite;
+    height: 2px;
+    background: linear-gradient(179.86deg, #62E09F -7.21%, #07C160 105.93%);
+}
+
+@keyframes progress {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 60px;
+    }
+}

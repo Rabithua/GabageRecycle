@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import React from 'react'
 import Header from '../compoents/header.jsx'
-import Tips from '../compoents/tips.jsx'
+import Timer from '../compoents/timer.jsx'
+import { globalComponent, globalMethed, globalState } from './_app.js'
 
 class Home extends React.Component {
   constructor(props) {
@@ -12,20 +13,16 @@ class Home extends React.Component {
     }
   }
 
-  buttonClick(tip) {
-    console.log(tip)
-    var tips = this.state.tips
-    var newtips = [...tips]
+  componentDidMount(e) {
+    // console.log(globalComponent)
+  }
 
+  buttonClick(tip) {
     if (this.state.cleartips_timer) {
       clearTimeout(this.state.cleartips_timer)
     }
 
-    newtips.push(tip)
-
-    this.setState({
-      tips: newtips
-    })
+    globalMethed.addTips(tip)
 
     var cleartips_timer = setTimeout(() => {
       this.setState({
@@ -33,9 +30,8 @@ class Home extends React.Component {
       })
     }, 2000)
 
-    console.log(cleartips_timer)
-
     this.setState({
+      tips: globalState.tips,
       cleartips_timer: cleartips_timer
     })
   }
@@ -48,7 +44,7 @@ class Home extends React.Component {
           <link rel="icon" href="/cat.ico" />
           <link rel='stylesheet' href='./style.css' />
         </Head>
-        <Header login={this.buttonClick.bind(this, {
+        <Header login={() => this.buttonClick({
           content: '💡现在你可以假装已经登陆了！',
           type: 'primary'
         })}></Header>
@@ -61,24 +57,25 @@ class Home extends React.Component {
               </h1>
               <h3 className='dsc'>请不要为难我，我只是一个小猫咪！</h3>
               <div className='buttons'>
-                <div className='button' onClick={this.buttonClick.bind(this, {
+                <div className='button' onClick={() => this.buttonClick({
                   content: '👋你点击了button！',
                   type: 'primary'
                 })}>Button</div>
-                <div className='cancel' onClick={this.buttonClick.bind(this, {
+                <div className='cancel' onClick={() => this.buttonClick({
                   content: '🤚你点击了cancel！',
                   type: 'normal'
                 })}>Cancel</div>
               </div>
             </div>
-            <div className='right' onClick={this.buttonClick.bind(this, {
+            <div className='right' onClick={() => this.buttonClick({
               content: '喵喵喵~',
               type: 'normal'
             })}>
             </div>
           </div>
-          <Tips tips={this.state.tips} />
         </main>
+        <globalComponent.Tips tips={this.state.tips} />
+        {globalComponent.Timer()}
       </div>
     )
   }
