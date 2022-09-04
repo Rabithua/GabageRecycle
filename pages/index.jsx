@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import React from 'react'
 import Header from '../compoents/header.jsx'
-import Timer from '../compoents/timer.jsx'
 import { globalComponent, globalMethed, globalState } from './_app.js'
 
 class Home extends React.Component {
@@ -22,7 +21,9 @@ class Home extends React.Component {
       clearTimeout(this.state.cleartips_timer)
     }
 
-    globalMethed.addTips(tip)
+    var tips = this.state.tips
+    var newtips = [...tips]
+    newtips.push(tip)
 
     var cleartips_timer = setTimeout(() => {
       this.setState({
@@ -31,7 +32,7 @@ class Home extends React.Component {
     }, 2000)
 
     this.setState({
-      tips: globalState.tips,
+      tips: newtips,
       cleartips_timer: cleartips_timer
     })
   }

@@ -15,14 +15,6 @@ export const globalComponent = {
 
 export const globalMethed = {
 
-    addTips(tip) {
-        console.log(tip)
-        var tips = globalState.tips
-        var newtips = [...tips]
-        newtips.push(tip)
-        globalState.tips = newtips
-    },
-
 }
 
 function MyApp({ Component, pageProps }) {
