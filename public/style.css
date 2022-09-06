@@ -44,7 +44,7 @@ main .line {
     background-size: contain;
     background-repeat: round;
     height: 90%;
-    filter: blur(76px);
+    filter: blur(70px);
     z-index: -1;
 }
 

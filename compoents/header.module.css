@@ -1,7 +1,6 @@
     .header {
         border-radius: 0rem 0rem 2rem 2rem;
         max-width: 1200px;
-        padding-top: 4rem;
         width: 100%;
         display: flex;
         align-items: center;
@@ -9,15 +8,16 @@
         top: 0;
         border-bottom: 1px solid #00000005;
         background: #ffffff;
-        /* backdrop-filter: blur(100px); */
-        animation: slide 500ms 500ms forwards;
-        transform: translateY(0rem);
-        transition: transform 500ms 3000ms;
+        
+        /* padding-top: 4rem; */
+        /* animation: slide 500ms 500ms forwards; */
+        /* transform: translateY(0rem); */
+        /* transition: transform 500ms 3000ms; */
     }
 
     .header:hover {
-        transform: translateY(4rem);
-        transition: transform 500ms 100ms;
+        /* transform: translateY(4rem); */
+        /* transition: transform 500ms 100ms; */
     }
 
     .header::before {
@@ -65,8 +65,8 @@
     @media (max-width: 767.98px) {
         .header .logo {
             margin: 0.5rem 1rem;
-            width: 6rem;
-            height: 2rem;
+            width: 9rem;
+            height: 3rem;
         }
 
         .header {
@@ -74,7 +74,7 @@
         }
 
 
-        .header::after {
+        /* .header::after {
             content: '🍋';
             text-align: center;
             width: 50px;
@@ -86,8 +86,7 @@
             position: absolute;
             right: 50px;
             top: 7rem;
-            /* backdrop-filter: blur(100px); */
-        }
+            /* backdrop-filter: blur(100px);} */
     }
 
     @keyframes slide {
