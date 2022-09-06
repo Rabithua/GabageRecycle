@@ -14,6 +14,10 @@ class Header extends react.Component {
         })
     }
 
+    gohome() {
+        globalMethed.gohome()
+    }
+
     login() {
         console.log(this.props)
         //调用页面内方法
@@ -27,7 +31,7 @@ class Header extends react.Component {
     render() {
         return (
             <div className={style.header}>
-                <div className={style.logo}></div>
+                <div className={style.logo} onClick={this.gohome.bind(this)}></div>
                 <div className={style.logIn} onClick={this.login.bind(this)}>{this.state.login_txt}</div>
             </div>
         )

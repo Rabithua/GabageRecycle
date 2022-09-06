@@ -1,6 +1,7 @@
 import Header from '../compoents/header.jsx'
 import Tips from '../compoents/tips.jsx'
 import Timer from '../compoents/timer.jsx'
+import Router from "next/router"
 
 export const globalState = {
     tips: [],
@@ -15,6 +16,9 @@ export const globalComponent = {
 }
 
 export const globalMethed = {
+    gohome() {
+        Router.push('/')
+    }
 
 }
 
