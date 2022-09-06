@@ -81,12 +81,12 @@
             padding-top: 20px;
             padding-bottom: 10px;
             height: 20px;
-            background: #ffffff80;
+            background: #ffffff;
             border-radius: 0px 0px 10px 10px;
             position: absolute;
             right: 50px;
             top: 7rem;
-            backdrop-filter: blur(100px);
+            /* backdrop-filter: blur(100px); */
         }
     }
 
