@@ -15,7 +15,7 @@
 .progress {
     margin: 0 auto;
     width: 0;
-    animation: progress 3000ms alternate-reverse ease-in-out infinite;
+    animation: progress 12000ms alternate-reverse ease-in-out infinite;
     height: 2px;
     background: linear-gradient(179.86deg, #62E09F -7.21%, #07C160 105.93%);
 }

@@ -1,10 +1,17 @@
 import react from "react";
 import style from "./header.module.css"
+import { globalComponent, globalMethed, globalState } from '../pages/_app'
 
 class Header extends react.Component {
     constructor(props) {
         super(props)
-        this.state = { login_txt: 'LogIn' };
+        this.state = { login_txt: String };
+    }
+    componentDidMount(e) {
+        console.log(globalState)
+        this.setState({
+            login_txt: globalState.login_txt
+        })
     }
 
     login() {
@@ -14,6 +21,7 @@ class Header extends react.Component {
         this.setState({
             login_txt: 'Hi,Tom'
         })
+        globalState.login_txt = 'Hi,Tom'
     }
 
     render() {

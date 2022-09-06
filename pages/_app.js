@@ -4,7 +4,8 @@ import Timer from '../compoents/timer.jsx'
 
 export const globalState = {
     tips: [],
-    cleartips_timer: null
+    cleartips_timer: null,
+    login_txt: 'LogIn'
 }
 
 export const globalComponent = {

@@ -1,10 +1,11 @@
 import Head from 'next/head'
 import React from 'react'
-import Header from '../compoents/header.jsx'
-import { globalComponent, globalMethed, globalState } from './_app.js'
+import Header from '../../compoents/header'
+import style from './style.module.css'
 import Router from "next/router"
+import { globalComponent, globalMethed, globalState } from '../_app'
 
-class Home extends React.Component {
+class Tree extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -16,7 +17,7 @@ class Home extends React.Component {
   componentDidMount(e) {
     // console.log(globalComponent)
     setTimeout(() => {
-      Router.push('/tree')
+      Router.push('/')
     }, 12000);
   }
 
@@ -58,27 +59,13 @@ class Home extends React.Component {
           <div className='content'>
             <div className='left'>
               <h1 className="title">
-                GARBAGE BE LIKE... <br></br> JUST LIKE...
+              种一棵树最好的时间是十年前，其次是现在。  
               </h1>
-              <h3 className='dsc'>请不要为难我，我只是一个小猫咪！</h3>
-              <div className='buttons'>
-                <div className='button' onClick={() => this.buttonClick({
-                  content: '👋你点击了button！',
-                  type: 'primary'
-                })}>Button</div>
-                <div className='cancel' onClick={() => this.buttonClick({
-                  content: '🤚你点击了cancel！',
-                  type: 'normal'
-                })}>Cancel</div>
-              </div>
-            </div>
-            <div className='right' onClick={() => this.buttonClick({
-              content: '喵喵喵~',
-              type: 'normal'
-            })}>
+              <h3 className='dsc'>There are countless ways to achieve an effect, but I just want to be a cat.</h3>
             </div>
           </div>
         </main>
+        <div className={style.tree}></div>
         <globalComponent.Tips tips={this.state.tips} />
         {globalComponent.Timer()}
       </div>
@@ -86,4 +73,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home
+export default Tree
