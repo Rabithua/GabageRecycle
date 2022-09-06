@@ -88,8 +88,8 @@ main .line {
     transform: rotate(0.01turn);
     transition: 0.3s ease-in-out;
     transition-duration: 500ms;
-    width: 20rem;
-    height: 20rem;
+    width: 15rem;
+    height: 15rem;
     background-size: cover;
     background-image: url(/cat.png)
 }

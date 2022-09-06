@@ -16,9 +16,9 @@ class Tree extends React.Component {
 
   componentDidMount(e) {
     // console.log(globalComponent)
-    // setTimeout(() => {
-    //   Router.push('/')
-    // }, 12000);
+    setTimeout(() => {
+      Router.push('/')
+    }, 12000);
   }
 
   buttonClick(tip) {
