@@ -5,7 +5,7 @@ import style from './style.module.css'
 import Router from "next/router"
 import { globalComponent, globalMethed, globalState } from '../_app'
 
-class Tree extends React.Component {
+class Apple extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -15,9 +15,9 @@ class Tree extends React.Component {
   }
 
   componentDidMount(e) {
-    // console.log(globalComponent)
+    console.log(globalComponent)
     setTimeout(() => {
-      Router.push('/apple')
+      Router.push('/')
     }, 12000);
   }
 
@@ -46,7 +46,7 @@ class Tree extends React.Component {
     return (
       <div className="container" >
         <Head>
-          <title>tree</title>
+          <title>Apple</title>
           <link rel="icon" href="/cat.ico" />
           <link rel='stylesheet' href='./style.css' />
         </Head>
@@ -59,14 +59,14 @@ class Tree extends React.Component {
           <div className='content'>
             <div className='left'>
               <h1 className="title">
-              种一棵树最好的时间是十年前，其次是现在。  
+              上帝丢了一个苹果给我，感谢上帝，它很好吃！
               </h1>
-              <h3 className='dsc'>There are countless ways to achieve an effect, but I just want to be a cat.</h3>
+              <h3 className='dsc'>It would be better if durian.</h3>
             </div>
           </div>
         </main>
-        <div className={style.tree}>
-          <div className={style.trees}></div>
+        <div className={style.appleContainer}>
+          <div className={style.apple}></div>
         </div>
         <globalComponent.Tips tips={this.state.tips} />
         {globalComponent.Timer()}
@@ -75,4 +75,4 @@ class Tree extends React.Component {
   }
 }
 
-export default Tree
+export default Apple
