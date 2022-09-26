@@ -21,8 +21,6 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    opacity: 0;
-    animation: show 300ms 300ms forwards;
 }
 
 main {
@@ -34,6 +32,8 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    opacity: 0;
+    animation: show 300ms 300ms forwards;
 }
 
 main .line {
