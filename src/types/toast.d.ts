@@ -10,6 +10,7 @@ const ToastPosition = {
 type FullToastOptions = {
   duration: number;
   position: keyof typeof ToastPosition;
+  status: "new" | "progress" | "done";
 };
 
 interface Toast {
