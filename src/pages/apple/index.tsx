@@ -34,7 +34,7 @@ export default function Apple() {
   return (
     <main
       ref={containerRef}
-      className="w-dvw h-dvh flex flex-col items-center justify-center grid-background basic-font"
+      className="w-dvw h-dvh flex flex-col items-center justify-center grid-background font-basic"
     >
       <BackgroundText text="Just a Apple" />
 

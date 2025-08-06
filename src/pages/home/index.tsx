@@ -69,7 +69,7 @@ export default function Home() {
   return (
     <main
       ref={containerRef}
-      className="w-dvw h-dvh flex flex-col items-center justify-center grid-background basic-font"
+      className="w-dvw h-dvh flex flex-col items-center justify-center grid-background font-basic"
     >
       {/* 背景元素 */}
       <BackgroundText text="Just a cat" />

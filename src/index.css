@@ -5,7 +5,7 @@
     --color-secondary: #C4E0C6;
 }
 
-@utility basic-font {
+@utility font-basic {
     font-family: 'Playwrite AU QLD', 'Noto Serif SC', sans-serif;
 }
 
