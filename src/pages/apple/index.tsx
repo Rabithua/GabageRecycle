@@ -24,8 +24,8 @@ export default function Apple() {
         .to(appleRef.current, {
           scale: 1.05,
           right: "-15%",
-          bottom: "-30%",
-          duration: 6,
+          bottom: "-35%",
+          duration: 4,
           ease: "elastic.inOut",
           repeat: -1,
           yoyo: true,
