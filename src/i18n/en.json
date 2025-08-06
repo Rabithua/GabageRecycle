@@ -1,0 +1,22 @@
+{
+  "page": {
+    "scroll": {
+      "scrollTip": "Scroll up to see the next"
+    },
+    "apple": {
+      "title": "God threw me an apple, thank God, it was delicious!",
+      "subtitle": "But next time, you'd better not smash it on my head 😵‍💫",
+      "background": "Just an Apple"
+    },
+    "home": {
+      "background": "Just a cat",
+      "title": "What is garbage collection... <br> I guess it's...",
+      "subtitle": "Please don't make it hard for me, I'm just a little kitty!"
+    },
+    "tree": {
+      "background": "Just a tree",
+      "title": "The best time to plant a tree was ten years ago, followed by now",
+      "subtitle": "There are countless ways to achieve the goal, but I just want to be a cat."
+    }
+  }
+}
