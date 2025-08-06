@@ -2,6 +2,8 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router";
+import "@/i18n/i18n";
+
 import Home from "./pages/home";
 import Tree from "./pages/tree";
 import Apple from "./pages/apple";

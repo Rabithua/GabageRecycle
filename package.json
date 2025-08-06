@@ -15,9 +15,12 @@
     "@react-router/fs-routes": "^7.7.1",
     "@tailwindcss/vite": "^4.1.11",
     "gsap": "^3.13.0",
+    "i18next": "^25.3.2",
+    "i18next-browser-languagedetector": "^8.2.0",
     "lucide-react": "^0.536.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-i18next": "^15.6.1",
     "react-router": "^7.7.1",
     "tailwindcss": "^4.1.11"
   },

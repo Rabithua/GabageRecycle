@@ -2,6 +2,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Observer } from "gsap/Observer";
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import Home from "@/pages/home";
 import Apple from "@/pages/apple";
@@ -13,6 +14,9 @@ gsap.registerPlugin(Observer);
 const pages = [<Home />, <Apple />, <Tree />];
 
 export default function FadingScroll() {
+  const { t } = useTranslation("translation", {
+    keyPrefix: "page.scroll",
+  });
   const containerRef = useRef(null); // This should be managed by your routing logic
   const scrollTipRef = useRef(null);
   const [currentPageIndex, setCurrentPageIndex] = useState(0); // This should be managed by your routing logic
@@ -100,7 +104,7 @@ export default function FadingScroll() {
           "flex gap-2 items-center font-light text-sm text-primary justify-center fixed bottom-4 left-1/2 transform -translate-x-1/2 z-10 opacity-60"
         }
       >
-        <ChevronsUp className="size-4" /> Scroll To View Next
+        <ChevronsUp className="size-4" /> {t("scrollTip")}
       </div>
     </div>
   );
