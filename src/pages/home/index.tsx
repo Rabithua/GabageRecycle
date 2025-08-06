@@ -2,6 +2,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import BackgroundText from "./components/BackgroudText";
 import SliderText from "./components/SliderText";
 
@@ -46,6 +47,9 @@ const spawnTreat = () => {
 };
 
 export default function Home() {
+  const { t } = useTranslation("translation", {
+    keyPrefix: "page.home",
+  });
   const containerRef = useRef(null); // This should be managed by your routing logic
 
   useGSAP(
@@ -72,7 +76,7 @@ export default function Home() {
       className="w-dvw h-dvh flex flex-col items-center justify-center grid-background font-basic"
     >
       {/* 背景元素 */}
-      <BackgroundText text="Just a cat" />
+      <BackgroundText text={t("background")} />
       {/* 前景元素，用于放置 treat */}
       <div
         id="foreground"
@@ -81,10 +85,11 @@ export default function Home() {
 
       <div className="md:flex flex-row items-center justify-between w-3/4 z-10">
         <div className="space-y-4">
-          <h1 className="font-semibold leading-tight text-5xl pretty-text">
-            废物回收是什么... <br></br> 大概是...
-          </h1>
-          <SliderText>请不要为难我，我只是一个小猫咪！</SliderText>
+          <h1
+            className="font-semibold leading-tight text-5xl pretty-text"
+            dangerouslySetInnerHTML={{ __html: t("title") }}
+          />
+          <SliderText>{t("subtitle")}</SliderText>
         </div>
         <div
           onClick={spawnTreat}

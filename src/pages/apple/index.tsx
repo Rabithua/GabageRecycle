@@ -3,8 +3,12 @@ import BackgroundText from "../home/components/BackgroudText";
 import SliderText from "../home/components/SliderText";
 import gsap from "gsap";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function Apple() {
+  const { t } = useTranslation("translation", {
+    keyPrefix: "page.apple",
+  });
   const containerRef = useRef(null); // This should be managed by your routing logic
   const appleRef = useRef(null);
 
@@ -36,13 +40,13 @@ export default function Apple() {
       ref={containerRef}
       className="w-dvw h-dvh flex flex-col items-center justify-center grid-background font-basic"
     >
-      <BackgroundText text="Just a Apple" />
+      <BackgroundText text={t("background")} />
 
       <div className="space-y-4 w-4/5 max-w-150  md:mr-[20%] z-10">
         <h1 className=" font-semibold leading-tight text-5xl pretty-text">
-          上帝丢了一个苹果给我，感谢上帝，它很好吃！
+          {t("title")}
         </h1>
-        <SliderText>但是下次最好不要砸在我的脑袋上了 😵‍💫</SliderText>
+        <SliderText>{t("subtitle")}</SliderText>
       </div>
 
       <div className="w-dvw h-dvh absolute top-0 left-0 overflow-hidden select-none">
