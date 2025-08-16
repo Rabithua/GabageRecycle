@@ -8,6 +8,7 @@ import Home from "./pages/home";
 import Tree from "./pages/tree";
 import Apple from "./pages/apple";
 import Scroll from "./pages/scroll";
+import Block from "./pages/blocks";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -17,6 +18,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/home" element={<Home />} />
         <Route path="/tree" element={<Tree />} />
         <Route path="/apple" element={<Apple />} />
+        <Route path="/blocks" element={<Block />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
