@@ -1,0 +1,83 @@
+import Block from "./block";
+import GoogleMapReact from "google-map-react";
+import { useState } from "react";
+import Marker from "./map/Marker";
+
+interface MapBlockProps {
+  className?: string;
+  center?: { lat: number; lng: number };
+  zoom?: number;
+  googleKey?: string;
+  title?: string;
+}
+
+export default function MapBlock(props: MapBlockProps) {
+  const {
+    title,
+    className,
+    center = { lat: 30.358313, lng: 120.026599 },
+    zoom = 10,
+    googleKey = import.meta.env.VITE_GOOGLE_MAP_KEY || "",
+  } = props;
+  const [loading, setLoading] = useState(true);
+  const [error] = useState<string | null>(null);
+  const hasKey = !!googleKey;
+  const centerObj = center;
+
+  return (
+    <Block className={`relative overflow-hidden p-0 ${className || ""}`}>
+      {/* 隐藏 Google logo 和版权 */}
+      <style>{`
+        .gmnoprint, .gm-style-cc, a[href^="https://maps.google.com/maps"], a[href^="https://www.google.com/maps"], .gmnoprint[style*="z-index: 1000001"] {
+          display: none !important;
+        }
+      `}</style>
+      {!hasKey && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-[11px] text-gray-500 bg-white/60 backdrop-blur-sm z-10">
+          <span>Need Google Map Key</span>
+        </div>
+      )}
+      {hasKey && (
+        <div className="w-full h-full" style={{ minHeight: 120 }}>
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: googleKey }}
+            defaultCenter={centerObj}
+            defaultZoom={zoom}
+            yesIWantToUseGoogleMapApiInternals
+            onGoogleApiLoaded={() => setLoading(false)}
+            options={{
+              fullscreenControl: false,
+              mapTypeControl: false,
+              streetViewControl: false,
+              zoomControl: false,
+              clickableIcons: false,
+              scaleControl: false,
+              rotateControl: false,
+              panControl: false,
+              keyboardShortcuts: false,
+              draggableCursor: "default",
+              disableDefaultUI: true,
+              mapId: "551e820942aed4209e064cbc",
+            }}
+          >
+            <Marker lat={centerObj.lat} lng={centerObj.lng} />
+          </GoogleMapReact>
+        </div>
+      )}
+      {(loading || error) && (
+        <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center bg-white/40 backdrop-blur-sm z-20">
+          {error ? (
+            <span className="text-[11px] text-gray-500">{error}</span>
+          ) : (
+            <div className="w-3/4 h-32 max-w-md rounded-xl bg-gradient-to-br from-gray-200 to-gray-300 animate-pulse shadow-inner" />
+          )}
+        </div>
+      )}
+      {title && (
+        <div className="absolute p-2 bottom-2 left-2 border border-black/6 rounded-lg bg-white/50 backdrop-blur-2xl font-sans text-black text-sm">
+          {title}
+        </div>
+      )}
+    </Block>
+  );
+}

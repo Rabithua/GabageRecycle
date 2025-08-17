@@ -7,6 +7,7 @@ import GitHubUserBlock from "./components/GitHubUserBlock";
 import GitHubRepoBlock from "./components/GitHubRepoBlock";
 import TextBlock from "./components/TextBlock";
 import PhotoBlock from "./components/PhototBlock";
+import MapBlock from "./components/MapBlock";
 
 export default function Blocks() {
   const { t } = useTranslation("translation", {
@@ -75,6 +76,12 @@ export default function Blocks() {
             src="https://cdn.bonjour.bio/cloudstorage/ed9292ca-0568-4332-91e6-4f86fd5f71e0"
             className="col-span-2 row-span-2 "
           />
+          <MapBlock
+            zoom={10}
+            title="Hangzhou,China"
+            className="col-span-2 row-span-2"
+          />
+
           <Block className="col-span-2 row-span-1 ">O</Block>
           <Block className="col-span-2 row-span-1 ">O</Block>
 
@@ -82,12 +89,8 @@ export default function Blocks() {
             src="https://public.zzfw.cc/gabagerecycle/blocks/IMG_6679.GIF"
             className="col-span-2 row-span-2 "
           />
-          <Block className="col-span-4 row-span-1 ">v</Block>
-
+          <Block className="col-span-4 row-span-1 ">V</Block>
           <Block className="col-span-2 row-span-1 ">求职ING</Block>
-          <Block className="col-span-4 row-span-1 ">
-            Powered By GarbageRecycle.
-          </Block>
         </div>
       </div>
     </main>

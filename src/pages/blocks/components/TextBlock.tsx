@@ -1,4 +1,4 @@
-import { Link } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Block from "./block";
 
 export default function TextBlock({
@@ -43,11 +43,12 @@ export default function TextBlock({
           WebkitLineClamp: 6,
           lineClamp: 6,
         }}
+        title={text || ""}
       >
         {href && (
-          <Link
-            size={16}
-            className={`text-primary/70 ${isEmojiOnly ? " absolute top-2 right-2" : "float-right m-1"}`}
+          <ArrowUpRight
+            size={24}
+            className={`text-primary/40 backdrop-blur-2xl rounded-full border bg-primary/5 border-primary/5 p-1 ${isEmojiOnly ? " absolute top-2 right-2" : "float-right m-1"}`}
           />
         )}
         {children}
