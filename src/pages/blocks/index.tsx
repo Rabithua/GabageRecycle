@@ -82,15 +82,21 @@ export default function Blocks() {
             className="col-span-2 row-span-2"
           />
 
-          <Block className="col-span-2 row-span-1 ">O</Block>
-          <Block className="col-span-2 row-span-1 ">O</Block>
+          <Block className="col-span-4 row-span-2 ">
+            被生活困住了，哪位好心人能伸出圆手
+            <br />
+            <br />
+            给我一份工作 🤕 &gt;&gt;
+          </Block>
 
           <PhotoBlock
             src="https://public.zzfw.cc/gabagerecycle/blocks/IMG_6679.GIF"
+            href="mailto:rabithua@gmail.com"
             className="col-span-2 row-span-2 "
           />
-          <Block className="col-span-4 row-span-1 ">V</Block>
-          <Block className="col-span-2 row-span-1 ">求职ING</Block>
+          <Block className="col-span-2 row-span-1 p-2">
+            不给我工作？那就推着电瓶车回去罢 👊
+          </Block>
         </div>
       </div>
     </main>
