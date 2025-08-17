@@ -1,6 +1,6 @@
-import Block from "./block";
 import GoogleMapReact from "google-map-react";
 import { useState } from "react";
+import Block from "./block";
 import Marker from "./map/Marker";
 
 interface MapBlockProps {
@@ -19,7 +19,18 @@ export default function MapBlock(props: MapBlockProps) {
     zoom = 10,
     googleKey = import.meta.env.VITE_GOOGLE_MAP_KEY || "",
   } = props;
-  const [loading, setLoading] = useState(true);
+  // 使用 sessionStorage 记忆 loading 状态，key 由 googleKey+center+zoom 组成
+  const sessionKey = `mapblock-loading-${googleKey}-${center.lat}-${center.lng}-${zoom}`;
+  const [loading, setLoading] = useState(() => {
+    const stored = sessionStorage.getItem(sessionKey);
+    return stored === null ? true : stored === "true";
+  });
+
+  // 地图加载完成时同步 sessionStorage
+  const handleMapLoaded = () => {
+    setLoading(false);
+    sessionStorage.setItem(sessionKey, "false");
+  };
   const [error] = useState<string | null>(null);
   const hasKey = !!googleKey;
   const centerObj = center;
@@ -44,7 +55,7 @@ export default function MapBlock(props: MapBlockProps) {
             defaultCenter={centerObj}
             defaultZoom={zoom}
             yesIWantToUseGoogleMapApiInternals
-            onGoogleApiLoaded={() => setLoading(false)}
+            onGoogleApiLoaded={handleMapLoaded}
             options={{
               fullscreenControl: false,
               mapTypeControl: false,
@@ -69,7 +80,7 @@ export default function MapBlock(props: MapBlockProps) {
           {error ? (
             <span className="text-[11px] text-gray-500">{error}</span>
           ) : (
-            <div className="w-3/4 h-32 max-w-md rounded-xl bg-gradient-to-br from-gray-200 to-gray-300 animate-pulse shadow-inner" />
+            <div className="size-6 max-w-md rounded-xl bg-gradient-to-br from-gray-200 to-gray-300 animate-pulse shadow-inner" />
           )}
         </div>
       )}
