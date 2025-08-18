@@ -1,5 +1,3 @@
-import { useGSAP } from "@gsap/react";
-import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import BackgroundText from "../home/components/BackgroudText";
 import Block from "./components/block";
@@ -8,27 +6,24 @@ import GitHubUserBlock from "./components/GitHubUserBlock";
 import MapBlock from "./components/MapBlock";
 import PhotoBlock from "./components/PhototBlock";
 import TextBlock from "./components/TextBlock";
+import { useRef } from "react";
 
 export default function Blocks() {
+  const gridContainer = useRef<HTMLDivElement>(null);
   const { t } = useTranslation("translation", {
     keyPrefix: "page.blocks",
   });
-  const containerRef = useRef(null); // This should be managed by your routing logic
-
-  useGSAP(() => {}, {
-    scope: containerRef,
-  });
 
   return (
-    <main
-      ref={containerRef}
-      className="w-dvw min-h-dvh flex flex-col items-center lg:justify-center grid-background font-basic py-8"
-    >
+    <main className="w-dvw min-h-dvh flex flex-col items-center lg:justify-center grid-background font-basic py-8">
       <BackgroundText text={t("background")} />
 
-      <div className="w-9/10 max-w-6xl">
+      <div ref={gridContainer} className="w-9/10 max-w-6xl">
         {/* Grid container */}
-        <div className="w-full font-['Noto_Serif_SC'] h-full grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 auto-rows-[80px] gap-4 grid-flow-dense pr-2">
+        <div
+          id="grid-container"
+          className="w-full font-['Noto_Serif_SC'] h-full grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 auto-rows-[80px] gap-4 grid-flow-dense pr-2"
+        >
           {/* Large feature block: Repo info */}
           <GitHubRepoBlock
             owner="Rabithua"
@@ -82,7 +77,10 @@ export default function Blocks() {
             className="col-span-2 row-span-2"
           />
 
-          <Block className="col-span-4 row-span-2 ">
+          <Block
+            containerRef={gridContainer}
+            className="col-span-4 row-span-2 "
+          >
             被生活困住了，哪位好心人能伸出圆手
             <br />
             <br />
