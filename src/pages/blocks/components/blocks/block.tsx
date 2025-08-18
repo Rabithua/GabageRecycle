@@ -25,7 +25,8 @@ export default function Block({
             gsap.to(el, {
               scale: 1.02,
               rotate: -1,
-              duration: 0.2,
+              boxShadow: "0 4px 16px rgba(0, 0, 0, 0.05)",
+              duration: 0.5,
               overwrite: true,
             });
           }
@@ -35,7 +36,8 @@ export default function Block({
             gsap.to(el, {
               scale: 1,
               rotate: 0,
-              duration: 0.2,
+              boxShadow: "0 0px 0px rgba(0, 0, 0, 0.05)",
+              duration: 0.5,
               overwrite: true,
             });
           }
@@ -45,7 +47,8 @@ export default function Block({
             gsap.to(el, {
               scale: 1,
               rotate: 0,
-              duration: 0.2,
+              boxShadow: "0 0px 0px rgba(0, 0, 0, 0.05)",
+              duration: 0.5,
               overwrite: true,
             });
           }
@@ -64,7 +67,7 @@ export default function Block({
   return (
     <div
       ref={blockRef}
-      className={`rounded-2xl border duration-500 overflow-hidden hover:scale-102 hover:-rotate-1 hover:shadow-2xl shadow-black/5 border-primary/20 bg-white/60 flex items-center justify-center text-primary/70 ${className}`}
+      className={`rounded-2xl border overflow-hidden shadow-black/5 border-primary/20 bg-white flex items-center justify-center text-primary/70 ${className}`}
     >
       {children}
     </div>

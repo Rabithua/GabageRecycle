@@ -41,7 +41,7 @@ export default function TextBlock({
           isEmojiOnly
             ? "text-3xl text-center text-primary/70"
             : "w-full h-full text-left text-gray-500"
-        } ${href ? "cursor-pointer" : "cursor-default select-all"}`}
+        } ${href ? "cursor-pointer" : " select-all"}`}
         style={{
           display: "-webkit-box",
           WebkitBoxOrient: "vertical",
