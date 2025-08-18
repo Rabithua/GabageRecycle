@@ -1,13 +1,13 @@
 import { useGSAP } from "@gsap/react";
-import BackgroundText from "../home/components/BackgroudText";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
+import BackgroundText from "../home/components/BackgroudText";
 import Block from "./components/block";
-import GitHubUserBlock from "./components/GitHubUserBlock";
 import GitHubRepoBlock from "./components/GitHubRepoBlock";
-import TextBlock from "./components/TextBlock";
-import PhotoBlock from "./components/PhototBlock";
+import GitHubUserBlock from "./components/GitHubUserBlock";
 import MapBlock from "./components/MapBlock";
+import PhotoBlock from "./components/PhototBlock";
+import TextBlock from "./components/TextBlock";
 
 export default function Blocks() {
   const { t } = useTranslation("translation", {
@@ -22,13 +22,13 @@ export default function Blocks() {
   return (
     <main
       ref={containerRef}
-      className="w-dvw h-dvh flex flex-col items-center justify-center grid-background font-basic"
+      className="w-dvw min-h-dvh flex flex-col items-center lg:justify-center grid-background font-basic py-8"
     >
       <BackgroundText text={t("background")} />
 
-      <div className="w-9/10 max-w-6xl overflow-hidden">
+      <div className="w-9/10 max-w-6xl">
         {/* Grid container */}
-        <div className="w-full font-['Noto_Serif_SC'] h-full grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 auto-rows-[80px] gap-4 grid-flow-dense overflow-auto pr-2">
+        <div className="w-full font-['Noto_Serif_SC'] h-full grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 auto-rows-[80px] gap-4 grid-flow-dense pr-2">
           {/* Large feature block: Repo info */}
           <GitHubRepoBlock
             owner="Rabithua"

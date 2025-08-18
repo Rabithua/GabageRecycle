@@ -109,7 +109,10 @@ export default function GitHubUserBlock({
 
           <div className="flex flex-col grow gap-2 overflow-hidden">
             {data.bio && (
-              <p className="text-xs text-gray-600 leading-snug line-clamp-4">
+              <p
+                className="text-xs text-gray-600 leading-snug line-clamp-4"
+                title={data.bio}
+              >
                 {data.bio}
               </p>
             )}
