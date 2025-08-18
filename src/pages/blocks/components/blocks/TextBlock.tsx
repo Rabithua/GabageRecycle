@@ -5,10 +5,12 @@ export default function TextBlock({
   children,
   className,
   href,
+  containerRef,
 }: {
   children: React.ReactNode;
   className?: string;
   href?: string;
+  containerRef?: React.RefObject<HTMLDivElement>;
 }) {
   // 提取纯文本（若 children 不是纯字符串则返回 null）
   const extractText = (node: React.ReactNode): string | null => {
@@ -29,7 +31,10 @@ export default function TextBlock({
     );
 
   return (
-    <Block className={`relative p-4 ${className || ""}`}>
+    <Block
+      containerRef={containerRef}
+      className={`relative p-4 ${className || ""}`}
+    >
       <a
         href={href || "#"}
         className={` line-clamp-6 overflow-hidden ${

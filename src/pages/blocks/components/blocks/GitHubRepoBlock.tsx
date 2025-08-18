@@ -6,6 +6,7 @@ interface GitHubRepoBlockProps {
   repo: string;
   branch?: string; // branch to show latest commit
   className?: string;
+  containerRef?: React.RefObject<HTMLDivElement>;
 }
 
 interface RepoData {
@@ -41,11 +42,12 @@ interface CommitData {
   author: { login: string } | null;
 }
 
-export default function GitHubRepoBlock({
+export default function GithubRepoBlock({
   owner,
   repo,
   branch,
   className,
+  containerRef,
 }: GitHubRepoBlockProps) {
   const [repoData, setRepoData] = useState<RepoData | null>(null);
   const [branchData, setBranchData] = useState<BranchCommitData | null>(null);
@@ -99,7 +101,10 @@ export default function GitHubRepoBlock({
   }, [owner, repo, branch]);
 
   return (
-    <Block className={`p-4 flex flex-col items-start gap-4 ${className || ""}`}>
+    <Block
+      containerRef={containerRef}
+      className={`p-4 flex flex-col items-start gap-4 ${className || ""}`}
+    >
       {loading && (
         <div className="w-full h-full flex flex-col gap-3 animate-pulse text-xs text-gray-400">
           <div className="h-5 w-40 bg-gray-200/60 rounded" />

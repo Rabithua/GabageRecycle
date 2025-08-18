@@ -7,8 +7,8 @@ interface MapBlockProps {
   className?: string;
   center?: { lat: number; lng: number };
   zoom?: number;
-  googleKey?: string;
   title?: string;
+  containerRef?: React.RefObject<HTMLDivElement>;
 }
 
 export default function MapBlock(props: MapBlockProps) {
@@ -17,8 +17,10 @@ export default function MapBlock(props: MapBlockProps) {
     className,
     center = { lat: 30.358313, lng: 120.026599 },
     zoom = 10,
-    googleKey = import.meta.env.VITE_GOOGLE_MAP_KEY || "",
+    containerRef
   } = props;
+  const googleKey = import.meta.env.VITE_GOOGLE_MAP_KEY || "";
+
   // 使用 sessionStorage 记忆 loading 状态，key 由 googleKey+center+zoom 组成
   const sessionKey = `mapblock-loading-${googleKey}-${center.lat}-${center.lng}-${zoom}`;
   const [loading, setLoading] = useState(() => {
@@ -36,7 +38,10 @@ export default function MapBlock(props: MapBlockProps) {
   const centerObj = center;
 
   return (
-    <Block className={`relative overflow-hidden p-0 ${className || ""}`}>
+    <Block
+      containerRef={containerRef}
+      className={`relative overflow-hidden p-0 ${className || ""}`}
+    >
       {/* 隐藏 Google logo 和版权 */}
       <style>{`
         .gmnoprint, .gm-style-cc, a[href^="https://maps.google.com/maps"], a[href^="https://www.google.com/maps"], .gmnoprint[style*="z-index: 1000001"] {
