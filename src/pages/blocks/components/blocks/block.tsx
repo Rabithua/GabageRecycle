@@ -67,7 +67,7 @@ export default function Block({
   return (
     <div
       ref={blockRef}
-      className={`rounded-2xl border overflow-hidden shadow-black/5 border-primary/20 bg-white flex items-center justify-center text-primary/70 ${className}`}
+      className={`rounded-2xl border duration-100 overflow-hidden shadow-black/5 border-primary/20 bg-white flex items-center justify-center text-primary/70 ${className}`}
     >
       {children}
     </div>
