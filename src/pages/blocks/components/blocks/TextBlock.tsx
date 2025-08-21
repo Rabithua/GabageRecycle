@@ -10,7 +10,7 @@ export default function TextBlock({
   children: React.ReactNode;
   className?: string;
   href?: string;
-  containerRef?: React.RefObject<HTMLDivElement>;
+  containerRef: React.RefObject<HTMLDivElement>;
 }) {
   // 提取纯文本（若 children 不是纯字符串则返回 null）
   const extractText = (node: React.ReactNode): string | null => {

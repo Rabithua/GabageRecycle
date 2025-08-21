@@ -12,14 +12,50 @@ export default function Block({
 }: {
   children: React.ReactNode;
   className?: string;
-  containerRef?: React.RefObject<HTMLDivElement>;
+  containerRef: React.RefObject<HTMLDivElement>;
 }) {
   const blockRef = useRef<HTMLDivElement>(null);
   useGSAP(
     () => {
       const el = blockRef.current;
+
+      // 计算网格对齐函数
+      const getGridSnapFunction = () => {
+        return {
+          x: (endValue: number) => {
+            // 获取网格指标的逻辑保持不变
+            const containerRect = containerRef.current?.getBoundingClientRect();
+            if (!containerRect) return endValue;
+            const gap = 16;
+            const screenWidth = window.innerWidth;
+            let columns = 4;
+            if (screenWidth >= 1024) columns = 12;
+            else if (screenWidth >= 768) columns = 8;
+            const availableWidth = containerRect.width;
+            const columnWidth =
+              (availableWidth - gap * (columns - 1)) / columns;
+
+            // 移除 Math.max(0, ...) 和 Math.min(...)
+            const gridX =
+              Math.round(endValue / (columnWidth + gap)) * (columnWidth + gap);
+            return gridX;
+          },
+          y: (endValue: number) => {
+            const gap = 16;
+            const rowHeight = 80;
+
+            // 移除 Math.max(0, ...)
+            const gridY =
+              Math.round(endValue / (rowHeight + gap)) * (rowHeight + gap);
+            return gridY;
+          },
+        };
+      };
+
       const draggable = Draggable.create(el, {
-        bounds: containerRef?.current,
+        bounds: containerRef.current,
+        liveSnap: true,
+        snap: getGridSnapFunction(),
         onPress() {
           if (el) {
             gsap.to(el, {
@@ -55,8 +91,18 @@ export default function Block({
         },
       });
 
+      // 监听窗口大小变化，更新网格对齐
+      const handleResize = () => {
+        if (draggable[0]) {
+          draggable[0].vars.snap = getGridSnapFunction();
+        }
+      };
+
+      window.addEventListener("resize", handleResize);
+
       return () => {
         draggable.forEach((d) => d.kill());
+        window.removeEventListener("resize", handleResize);
       };
     },
     {

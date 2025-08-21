@@ -62,6 +62,6 @@ export type BlockData =
 export interface BlockProps {
   children?: React.ReactNode;
   className?: string;
-  containerRef?: React.RefObject<HTMLDivElement>;
+  containerRef: React.RefObject<HTMLDivElement>;
   blockData: BlockData;
 }

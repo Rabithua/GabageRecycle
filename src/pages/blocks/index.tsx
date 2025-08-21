@@ -9,16 +9,14 @@ import { useTranslation } from "react-i18next";
 import { v4 as uuidv4 } from "uuid";
 
 export default function Blocks() {
-  const gridContainer = useRef<HTMLDivElement>(null);
+  const gridContainer = useRef<HTMLDivElement>(null!);
   const { t } = useTranslation("translation", {
     keyPrefix: "page.blocks",
   });
 
-  const grids: Array<BlockProps> = [
+  const grids: Omit<BlockProps, "containerRef">[] = [
     {
       className: "col-span-4 row-span-4",
-      containerRef:
-        gridContainer.current as unknown as React.RefObject<HTMLDivElement>,
       blockData: {
         id: uuidv4(),
         type: BlockType.GITHUBREPO,
@@ -29,8 +27,6 @@ export default function Blocks() {
     },
     {
       className: "col-span-4 row-span-2",
-      containerRef:
-        gridContainer.current as unknown as React.RefObject<HTMLDivElement>,
       blockData: {
         id: uuidv4(),
         type: BlockType.GITHUBUSER,
@@ -39,8 +35,6 @@ export default function Blocks() {
     },
     {
       className: "col-span-4 row-span-2",
-      containerRef:
-        gridContainer.current as unknown as React.RefObject<HTMLDivElement>,
       blockData: {
         id: uuidv4(),
         type: BlockType.GITHUBREPO,
@@ -51,8 +45,6 @@ export default function Blocks() {
     },
     {
       className: "col-span-2 row-span-2",
-      containerRef:
-        gridContainer.current as unknown as React.RefObject<HTMLDivElement>,
       blockData: {
         id: uuidv4(),
         type: BlockType.PHOTO,
@@ -61,8 +53,6 @@ export default function Blocks() {
     },
     {
       className: "col-span-4 row-span-2",
-      containerRef:
-        gridContainer.current as unknown as React.RefObject<HTMLDivElement>,
       children:
         "因为我始终相信人是知善恶、辨是非的，我们不要在白天高举火把，而是应该在黑夜成为明灯，如果天黑那就摸黑生存，如果发出声音危险，那就保持沉默，但是不要因为自己的苟且而洋洋自得，不要对那些勇敢的人不屑一顾，不要因为身处黑暗就为黑暗辩护，我们可以卑微如尘土，但是绝对不可以扭曲如蛆虫！",
       blockData: {
@@ -72,8 +62,6 @@ export default function Blocks() {
     },
     {
       className: "col-span-1 row-span-1",
-      containerRef:
-        gridContainer.current as unknown as React.RefObject<HTMLDivElement>,
       children: "🍎",
       blockData: {
         id: uuidv4(),
@@ -83,8 +71,6 @@ export default function Blocks() {
     },
     {
       className: "col-span-1 row-span-1",
-      containerRef:
-        gridContainer.current as unknown as React.RefObject<HTMLDivElement>,
       children: "🪴",
       blockData: {
         id: uuidv4(),
@@ -94,8 +80,6 @@ export default function Blocks() {
     },
     {
       className: "col-span-2 row-span-2",
-      containerRef:
-        gridContainer.current as unknown as React.RefObject<HTMLDivElement>,
       children: "🐱",
       blockData: {
         id: uuidv4(),
@@ -105,8 +89,6 @@ export default function Blocks() {
     },
     {
       className: "col-span-2 row-span-2",
-      containerRef:
-        gridContainer.current as unknown as React.RefObject<HTMLDivElement>,
       blockData: {
         id: uuidv4(),
         type: BlockType.PHOTO,
@@ -116,8 +98,6 @@ export default function Blocks() {
     },
     {
       className: "col-span-2 row-span-2",
-      containerRef:
-        gridContainer.current as unknown as React.RefObject<HTMLDivElement>,
       blockData: {
         id: uuidv4(),
         type: BlockType.MAP,
@@ -128,8 +108,6 @@ export default function Blocks() {
     },
     {
       className: "col-span-4 row-span-2",
-      containerRef:
-        gridContainer.current as unknown as React.RefObject<HTMLDivElement>,
       children: (
         <>
           被生活困住了，哪位好心人能伸出圆手
@@ -144,8 +122,6 @@ export default function Blocks() {
     },
     {
       className: "col-span-2 row-span-2",
-      containerRef:
-        gridContainer.current as unknown as React.RefObject<HTMLDivElement>,
       blockData: {
         id: uuidv4(),
         type: BlockType.PHOTO,
@@ -155,8 +131,6 @@ export default function Blocks() {
     },
     {
       className: "col-span-2 row-span-1 p-2",
-      containerRef:
-        gridContainer.current as unknown as React.RefObject<HTMLDivElement>,
       children: <>不给我工作？那就推着电瓶车回去罢 👊</>,
       blockData: {
         id: uuidv4(),
@@ -169,14 +143,20 @@ export default function Blocks() {
     <main className="w-dvw min-h-dvh flex flex-col items-center lg:justify-center grid-background font-basic py-8">
       <BackgroundText text={t("background")} />
 
-      <div ref={gridContainer} className="w-9/10 max-w-6xl">
+      <div className="w-9/10 max-w-6xl">
         {/* Grid container */}
         <div
-          id="grid-container"
+          ref={gridContainer}
           className="w-full font-['Noto_Serif_SC'] h-full grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 auto-rows-[80px] gap-4 grid-flow-dense pr-2"
         >
           {grids.map((grid, index) => {
-            return <BlockSwitcher key={index} {...grid} />;
+            return (
+              <BlockSwitcher
+                key={index}
+                {...grid}
+                containerRef={gridContainer}
+              />
+            );
           })}
         </div>
       </div>

@@ -8,7 +8,7 @@ interface MapBlockProps {
   center?: { lat: number; lng: number };
   zoom?: number;
   title?: string;
-  containerRef?: React.RefObject<HTMLDivElement>;
+  containerRef: React.RefObject<HTMLDivElement>;
 }
 
 export default function MapBlock(props: MapBlockProps) {
