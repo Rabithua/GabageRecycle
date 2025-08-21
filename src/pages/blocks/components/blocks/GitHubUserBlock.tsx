@@ -4,7 +4,7 @@ import Block from "./block";
 interface GitHubUserBlockProps {
   username: string;
   className?: string;
-  containerRef?: React.RefObject<HTMLDivElement>;
+  containerRef: React.RefObject<HTMLDivElement>;
 }
 
 interface GitHubUserData {

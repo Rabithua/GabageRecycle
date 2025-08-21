@@ -17,7 +17,7 @@ export default function MapBlock(props: MapBlockProps) {
     className,
     center = { lat: 30.358313, lng: 120.026599 },
     zoom = 10,
-    containerRef
+    containerRef,
   } = props;
   const googleKey = import.meta.env.VITE_GOOGLE_MAP_KEY || "";
 

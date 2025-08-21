@@ -62,6 +62,12 @@ export type BlockData =
 export interface BlockProps {
   children?: React.ReactNode;
   className?: string;
+  grid: Grid;
   containerRef: React.RefObject<HTMLDivElement>;
   blockData: BlockData;
+}
+
+export interface Grid {
+  col: 1 | 2 | 4;
+  row: 1 | 2 | 4;
 }

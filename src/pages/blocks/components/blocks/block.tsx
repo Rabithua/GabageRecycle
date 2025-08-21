@@ -15,107 +15,130 @@ export default function Block({
   containerRef: React.RefObject<HTMLDivElement>;
 }) {
   const blockRef = useRef<HTMLDivElement>(null);
-  useGSAP(
-    () => {
+  const placeholderRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    let raf: number | null = null;
+    const cleanups: Array<() => void> = [];
+
+    const init = () => {
+      if (!containerRef.current) {
+        raf = requestAnimationFrame(init);
+        return;
+      }
       const el = blockRef.current;
+      if (!el) return;
+      const placeholder = placeholderRef.current;
 
-      // 计算网格对齐函数
-      const getGridSnapFunction = () => {
-        return {
-          x: (endValue: number) => {
-            // 获取网格指标的逻辑保持不变
-            const containerRect = containerRef.current?.getBoundingClientRect();
-            if (!containerRect) return endValue;
-            const gap = 16;
-            const screenWidth = window.innerWidth;
-            let columns = 4;
-            if (screenWidth >= 1024) columns = 12;
-            else if (screenWidth >= 768) columns = 8;
-            const availableWidth = containerRect.width;
-            const columnWidth =
-              (availableWidth - gap * (columns - 1)) / columns;
-
-            // 移除 Math.max(0, ...) 和 Math.min(...)
-            const gridX =
-              Math.round(endValue / (columnWidth + gap)) * (columnWidth + gap);
-            return gridX;
-          },
-          y: (endValue: number) => {
-            const gap = 16;
-            const rowHeight = 80;
-
-            // 移除 Math.max(0, ...)
-            const gridY =
-              Math.round(endValue / (rowHeight + gap)) * (rowHeight + gap);
-            return gridY;
-          },
-        };
+      const GAP = 16;
+      const ROW_HEIGHT = 80;
+      const calcColumns = () => {
+        const w = window.innerWidth;
+        if (w >= 1024) return 12;
+        if (w >= 768) return 8;
+        return 4;
       };
+      const getColumnWidth = () => {
+        const rect = containerRef.current!.getBoundingClientRect();
+        const cols = calcColumns();
+        return (rect.width - GAP * (cols - 1)) / cols;
+      };
+      const snapX = (endValue: number) => {
+        const cw = getColumnWidth();
+        return Math.round(endValue / (cw + GAP)) * (cw + GAP);
+      };
+      const snapY = (endValue: number) =>
+        Math.round(endValue / (ROW_HEIGHT + GAP)) * (ROW_HEIGHT + GAP);
+      const getGridSnapPosition = (x: number, y: number) => ({
+        x: snapX(x),
+        y: snapY(y),
+      });
 
       const draggable = Draggable.create(el, {
         bounds: containerRef.current,
-        liveSnap: true,
-        snap: getGridSnapFunction(),
+        inertia: false,
+        snap: { x: snapX, y: snapY },
         onPress() {
-          if (el) {
-            gsap.to(el, {
-              scale: 1.02,
-              rotate: -1,
-              boxShadow: "0 4px 16px rgba(0, 0, 0, 0.05)",
-              duration: 0.5,
-              overwrite: true,
-            });
-          }
+          if (!placeholder) return;
+          gsap.set(placeholder, { opacity: 1 });
+          gsap.to(el, {
+            scale: 1.02,
+            rotate: -1,
+            boxShadow: "0 4px 16px rgba(0,0,0,0.05)",
+            duration: 0.4,
+            overwrite: true,
+          });
+          draggable[0].applyBounds(containerRef.current!);
+        },
+        onDrag() {
+          if (!placeholder) return;
+          const snapPos = getGridSnapPosition(this.x, this.y);
+          gsap.set(placeholder, { x: snapPos.x, y: snapPos.y });
         },
         onRelease() {
-          if (el) {
-            gsap.to(el, {
-              scale: 1,
-              rotate: 0,
-              boxShadow: "0 0px 0px rgba(0, 0, 0, 0.05)",
-              duration: 0.5,
-              overwrite: true,
-            });
-          }
+          if (!placeholder) return;
+          gsap.to(el, {
+            scale: 1,
+            rotate: 0,
+            boxShadow: "0 0 0 rgba(0,0,0,0.05)",
+            duration: 0.25,
+            ease: "power2.out",
+            overwrite: true,
+          });
+          gsap.to(placeholder, { opacity: 0, duration: 0.25 });
         },
         onDragEnd() {
-          if (el) {
-            gsap.to(el, {
-              scale: 1,
-              rotate: 0,
-              boxShadow: "0 0px 0px rgba(0, 0, 0, 0.05)",
-              duration: 0.5,
-              overwrite: true,
-            });
-          }
+          if (!placeholder) return;
+          gsap.to(placeholder, { opacity: 0, duration: 0.25 });
         },
       });
 
-      // 监听窗口大小变化，更新网格对齐
+      // next frame ensure bounds after layout
+      requestAnimationFrame(() => {
+        if (draggable[0]) draggable[0].applyBounds(containerRef.current!);
+      });
+
+      if (placeholder) gsap.set(placeholder, { opacity: 0 });
+
+      const ro = new ResizeObserver(() => {
+        if (!draggable[0]) return;
+        draggable[0].applyBounds(containerRef.current!);
+        draggable[0].vars.snap = { x: snapX, y: snapY };
+      });
+      ro.observe(containerRef.current!);
+      cleanups.push(() => ro.disconnect());
+
       const handleResize = () => {
-        if (draggable[0]) {
-          draggable[0].vars.snap = getGridSnapFunction();
-        }
+        if (!draggable[0]) return;
+        draggable[0].applyBounds(containerRef.current!);
+        draggable[0].vars.snap = { x: snapX, y: snapY };
       };
-
       window.addEventListener("resize", handleResize);
+      cleanups.push(() => window.removeEventListener("resize", handleResize));
 
-      return () => {
-        draggable.forEach((d) => d.kill());
-        window.removeEventListener("resize", handleResize);
-      };
-    },
-    {
-      scope: containerRef?.current,
-    }
-  );
+      cleanups.push(() => draggable.forEach((d) => d.kill()));
+    };
+
+    init();
+
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      cleanups.forEach((fn) => fn());
+    };
+  });
 
   return (
-    <div
-      ref={blockRef}
-      className={`rounded-2xl border duration-100 overflow-hidden shadow-black/5 border-primary/20 bg-white flex items-center justify-center text-primary/70 ${className}`}
-    >
-      {children}
-    </div>
+    <>
+      <div
+        ref={blockRef}
+        className={`w-full z-10 h-full rounded-2xl border duration-100 overflow-hidden shadow-black/5 border-primary/20 bg-white flex items-center justify-center text-primary/70 ${className}`}
+      >
+        {children}
+      </div>
+      <div
+        ref={placeholderRef}
+        className="absolute top-0 left-0 w-full h-full border-2 border-dashed border-primary/40 rounded-2xl pointer-events-none z-5"
+      ></div>
+    </>
   );
 }

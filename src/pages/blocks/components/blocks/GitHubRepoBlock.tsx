@@ -6,7 +6,7 @@ interface GitHubRepoBlockProps {
   repo: string;
   branch?: string; // branch to show latest commit
   className?: string;
-  containerRef?: React.RefObject<HTMLDivElement>;
+  containerRef: React.RefObject<HTMLDivElement>;
 }
 
 interface RepoData {

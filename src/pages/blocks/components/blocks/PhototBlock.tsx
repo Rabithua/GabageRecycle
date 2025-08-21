@@ -5,18 +5,15 @@ export default function PhotoBlock({
   className,
   src,
   href,
-  containerRef
+  containerRef,
 }: {
   className?: string;
   src: string;
   href?: string;
-  containerRef?: React.RefObject<HTMLDivElement>;
+  containerRef: React.RefObject<HTMLDivElement>;
 }) {
   return (
-    <Block
-      containerRef={containerRef}
-      className={` ${className || ""}`}
-    >
+    <Block containerRef={containerRef} className={` ${className || ""}`}>
       <a
         href={href || "#"}
         title="Photo link"

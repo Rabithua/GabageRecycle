@@ -16,7 +16,7 @@ export default function Blocks() {
 
   const grids: Omit<BlockProps, "containerRef">[] = [
     {
-      className: "col-span-4 row-span-4",
+      grid: { col: 4, row: 4 },
       blockData: {
         id: uuidv4(),
         type: BlockType.GITHUBREPO,
@@ -26,7 +26,7 @@ export default function Blocks() {
       },
     },
     {
-      className: "col-span-4 row-span-2",
+      grid: { col: 4, row: 2 },
       blockData: {
         id: uuidv4(),
         type: BlockType.GITHUBUSER,
@@ -34,7 +34,7 @@ export default function Blocks() {
       },
     },
     {
-      className: "col-span-4 row-span-2",
+      grid: { col: 4, row: 2 },
       blockData: {
         id: uuidv4(),
         type: BlockType.GITHUBREPO,
@@ -44,7 +44,7 @@ export default function Blocks() {
       },
     },
     {
-      className: "col-span-2 row-span-2",
+      grid: { col: 2, row: 2 },
       blockData: {
         id: uuidv4(),
         type: BlockType.PHOTO,
@@ -52,7 +52,7 @@ export default function Blocks() {
       },
     },
     {
-      className: "col-span-4 row-span-2",
+      grid: { col: 4, row: 2 },
       children:
         "因为我始终相信人是知善恶、辨是非的，我们不要在白天高举火把，而是应该在黑夜成为明灯，如果天黑那就摸黑生存，如果发出声音危险，那就保持沉默，但是不要因为自己的苟且而洋洋自得，不要对那些勇敢的人不屑一顾，不要因为身处黑暗就为黑暗辩护，我们可以卑微如尘土，但是绝对不可以扭曲如蛆虫！",
       blockData: {
@@ -61,7 +61,7 @@ export default function Blocks() {
       },
     },
     {
-      className: "col-span-1 row-span-1",
+      grid: { col: 1, row: 1 },
       children: "🍎",
       blockData: {
         id: uuidv4(),
@@ -70,7 +70,7 @@ export default function Blocks() {
       },
     },
     {
-      className: "col-span-1 row-span-1",
+      grid: { col: 1, row: 1 },
       children: "🪴",
       blockData: {
         id: uuidv4(),
@@ -79,7 +79,7 @@ export default function Blocks() {
       },
     },
     {
-      className: "col-span-2 row-span-2",
+      grid: { col: 2, row: 2 },
       children: "🐱",
       blockData: {
         id: uuidv4(),
@@ -88,7 +88,7 @@ export default function Blocks() {
       },
     },
     {
-      className: "col-span-2 row-span-2",
+      grid: { col: 2, row: 2 },
       blockData: {
         id: uuidv4(),
         type: BlockType.PHOTO,
@@ -97,7 +97,7 @@ export default function Blocks() {
       },
     },
     {
-      className: "col-span-2 row-span-2",
+      grid: { col: 2, row: 2 },
       blockData: {
         id: uuidv4(),
         type: BlockType.MAP,
@@ -107,7 +107,8 @@ export default function Blocks() {
       },
     },
     {
-      className: "col-span-4 row-span-2",
+      grid: { col: 4, row: 2 },
+      className: "p-2",
       children: (
         <>
           被生活困住了，哪位好心人能伸出圆手
@@ -121,7 +122,7 @@ export default function Blocks() {
       },
     },
     {
-      className: "col-span-2 row-span-2",
+      grid: { col: 2, row: 2 },
       blockData: {
         id: uuidv4(),
         type: BlockType.PHOTO,
@@ -130,7 +131,8 @@ export default function Blocks() {
       },
     },
     {
-      className: "col-span-2 row-span-1 p-2",
+      grid: { col: 2, row: 1 },
+      className: "p-2",
       children: <>不给我工作？那就推着电瓶车回去罢 👊</>,
       blockData: {
         id: uuidv4(),
