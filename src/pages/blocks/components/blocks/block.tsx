@@ -57,23 +57,21 @@ export default function Block({
         bounds: containerRef.current,
         inertia: false,
         onPress() {
-          if (!placeholder) return;
-          gsap.set(placeholder, { opacity: 1 });
+          gsap.set(placeholder, { opacity: 1, zIndex: 15 });
           gsap.to(el, {
             scale: 1.02,
             rotate: -1,
             boxShadow: "0 4px 16px rgba(0,0,0,0.05)",
             duration: 0.35,
             overwrite: true,
+            zIndex: 20,
           });
           this.applyBounds(containerRef.current!);
         },
         onDrag() {
-          if (!placeholder) return;
           gsap.set(placeholder, { x: snapX(this.x), y: snapY(this.y) });
         },
         onRelease() {
-          if (!placeholder) return;
           const finalX = snapX(this.x);
           const finalY = snapY(this.y);
 
@@ -91,15 +89,25 @@ export default function Block({
             .to(placeholder, { opacity: 0, duration: 0.2 }, "<");
         },
         onDragEnd() {
-          if (!placeholder) return;
-          gsap.to(placeholder, { opacity: 0, duration: 0.2 });
+          gsap.to(placeholder, {
+            opacity: 0,
+            duration: 0.2,
+          });
+          gsap.set(placeholder, {
+            clearProps: "opacity,duration,zIndex",
+          });
+          gsap.set(el, {
+            clearProps: "zIndex",
+          });
         },
       })[0];
 
       // 布局稳定后一帧再校准 bounds
       requestAnimationFrame(() => drag?.applyBounds(containerRef.current!));
 
-      if (placeholder) gsap.set(placeholder, { opacity: 0 });
+      gsap.set(placeholder, {
+        clearProps: "all",
+      });
 
       // 节流 resize / observer 更新
       let ticking = false;
@@ -141,7 +149,7 @@ export default function Block({
       </div>
       <div
         ref={placeholderRef}
-        className="absolute top-0 left-0 w-full h-full duration-300 border-2 border-dashed border-primary/40 rounded-2xl pointer-events-none z-5"
+        className="absolute top-0 left-0 w-full h-full duration-300 border-2 border-dashed border-primary/40 rounded-2xl pointer-events-none bg-primary/20 backdrop-blur-2xl"
       ></div>
     </>
   );
