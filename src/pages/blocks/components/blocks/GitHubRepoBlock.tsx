@@ -117,7 +117,7 @@ export default function GithubRepoBlock({
           </div>
         </div>
       )}
-      {!loading && error && <div className="text-sm text-red-500">{error}</div>}
+      {!loading && error && <div className="text-sm w-full text-primary text-center">{error}</div>}
       {!loading && !error && repoData && (
         <div className="flex flex-col w-full h-full">
           <div className="flex flex-col w-full shrink-0 mb-2">

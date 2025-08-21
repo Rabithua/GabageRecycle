@@ -83,7 +83,7 @@ export default function GithubUserBlock({
           </div>
         </div>
       )}
-      {!loading && error && <div className="text-sm text-red-500">{error}</div>}
+      {!loading && error && <div className="text-sm text-primary">{error}</div>}
       {!loading && !error && data && (
         <div className="flex flex-col gap-2 w-full h-full">
           <div className="flex gap-4 items-center">
