@@ -56,7 +56,6 @@ export default function Block({
       const drag = Draggable.create(el, {
         bounds: containerRef.current,
         inertia: false,
-        snap: { x: snapX, y: snapY },
         onPress() {
           if (!placeholder) return;
           gsap.set(placeholder, { opacity: 1 });
@@ -75,9 +74,14 @@ export default function Block({
         },
         onRelease() {
           if (!placeholder) return;
+          const finalX = snapX(this.x);
+          const finalY = snapY(this.y);
+
           gsap
             .timeline({ defaults: { overwrite: true } })
             .to(el, {
+              x: finalX,
+              y: finalY,
               scale: 1,
               rotate: 0,
               boxShadow: "0 0 0 rgba(0,0,0,0.04)",
@@ -131,13 +135,13 @@ export default function Block({
       <div
         ref={blockRef}
         role="group"
-        className={`w-full z-10 h-full rounded-2xl border duration-100 overflow-hidden shadow-black/5 border-primary/20 bg-white flex items-center justify-center text-primary/70 ${className}`}
+        className={`relative w-full z-10 h-full rounded-2xl border duration-100 overflow-hidden shadow-black/5 border-primary/20 bg-white flex items-center justify-center text-primary/70 ${className}`}
       >
         {children}
       </div>
       <div
         ref={placeholderRef}
-        className="absolute top-0 left-0 w-full h-full border-2 border-dashed border-primary/40 rounded-2xl pointer-events-none z-5"
+        className="absolute top-0 left-0 w-full h-full duration-300 border-2 border-dashed border-primary/40 rounded-2xl pointer-events-none z-5"
       ></div>
     </>
   );
