@@ -1,6 +1,9 @@
 [简体中文](./README.md) | English
 
+[Figma](https://www.figma.com/design/ErcL6eJ3hfRb0uQ4tLvWDt/GabageRecycle?m=auto&t=j99wipHRWdSL7DhL-1) | [Aboutme](https://www.zzfw.cc/blocks)
+
 <img width="2541" height="1071" alt="草稿 3025" src="https://github.com/user-attachments/assets/0893efcc-e368-47ff-96b7-b47f8d8ee553" />
+
 
 # Garbage Recycle
 
@@ -37,7 +40,7 @@
     cd gabage_recycle
     ```
 
-3.  Install dependencies (b`un` is recommended):
+3.  Install dependencies (recommended using `bun`):
 
     ```bash
     bun install
