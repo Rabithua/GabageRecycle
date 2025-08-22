@@ -1,9 +1,9 @@
-简体中文 | [English](./README.en.md)
-
-[Figma](https://www.figma.com/design/ErcL6eJ3hfRb0uQ4tLvWDt/GabageRecycle?m=auto&t=j99wipHRWdSL7DhL-1) | [Aboutme](https://www.zzfw.cc/blocks)
+<div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;">
+    <span>简体中文 | <a href="./README.en.md">English</a></span>
+    <span><a href="https://www.figma.com/design/ErcL6eJ3hfRb0uQ4tLvWDt/GabageRecycle?m=auto&t=j99wipHRWdSL7DhL-1">Figma</a> | <a href="https://www.zzfw.cc/blocks">Aboutme</a></span>
+</div>
 
 <img width="2541" height="1071" alt="草稿 3025" src="https://github.com/user-attachments/assets/0893efcc-e368-47ff-96b7-b47f8d8ee553" />
-
 
 # 废物回收
 
