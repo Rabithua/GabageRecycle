@@ -1,7 +1,7 @@
-<div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;">
-    <span><a href="./README.md">简体中文</a> | English</span>
-    <span><a href="https://www.figma.com/design/ErcL6eJ3hfRb0uQ4tLvWDt/GabageRecycle?m=auto&t=j99wipHRWdSL7DhL-1">Figma</a> | <a href="https://www.zzfw.cc/blocks">Aboutme</a></span>
-</div>
+<table width="100%" cellspacing="0" cellpadding="0"><tr>
+<td align="left"><a href="./README.md">简体中文</a> | English</td>
+<td align="right"><a href="https://www.figma.com/design/ErcL6eJ3hfRb0uQ4tLvWDt/GabageRecycle?m=auto&t=j99wipHRWdSL7DhL-1">Figma</a> | <a href="https://www.zzfw.cc/blocks">Aboutme</a></td>
+</tr></table>
 
 <img width="2541" height="1071" alt="草稿 3025" src="https://github.com/user-attachments/assets/0893efcc-e368-47ff-96b7-b47f8d8ee553" />
 
