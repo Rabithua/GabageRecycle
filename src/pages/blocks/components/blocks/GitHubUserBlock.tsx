@@ -4,6 +4,7 @@ import Block from "./block";
 interface GitHubUserBlockProps {
   username: string;
   className?: string;
+  containerRef: React.RefObject<HTMLDivElement>;
 }
 
 interface GitHubUserData {
@@ -17,9 +18,10 @@ interface GitHubUserData {
   html_url: string;
 }
 
-export default function GitHubUserBlock({
+export default function GithubUserBlock({
   username,
   className,
+  containerRef,
 }: GitHubUserBlockProps) {
   const [data, setData] = useState<GitHubUserData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -53,7 +55,10 @@ export default function GitHubUserBlock({
   }, [username]);
 
   return (
-    <Block className={`p-4 text-left ${className || ""}`}>
+    <Block
+      containerRef={containerRef}
+      className={`p-4 text-left ${className || ""}`}
+    >
       {loading && (
         <div
           className="w-full h-full flex flex-col gap-4 animate-pulse text-xs text-gray-400"
@@ -78,7 +83,7 @@ export default function GitHubUserBlock({
           </div>
         </div>
       )}
-      {!loading && error && <div className="text-sm text-red-500">{error}</div>}
+      {!loading && error && <div className="text-sm text-primary">{error}</div>}
       {!loading && !error && data && (
         <div className="flex flex-col gap-2 w-full h-full">
           <div className="flex gap-4 items-center">
@@ -109,7 +114,10 @@ export default function GitHubUserBlock({
 
           <div className="flex flex-col grow gap-2 overflow-hidden">
             {data.bio && (
-              <p className="text-xs text-gray-600 leading-snug line-clamp-4">
+              <p
+                className="text-xs text-gray-600 leading-snug line-clamp-4"
+                title={data.bio}
+              >
                 {data.bio}
               </p>
             )}

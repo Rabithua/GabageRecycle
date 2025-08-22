@@ -1,14 +1,16 @@
-import { Link } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Block from "./block";
 
 export default function TextBlock({
   children,
   className,
   href,
+  containerRef,
 }: {
   children: React.ReactNode;
   className?: string;
   href?: string;
+  containerRef: React.RefObject<HTMLDivElement>;
 }) {
   // 提取纯文本（若 children 不是纯字符串则返回 null）
   const extractText = (node: React.ReactNode): string | null => {
@@ -29,25 +31,29 @@ export default function TextBlock({
     );
 
   return (
-    <Block className={`relative p-4 ${className || ""}`}>
+    <Block
+      containerRef={containerRef}
+      className={`relative p-4 ${className || ""}`}
+    >
       <a
         href={href || "#"}
         className={` line-clamp-6 overflow-hidden ${
           isEmojiOnly
             ? "text-3xl text-center text-primary/70"
             : "w-full h-full text-left text-gray-500"
-        } ${href ? "cursor-pointer" : "cursor-default select-all"}`}
+        } ${href ? "cursor-pointer" : " select-all"}`}
         style={{
           display: "-webkit-box",
           WebkitBoxOrient: "vertical",
           WebkitLineClamp: 6,
           lineClamp: 6,
         }}
+        title={text || ""}
       >
         {href && (
-          <Link
-            size={16}
-            className={`text-primary/70 ${isEmojiOnly ? " absolute top-2 right-2" : "float-right m-1"}`}
+          <ArrowUpRight
+            size={24}
+            className={`text-primary/40 backdrop-blur-2xl rounded-full border bg-primary/5 border-primary/5 p-1 ${isEmojiOnly ? " absolute top-2 right-2" : "float-right m-1"}`}
           />
         )}
         {children}

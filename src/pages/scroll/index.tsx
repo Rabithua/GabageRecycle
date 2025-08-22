@@ -8,10 +8,11 @@ import Home from "@/pages/home";
 import Apple from "@/pages/apple";
 import Tree from "@/pages/tree";
 import { ChevronsUp } from "lucide-react";
+import Blocks from "../blocks";
 
 gsap.registerPlugin(Observer);
 
-const pages = [<Home />, <Apple />, <Tree />];
+const pages = [<Home />, <Apple />, <Tree />, <Blocks />];
 
 export default function FadingScroll() {
   const { t } = useTranslation("translation", {

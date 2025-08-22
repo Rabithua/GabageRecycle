@@ -6,6 +6,7 @@ interface GitHubRepoBlockProps {
   repo: string;
   branch?: string; // branch to show latest commit
   className?: string;
+  containerRef: React.RefObject<HTMLDivElement>;
 }
 
 interface RepoData {
@@ -41,11 +42,12 @@ interface CommitData {
   author: { login: string } | null;
 }
 
-export default function GitHubRepoBlock({
+export default function GithubRepoBlock({
   owner,
   repo,
   branch,
   className,
+  containerRef,
 }: GitHubRepoBlockProps) {
   const [repoData, setRepoData] = useState<RepoData | null>(null);
   const [branchData, setBranchData] = useState<BranchCommitData | null>(null);
@@ -99,7 +101,10 @@ export default function GitHubRepoBlock({
   }, [owner, repo, branch]);
 
   return (
-    <Block className={`p-4 flex flex-col items-start gap-4 ${className || ""}`}>
+    <Block
+      containerRef={containerRef}
+      className={`p-4 flex flex-col items-start gap-4 ${className || ""}`}
+    >
       {loading && (
         <div className="w-full h-full flex flex-col gap-3 animate-pulse text-xs text-gray-400">
           <div className="h-5 w-40 bg-gray-200/60 rounded" />
@@ -112,7 +117,7 @@ export default function GitHubRepoBlock({
           </div>
         </div>
       )}
-      {!loading && error && <div className="text-sm text-red-500">{error}</div>}
+      {!loading && error && <div className="text-sm w-full text-primary text-center">{error}</div>}
       {!loading && !error && repoData && (
         <div className="flex flex-col w-full h-full">
           <div className="flex flex-col w-full shrink-0 mb-2">
@@ -160,7 +165,7 @@ export default function GitHubRepoBlock({
                   </div>
                 ))}
               </div>
-              <div className="h-2 w-full bg-white blur-xs sticky -bottom-1 "></div>
+              <div className="h-2 w-full bg-primary/10 blur-xs sticky -bottom-1 "></div>
               <div className="h-2 w-full bg-white blur-sm sticky -bottom-1 "></div>
               <div className="h-2 w-full bg-white blur-sm sticky -bottom-1 "></div>
             </div>
