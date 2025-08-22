@@ -2,6 +2,9 @@
 
 [Figma](https://www.figma.com/design/ErcL6eJ3hfRb0uQ4tLvWDt/GabageRecycle?m=auto&t=j99wipHRWdSL7DhL-1) | [Aboutme](https://www.zzfw.cc/blocks)
 
+<img width="2541" height="1071" alt="草稿 3025" src="https://github.com/user-attachments/assets/0893efcc-e368-47ff-96b7-b47f8d8ee553" />
+
+
 # Garbage Recycle
 
 > This is an old project from 3 years ago when I was a front-end newbie, just out of school and trying to make a living, learning front-end development on my own. Because I couldn't find a job I liked, I decided to make some fun little toys to practice the skills I wanted to learn and recycle my own "garbage" time. It's worth mentioning that I did all the UI, animations, and interactions myself (even the illustrations, as I was also learning Figma at the time). Recently, I had some free time and remembered this project. Since I wanted to learn some new things, I decided to revamp it.
