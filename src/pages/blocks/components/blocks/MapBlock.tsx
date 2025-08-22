@@ -5,7 +5,7 @@ import Marker from "./map/Marker";
 
 interface MapBlockProps {
   className?: string;
-  center?: { lat: number; lng: number };
+  center: { lat: number; lng: number };
   zoom?: number;
   title?: string;
   containerRef: React.RefObject<HTMLDivElement>;
