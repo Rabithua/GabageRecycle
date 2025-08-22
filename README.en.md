@@ -1,5 +1,7 @@
 [简体中文](./README.md) | English
 
+[Figma](https://www.figma.com/design/ErcL6eJ3hfRb0uQ4tLvWDt/GabageRecycle?m=auto&t=j99wipHRWdSL7DhL-1) | [Aboutme](https://www.zzfw.cc/blocks)
+
 # Garbage Recycle
 
 > This is an old project from 3 years ago when I was a front-end newbie, just out of school and trying to make a living, learning front-end development on my own. Because I couldn't find a job I liked, I decided to make some fun little toys to practice the skills I wanted to learn and recycle my own "garbage" time. It's worth mentioning that I did all the UI, animations, and interactions myself (even the illustrations, as I was also learning Figma at the time). Recently, I had some free time and remembered this project. Since I wanted to learn some new things, I decided to revamp it.
@@ -35,7 +37,7 @@
     cd gabage_recycle
     ```
 
-3.  Install dependencies (b`un` is recommended):
+3.  Install dependencies (recommended using `bun`):
 
     ```bash
     bun install

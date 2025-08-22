@@ -1,5 +1,7 @@
 简体中文 | [English](./README.en.md)
 
+[Figma](https://www.figma.com/design/ErcL6eJ3hfRb0uQ4tLvWDt/GabageRecycle?m=auto&t=j99wipHRWdSL7DhL-1) | [Aboutme](https://www.zzfw.cc/blocks)
+
 # 废物回收
 
 > 这是一个 3 年前的旧项目，那时候我还是一个前端菜鸟，刚从学校出来愁于生计，一个人默默学习前端。因为找不到喜欢的工作，索性做一些无聊的小玩具，顺便练习想学的技能，回收一下自己的垃圾时间。值得一提的是，UI/动效/交互都是自己做的（甚至插画也是自己做的，因为当时也在学习 figma），最近闲下来又想起来了这个项目，正好想学一些新东西，就翻新了废物回收。
