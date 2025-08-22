@@ -57,7 +57,6 @@ export default function Block({
         bounds: containerRef.current,
         inertia: false,
         onPress() {
-          gsap.set(placeholder, { opacity: 1, zIndex: 15 });
           gsap.to(el, {
             scale: 1.02,
             rotate: -1,
@@ -66,6 +65,7 @@ export default function Block({
             overwrite: true,
             zIndex: 20,
           });
+          gsap.set(placeholder, { opacity: 1, delay: 0.35, zIndex: 15 });
           this.applyBounds(containerRef.current!);
         },
         onDrag() {
