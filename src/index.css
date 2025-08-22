@@ -5,6 +5,9 @@
     --color-secondary: #C4E0C6;
 }
 
+@source inline("col-span-{1,2,4} row-span-{1,2,4}");
+
+
 @utility font-basic {
     font-family: 'Playwrite AU QLD', 'Noto Serif SC', sans-serif;
 }
