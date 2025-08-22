@@ -23,8 +23,21 @@ export default function Block({
     let raf: number | null = null;
     const cleanups: Array<() => void> = [];
 
-    const GAP = 16;
-    const ROW_HEIGHT = 80;
+    const ROW_HEIGHT = 80; // 行高仍固定，可按需再改为动态
+
+    // 动态获取容器 gap（支持 grid/flex 的 columnGap/rowGap）。若未设置则回退 16。
+    const getGaps = () => {
+      const el = containerRef.current;
+      if (!el) return { col: 16, row: 16 };
+      const style = getComputedStyle(el);
+      // style.gap 可能是 "12px 24px"，但我们更精确使用 columnGap/rowGap
+      const col = parseFloat(style.columnGap) || parseFloat(style.gap) || 16;
+      const row =
+        parseFloat(style.rowGap) ||
+        (style.gap.includes(" ") ? parseFloat(style.gap.split(" ")[1]) : col) ||
+        16;
+      return { col, row };
+    };
 
     const calcColumns = () => {
       const w = window.innerWidth;
@@ -34,14 +47,18 @@ export default function Block({
     };
     const getColumnWidth = () => {
       const rect = containerRef.current!.getBoundingClientRect();
-      return (rect.width - GAP * (calcColumns() - 1)) / calcColumns();
+      const { col } = getGaps();
+      return (rect.width - col * (calcColumns() - 1)) / calcColumns();
     };
     const snapX = (endValue: number) => {
       const cw = getColumnWidth();
-      return Math.round(endValue / (cw + GAP)) * (cw + GAP);
+      const { col } = getGaps();
+      return Math.round(endValue / (cw + col)) * (cw + col);
     };
-    const snapY = (endValue: number) =>
-      Math.round(endValue / (ROW_HEIGHT + GAP)) * (ROW_HEIGHT + GAP);
+    const snapY = (endValue: number) => {
+      const { row } = getGaps();
+      return Math.round(endValue / (ROW_HEIGHT + row)) * (ROW_HEIGHT + row);
+    };
 
     const ensureContainer = (cb: () => void) => {
       if (containerRef.current) cb();
@@ -118,7 +135,7 @@ export default function Block({
           ticking = false;
           if (!drag) return;
           drag.applyBounds(containerRef.current!);
-          drag.vars.snap = { x: snapX, y: snapY }; // 列数可能变化
+          drag.vars.snap = { x: snapX, y: snapY }; // 列数或 gap 可能变化
         });
       };
 
