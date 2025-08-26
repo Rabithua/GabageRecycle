@@ -1,6 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Draggable } from "gsap/all";
+import { Ellipsis } from "lucide-react";
 import { useRef } from "react";
 
 gsap.registerPlugin(Draggable);
@@ -18,6 +19,8 @@ export default function Block({
 }: BlockBaseProps) {
   const blockRef = useRef<HTMLDivElement>(null);
   const placeholderRef = useRef<HTMLDivElement>(null);
+  const dragTriggerRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef<Draggable | null>(null);
 
   useGSAP(() => {
     let raf: number | null = null;
@@ -73,6 +76,8 @@ export default function Block({
       const drag = Draggable.create(el, {
         bounds: containerRef.current,
         inertia: false,
+        edgeResistance: 0.75,
+        trigger: dragTriggerRef.current || el,
         onPress() {
           gsap.to(el, {
             scale: 1.02,
@@ -119,6 +124,8 @@ export default function Block({
         },
       })[0];
 
+      dragRef.current = drag;
+
       // 布局稳定后一帧再校准 bounds
       requestAnimationFrame(() => drag?.applyBounds(containerRef.current!));
 
@@ -160,9 +167,15 @@ export default function Block({
       <div
         ref={blockRef}
         role="group"
-        className={`relative w-full z-10 h-full rounded-2xl border duration-100 overflow-hidden shadow-black/5 border-primary/20 bg-white flex items-center justify-center text-primary/70 ${className}`}
+        className={`group relative w-full z-10 h-full rounded-2xl border duration-100 overflow-hidden shadow-black/5 border-primary/20 bg-white flex items-center justify-center text-primary/70 ${className}`}
       >
         {children}
+        <div
+          ref={dragTriggerRef}
+          className="absolute top-0 left-0 right-0 mx-auto flex justify-center overflow-hidden"
+        >
+          <Ellipsis className="transform opacity-0 group-hover:opacity-30 transition-all duration-300 ease-out" />
+        </div>
       </div>
       <div
         ref={placeholderRef}
