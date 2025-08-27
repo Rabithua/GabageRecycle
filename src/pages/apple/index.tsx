@@ -42,7 +42,7 @@ export default function Apple() {
     >
       <BackgroundText text={t("background")} />
 
-      <div className="space-y-4 w-4/5 max-w-150  md:mr-[20%] z-10">
+      <div className="space-y-4 w-3/5 max-w-150  md:mr-[20%] z-10">
         <h1 className=" font-semibold leading-tight text-5xl pretty-text">
           {t("title")}
         </h1>
