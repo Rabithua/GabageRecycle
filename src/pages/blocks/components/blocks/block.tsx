@@ -76,7 +76,7 @@ export default function Block({
       const drag = Draggable.create(el, {
         bounds: containerRef.current,
         inertia: false,
-        edgeResistance: 0.75,
+        edgeResistance: 0.9,
         trigger: dragTriggerRef.current || el,
         onPress() {
           gsap.to(el, {
