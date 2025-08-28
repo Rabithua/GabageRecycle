@@ -133,7 +133,7 @@ export default function Blocks() {
     {
       grid: { col: 2, row: 1 },
       className: "p-2",
-      children: <>不给我工作？那就推着电瓶车回去罢 👊</>,
+      children: <>拖拽排序太难了，先摸了 🐟</>,
       blockData: {
         id: uuidv4(),
         type: BlockType.NORMAL,

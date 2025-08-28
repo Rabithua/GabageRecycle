@@ -35,29 +35,48 @@ export default function TextBlock({
       containerRef={containerRef}
       className={`relative p-4 ${className || ""}`}
     >
-      <a
-        href={href || "#"}
-        className={` line-clamp-6 overflow-hidden ${
-          isEmojiOnly
-            ? "text-3xl text-center text-primary/70"
-            : "w-full h-full text-left text-gray-500"
-        } ${href ? "cursor-pointer" : " select-all"}`}
-        style={{
-          display: "-webkit-box",
-          WebkitBoxOrient: "vertical",
-          WebkitLineClamp: 6,
-          lineClamp: 6,
-        }}
-        title={text || ""}
-      >
-        {href && (
+      {href ? (
+        <a
+          href={href}
+          className={`line-clamp-6 overflow-hidden ${
+            isEmojiOnly
+              ? "text-3xl text-center text-primary/70"
+              : "w-full h-full text-left text-gray-500"
+          } cursor-pointer`}
+          style={{
+            display: "-webkit-box",
+            WebkitBoxOrient: "vertical",
+            WebkitLineClamp: 6,
+            lineClamp: 6,
+          }}
+          title={text || ""}
+          rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+          target={href.startsWith("http") ? "_blank" : undefined}
+        >
           <ArrowUpRight
             size={24}
             className={`text-primary/40 backdrop-blur-2xl rounded-full border bg-primary/5 border-primary/5 p-1 ${isEmojiOnly ? " absolute top-2 right-2" : "float-right m-1"}`}
           />
-        )}
-        {children}
-      </a>
+          {children}
+        </a>
+      ) : (
+        <div
+          className={`line-clamp-6 overflow-hidden ${
+            isEmojiOnly
+              ? "text-3xl text-center text-primary/70"
+              : "w-full h-full text-left text-gray-500"
+          } select-all`}
+          style={{
+            display: "-webkit-box",
+            WebkitBoxOrient: "vertical",
+            WebkitLineClamp: 6,
+            lineClamp: 6,
+          }}
+          title={text || ""}
+        >
+          {children}
+        </div>
+      )}
     </Block>
   );
 }
