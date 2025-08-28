@@ -113,7 +113,9 @@ export default function Blocks() {
         <>
           被生活困住了，哪位好心人能伸出圆手
           <br />
-          给我一份工作 🤕 &gt;&gt;
+          给我一份工作 🤕
+          <br />
+          点击左侧图片滴滴我 &gt;&gt;
         </>
       ),
       blockData: {
