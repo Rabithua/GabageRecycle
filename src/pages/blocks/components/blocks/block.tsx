@@ -19,7 +19,7 @@ export default function Block({
 }: BlockBaseProps) {
   const blockRef = useRef<HTMLDivElement>(null);
   const placeholderRef = useRef<HTMLDivElement>(null);
-  const dragTriggerRef = useRef<HTMLDivElement>(null);
+  const dragTriggerRef = useRef<SVGSVGElement>(null);
   const dragRef = useRef<Draggable | null>(null);
 
   useGSAP(() => {
@@ -170,11 +170,11 @@ export default function Block({
         className={`group relative w-full z-10 h-full rounded-2xl border duration-100 overflow-hidden shadow-black/5 border-primary/20 bg-white flex items-center justify-center text-primary/70 ${className}`}
       >
         {children}
-        <div
-          ref={dragTriggerRef}
-          className="absolute top-0 left-0 right-0 mx-auto flex justify-center overflow-hidden"
-        >
-          <Ellipsis className="transform opacity-0 group-hover:opacity-30 transition-all duration-300 ease-out" />
+        <div className="absolute top-0 left-0 right-0 mx-auto flex justify-center overflow-hidden">
+          <Ellipsis
+            ref={dragTriggerRef}
+            className="transform opacity-0 group-hover:opacity-30 transition-all duration-300 ease-out"
+          />
         </div>
       </div>
       <div
