@@ -2,38 +2,59 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Draggable } from "gsap/all";
 import { Ellipsis } from "lucide-react";
-import { useRef } from "react";
+import { lazy, Suspense, useRef } from "react";
+import { BlockType, type BlockProps } from "./blocks.types";
 
 gsap.registerPlugin(Draggable);
 
-interface BlockBaseProps {
-  children: React.ReactNode;
-  className?: string;
-  containerRef: React.RefObject<HTMLDivElement>;
-}
+// 动态导入：较重组件按需拆分
+const BLOCK_COMPONENTS = {
+  [BlockType.TEXT]: lazy(() => import("./blocks/TextBlock")),
+  [BlockType.PHOTO]: lazy(() => import("./blocks/PhotoBlock")),
+  [BlockType.MAP]: lazy(() => import("./blocks/MapBlock")),
+  [BlockType.GITHUBUSER]: lazy(() => import("./blocks/GitHubUserBlock")),
+  [BlockType.GITHUBREPO]: lazy(() => import("./blocks/GitHubRepoBlock")),
+};
 
+// 不同类型默认的外层 padding / 布局 class（原先由各自 Block 包裹）
+const TYPE_BASE_CLASS: Record<string, string> = {
+  [BlockType.TEXT]: "",
+  [BlockType.PHOTO]: "", // 图片铺满
+  [BlockType.MAP]: "p-0 overflow-hidden",
+  [BlockType.GITHUBUSER]: "p-4 text-left",
+  [BlockType.GITHUBREPO]: "p-4 flex flex-col items-start gap-4",
+  [BlockType.NORMAL]: "p-4",
+};
+
+/**
+ * 统一 Block 组件：整合拖拽 + 动态内容选择
+ */
 export default function Block({
-  children,
   className,
+  grid,
+  children,
   containerRef,
-}: BlockBaseProps) {
+  blockData,
+}: BlockProps) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  const ContentComponent = BLOCK_COMPONENTS[blockData.type];
+
   const blockRef = useRef<HTMLDivElement>(null);
   const placeholderRef = useRef<HTMLDivElement>(null);
   const dragTriggerRef = useRef<SVGSVGElement>(null);
-  const dragRef = useRef<Draggable | null>(null);
 
+  // 拖拽逻辑（从旧 block.tsx 合并）
   useGSAP(() => {
     let raf: number | null = null;
     const cleanups: Array<() => void> = [];
 
-    const ROW_HEIGHT = 80; // 行高仍固定，可按需再改为动态
+    const ROW_HEIGHT = 80;
 
-    // 动态获取容器 gap（支持 grid/flex 的 columnGap/rowGap）。若未设置则回退 16。
     const getGaps = () => {
       const el = containerRef.current;
       if (!el) return { col: 16, row: 16 };
       const style = getComputedStyle(el);
-      // style.gap 可能是 "12px 24px"，但我们更精确使用 columnGap/rowGap
       const col = parseFloat(style.columnGap) || parseFloat(style.gap) || 16;
       const row =
         parseFloat(style.rowGap) ||
@@ -124,8 +145,6 @@ export default function Block({
         },
       })[0];
 
-      dragRef.current = drag;
-
       // 布局稳定后一帧再校准 bounds
       requestAnimationFrame(() => drag?.applyBounds(containerRef.current!));
 
@@ -133,7 +152,7 @@ export default function Block({
         clearProps: "all",
       });
 
-      // 节流 resize / observer 更新
+      // resize / observer 更新
       let ticking = false;
       const updateLayout = () => {
         if (ticking) return;
@@ -142,7 +161,7 @@ export default function Block({
           ticking = false;
           if (!drag) return;
           drag.applyBounds(containerRef.current!);
-          drag.vars.snap = { x: snapX, y: snapY }; // 列数或 gap 可能变化
+          drag.vars.snap = { x: snapX, y: snapY };
         });
       };
 
@@ -162,14 +181,45 @@ export default function Block({
     };
   });
 
+  const sizeClass = `col-span-${grid.col} row-span-${grid.row}`;
+  const baseTypeClass = TYPE_BASE_CLASS[blockData.type] || "";
+
   return (
-    <>
+    <div className={`relative ${sizeClass}`}>
       <div
         ref={blockRef}
         role="group"
-        className={`group relative w-full z-10 h-full rounded-2xl border duration-100 overflow-hidden shadow-black/5 border-primary/20 bg-white flex items-center justify-center text-primary/70 ${className}`}
+        className={`group relative w-full z-10 h-full rounded-2xl border duration-100 overflow-hidden shadow-black/5 border-primary/20 bg-white flex items-center justify-center text-primary/70 ${baseTypeClass} ${className || ""}`}
       >
-        {children}
+        <Suspense
+          fallback={
+            <div
+              className="h-full w-full flex flex-col gap-3 animate-pulse select-none"
+              aria-busy="true"
+              aria-label="内容加载中"
+            >
+              <div className="h-4 w-1/3 bg-primary/20 rounded" />
+              <div className="h-6 w-2/3 bg-primary/20 rounded" />
+              <div className="flex-1 w-full bg-primary/10 rounded" />
+            </div>
+          }
+        >
+          {ContentComponent ? (
+            <ContentComponent
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore -- 动态组件的 props 与 union 类型字段对齐
+              {...blockData}
+              containerRef={containerRef}
+              className={className}
+            >
+              {children}
+            </ContentComponent>
+          ) : (
+            <div className="w-full h-full flex items-center justify-center  p-4">
+              {children || "未知类型"}
+            </div>
+          )}
+        </Suspense>
         <div className="absolute top-0 left-0 right-0 mx-auto flex justify-center overflow-hidden">
           <Ellipsis
             ref={dragTriggerRef}
@@ -181,6 +231,6 @@ export default function Block({
         ref={placeholderRef}
         className="absolute top-0 left-0 w-full h-full duration-300 border-2 border-dashed border-primary/40 rounded-2xl pointer-events-none bg-primary/20 backdrop-blur-2xl"
       ></div>
-    </>
+    </div>
   );
 }

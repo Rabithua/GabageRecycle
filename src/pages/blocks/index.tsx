@@ -1,8 +1,8 @@
+import Block from "@/pages/blocks/components/Block";
 import {
   BlockType,
   type BlockProps,
 } from "@/pages/blocks/components/blocks.types";
-import BlockSwitcher from "@/pages/blocks/components/BlockSwitcher";
 import BackgroundText from "@/pages/home/components/BackgroudText";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
@@ -154,13 +154,7 @@ export default function Blocks() {
           className="w-full font-['Noto_Serif_SC'] h-full grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 auto-rows-[80px] gap-4 grid-flow-dense pr-2"
         >
           {grids.map((grid, index) => {
-            return (
-              <BlockSwitcher
-                key={index}
-                {...grid}
-                containerRef={gridContainer}
-              />
-            );
+            return <Block key={index} {...grid} containerRef={gridContainer} />;
           })}
         </div>
       </div>

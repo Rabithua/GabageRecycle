@@ -1,16 +1,13 @@
 import { ArrowUpRight } from "lucide-react";
-import Block from "./block";
 
 export default function TextBlock({
   children,
   className,
   href,
-  containerRef,
 }: {
   children: React.ReactNode;
   className?: string;
   href?: string;
-  containerRef: React.RefObject<HTMLDivElement>;
 }) {
   // 提取纯文本（若 children 不是纯字符串则返回 null）
   const extractText = (node: React.ReactNode): string | null => {
@@ -30,53 +27,50 @@ export default function TextBlock({
       text
     );
 
-  return (
-    <Block
-      containerRef={containerRef}
-      className={`relative p-4 ${className || ""}`}
+  return href ? (
+    <a
+      href={href}
+      className={`w-full h-full p-4 line-clamp-6 overflow-hidden ${
+        isEmojiOnly
+          ? "text-3xl text-center text-primary/70"
+          : " text-left text-gray-500"
+      } cursor-pointer relative ${className || ""}`}
+      style={{
+        display: "-webkit-box",
+        WebkitBoxOrient: "vertical",
+        WebkitLineClamp: 6,
+        lineClamp: 6,
+      }}
+      title={text || ""}
+      rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+      target={href.startsWith("http") ? "_blank" : undefined}
     >
-      {href ? (
-        <a
-          href={href}
-          className={`line-clamp-6 overflow-hidden ${
-            isEmojiOnly
-              ? "text-3xl text-center text-primary/70"
-              : "w-full h-full text-left text-gray-500"
-          } cursor-pointer`}
-          style={{
-            display: "-webkit-box",
-            WebkitBoxOrient: "vertical",
-            WebkitLineClamp: 6,
-            lineClamp: 6,
-          }}
-          title={text || ""}
-          rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-          target={href.startsWith("http") ? "_blank" : undefined}
-        >
-          <ArrowUpRight
-            size={24}
-            className={`text-primary/40 backdrop-blur-2xl rounded-full border bg-primary/5 border-primary/5 p-1 ${isEmojiOnly ? " absolute top-2 right-2" : "float-right m-1"}`}
-          />
-          {children}
-        </a>
-      ) : (
-        <div
-          className={`line-clamp-6 overflow-hidden ${
-            isEmojiOnly
-              ? "text-3xl text-center text-primary/70"
-              : "w-full h-full text-left text-gray-500"
-          } select-all`}
-          style={{
-            display: "-webkit-box",
-            WebkitBoxOrient: "vertical",
-            WebkitLineClamp: 6,
-            lineClamp: 6,
-          }}
-          title={text || ""}
-        >
-          {children}
-        </div>
-      )}
-    </Block>
+      <ArrowUpRight
+        size={24}
+        className={`text-primary/40 backdrop-blur-2xl rounded-full border bg-primary/5 border-primary/5 p-1 ${isEmojiOnly ? " absolute top-2 right-2" : "float-right m-1"}`}
+      />
+      {children}
+    </a>
+  ) : (
+    <div
+      className={`line-clamp-6 p-4 ${
+        isEmojiOnly
+          ? "text-3xl text-center text-primary/70"
+          : "w-full h-full text-left text-gray-500"
+      } select-all relative ${className || ""}`}
+    >
+      <div
+        className="overflow-hidden"
+        title={text || ""}
+        style={{
+          display: "-webkit-box",
+          WebkitBoxOrient: "vertical",
+          WebkitLineClamp: 6,
+          lineClamp: 6,
+        }}
+      >
+        {children}
+      </div>
+    </div>
   );
 }

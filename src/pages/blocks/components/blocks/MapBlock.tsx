@@ -1,6 +1,5 @@
 import GoogleMapReact from "google-map-react";
 import { useState } from "react";
-import Block from "./block";
 import Marker from "./map/Marker";
 
 interface MapBlockProps {
@@ -8,7 +7,6 @@ interface MapBlockProps {
   center: { lat: number; lng: number };
   zoom?: number;
   title?: string;
-  containerRef: React.RefObject<HTMLDivElement>;
 }
 
 export default function MapBlock(props: MapBlockProps) {
@@ -17,7 +15,6 @@ export default function MapBlock(props: MapBlockProps) {
     className,
     center = { lat: 30.358313, lng: 120.026599 },
     zoom = 10,
-    containerRef,
   } = props;
   const googleKey = import.meta.env.VITE_GOOGLE_MAP_KEY || "";
 
@@ -38,9 +35,8 @@ export default function MapBlock(props: MapBlockProps) {
   const centerObj = center;
 
   return (
-    <Block
-      containerRef={containerRef}
-      className={`relative overflow-hidden p-0 ${className || ""}`}
+    <div
+      className={`relative w-full h-full overflow-hidden ${className || ""}`}
     >
       {/* 隐藏 Google logo 和版权 */}
       <style>{`
@@ -97,6 +93,6 @@ export default function MapBlock(props: MapBlockProps) {
           {title}
         </div>
       )}
-    </Block>
+    </div>
   );
 }
