@@ -15,24 +15,15 @@ export default function SliderText({
 
   useGSAP(
     () => {
-      gsap.from("#tb", {
-        y: "10%",
-        x: "10%",
-        filter: "blur(128px)",
-        duration: 5,
-        ease: "power2.inOut",
-        repeat: -1,
-        yoyo: true,
-      });
 
       const split = new SplitText(textRef.current, {
-        type: "lines",
-        linesClass: "line",
+        type: "words, chars",
       });
 
-      gsap.from(split.lines, {
+      gsap.from(split.chars, {
         duration: 2,
         opacity: 0,
+        filter: "blur(32px)",
         x: -100,
         stagger: 0.1,
         ease: "expo.out",
