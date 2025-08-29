@@ -39,13 +39,16 @@ export default function TimelinePage() {
   );
 
   return (
-    <main ref={containerRef} className="font-serif text-primary">
+    <main
+      ref={containerRef}
+      className="font-serif text-primary bg-primary/2"
+    >
       <Timeline />
 
       <div className="w-dvw h-dvh flex flex-col items-center justify-center">
         <h1
           ref={descRef}
-          className="max-w-4xl text-5xl font-medium leading-tight"
+          className="w-4/5 max-w-4xl text-2xl sm:text-5xl font-medium leading-tight"
         >
           GAP
           同时在寻找一生所爱的事业（或者在存款耗尽前找到维持生计的工作）。不想被限定为程序开发，在探索
@@ -54,9 +57,7 @@ export default function TimelinePage() {
         </h1>
       </div>
 
-      <div className="w-dvw h-dvh flex flex-col items-center justify-center ">
-        <h1 className="text-xl font-semibold">Timeline Demo</h1>
-      </div>
+      <div className="fixed top-0 left-0 w-dvw h-dvh shadow-[inset_0_0_30px_30px_#ffffff] pointer-events-none"></div>
     </main>
   );
 }

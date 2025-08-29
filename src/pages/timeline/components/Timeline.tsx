@@ -1,125 +1,281 @@
-import { useGSAP } from "@gsap/react";
+import GithubRepoBlock from "@/pages/blocks/components/blocks/GitHubRepoBlock";
+import MapBlock from "@/pages/blocks/components/blocks/MapBlock";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { MapPin } from "lucide-react";
-import { useRef } from "react";
+import {
+  Dog,
+  MapPin,
+  MessageSquareCodeIcon,
+  SunDim,
+  UtensilsCrossed,
+} from "lucide-react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// 技术 / 工具栈图标（远程静态资源）
+interface StackIcon {
+  name: string;
+  src: string;
+  url: string;
+}
+
+const stacks: StackIcon[] = [
+  {
+    name: "Arc Browser",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/Arc%20browser.svg",
+    url: "https://arc.net",
+  },
+  {
+    name: "Bun",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/Bun%20Icons.svg",
+    url: "https://bun.sh",
+  },
+  {
+    name: "Cloudflare",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/Cloudflare%20Icon.svg",
+    url: "https://www.cloudflare.com",
+  },
+  {
+    name: "Copilot GitHub",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/Copilot%20GitHub%20Icon.svg",
+    url: "https://github.com/features/copilot",
+  },
+  {
+    name: "Deno",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/Deno%20Icon.svg",
+    url: "https://deno.com",
+  },
+  {
+    name: "Docker",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/Docker%20Icons.svg",
+    url: "https://www.docker.com",
+  },
+  {
+    name: "Figma",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/Figma%20Icon.svg",
+    url: "https://www.figma.com",
+  },
+  {
+    name: "GSAP",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/GSAP%20Icon.svg",
+    url: "https://gsap.com",
+  },
+  {
+    name: "GitHub",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/GitHub%20Icon.svg",
+    url: "https://github.com",
+  },
+  {
+    name: "JavaScript",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/Javascript%20Icon.svg",
+    url: "https://developer.mozilla.org/docs/Web/JavaScript",
+  },
+  {
+    name: "PWA",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/PWA%20Icon.svg",
+    url: "https://web.dev/progressive-web-apps/",
+  },
+  {
+    name: "Photoshop",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/PhotoShop%20Icons.svg",
+    url: "https://www.adobe.com/products/photoshop.html",
+  },
+  {
+    name: "PostgreSQL",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/PostgreSQL%20Icon.svg",
+    url: "https://www.postgresql.org",
+  },
+  {
+    name: "Postman",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/Postman%20Icon.svg",
+    url: "https://www.postman.com",
+  },
+  {
+    name: "Prettier",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/Prettier%20Icon.svg",
+    url: "https://prettier.io",
+  },
+  {
+    name: "Prisma",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/Prisma%20Icon.svg",
+    url: "https://www.prisma.io",
+  },
+  {
+    name: "React",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/ReactJS%20Icon.svg",
+    url: "https://react.dev",
+  },
+  {
+    name: "Tailwind CSS",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/Tailwind%20CSS%20Icon.svg",
+    url: "https://tailwindcss.com",
+  },
+  {
+    name: "TypeScript",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/TypeScript%20Icon.svg",
+    url: "https://www.typescriptlang.org",
+  },
+  {
+    name: "VS Code",
+    src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/VSCode%20Icon.svg",
+    url: "https://code.visualstudio.com",
+  },
+];
+
+// 时间线刻度点，根据右侧内容高度自动生成刻度数量
 function Dot({
   children,
-  length = 6,
+  length,
 }: {
   children: React.ReactNode;
+  // 可选：强制指定刻度数量；不传则自动按高度计算
   length?: number;
 }) {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [autoLength, setAutoLength] = useState(6);
+
+  useLayoutEffect(() => {
+    if (length !== undefined) {
+      setAutoLength(length);
+      return;
+    }
+    if (!contentRef.current) return;
+    const el = contentRef.current;
+    const TOP_LINE = 2;
+    const SEG_LINE = 1;
+    const GAP = 16;
+    const calc = () => {
+      const h = el.offsetHeight;
+      const n = Math.max(1, Math.round((h - TOP_LINE) / (SEG_LINE + GAP)));
+      setAutoLength(n + 4);
+    };
+    calc();
+    const ro = new ResizeObserver(calc);
+    ro.observe(el);
+    window.addEventListener("resize", calc);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", calc);
+    };
+  }, [length]);
+
   return (
     <div className="flex gap-4 items-start">
       <div className="flex flex-col gap-4 translate-y-3">
-        <div className="w-5 h-[2px] shrink-0 bg-red-300"></div>
-        {Array.from({ length }).map((_, index) => (
-          <div key={index} className="w-3 h-[1px] shrink-0 bg-black/30"></div>
+        <div className="w-5 h-[2px] shrink-0 bg-red-300" />
+        {Array.from({ length: autoLength }).map((_, index) => (
+          <div key={index} className="w-3 h-[1px] shrink-0 bg-black/30" />
         ))}
       </div>
-      <div className="flex flex-col gap-4">{children}</div>
+      <div ref={contentRef} className="flex flex-col gap-4 w-full">
+        {children}
+      </div>
     </div>
   );
 }
 
 function PrimarySpan({ children }: { children: React.ReactNode }) {
   return (
-    <span className="text-black mx-2 underline underline-offset-4 decoration-primary/20">
+    <span className="text-black mx-2  underline-offset-4 decoration-primary/20">
       {children}
     </span>
   );
 }
 
+interface TimelineVideoProps {
+  src: string;
+  className?: string;
+  autoPlay?: boolean;
+  loop?: boolean;
+  muted?: boolean; // 默认静音可允许自动播放
+}
+
+function TimelineVideo({
+  src,
+  className = "",
+  autoPlay = false,
+  loop = false,
+  muted = false,
+}: TimelineVideoProps) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [, setPlaying] = useState(false);
+  const toggle = () => {
+    const v = ref.current;
+    if (!v) return;
+    if (v.paused) {
+      v.play();
+    } else {
+      v.pause();
+    }
+  };
+  const onPlay = () => setPlaying(true);
+  const onPause = () => setPlaying(false);
+  return (
+    <div
+      className={`relative w-full aspect-square sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden group ${className}`}
+    >
+      <SunDim className="absolute top-4 right-4 size-8 text-white z-10 bg-black/30 backdrop-blur-sm p-1 rounded-2xl opacity-60" />
+      <video
+        ref={ref}
+        src={src}
+        className="w-full h-full object-cover cursor-pointer"
+        onClick={toggle}
+        onPlay={onPlay}
+        onPause={onPause}
+        playsInline
+        preload="metadata"
+        autoPlay={autoPlay}
+        loop={loop}
+        muted={muted}
+        aria-label="点击播放或暂停视频"
+      />
+      {/* 中央播放/暂停按钮 */}
+      {/* <button
+        type="button"
+        onClick={toggle}
+        aria-label={playing ? "暂停视频" : "播放视频"}
+        className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${playing ? "opacity-0 group-hover:opacity-100" : "opacity-100"}`}
+      >
+        <span className="flex items-center justify-center size-16 rounded-full bg-black/40 backdrop-blur-sm text-white">
+          {playing ? (
+            <Pause className="size-8" />
+          ) : (
+            <Play className="size-8 translate-x-0.5" />
+          )}
+        </span>
+      </button> */}
+    </div>
+  );
+}
+
 export default function Timeline() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const scrollBlockRef = useRef<HTMLDivElement>(null);
-  const gridContainer = useRef<HTMLDivElement>(null!);
-
-  useGSAP(
-    () => {
-      const container = containerRef.current;
-      const scroller = scrollBlockRef.current;
-      if (!container || !scroller) return;
-
-      // 关闭内部原生滚动条交互，统一由 ScrollTrigger 驱动
-      scroller.style.overflow = "hidden"; // 保留视觉上的内层裁剪
-
-      const setup = () => {
-        const maxScroll = scroller.scrollHeight - scroller.clientHeight;
-        if (maxScroll <= 0) return; // 内容不足无需绑定
-
-        // 若已有实例先销毁
-        ScrollTrigger.getById("timeline-scroll-proxy")?.kill();
-
-        ScrollTrigger.create({
-          id: "timeline-scroll-proxy",
-          trigger: container,
-          // pin 住整个组件，使页面滚动的距离用于驱动内部内容 "假滚动"
-          pin: true,
-          start: "top top",
-          end: () => "+=" + maxScroll,
-          scrub: true,
-          onUpdate: (self) => {
-            scroller.scrollTop = self.progress * maxScroll;
-          },
-        });
-      };
-
-      setup();
-      // 尺寸或字体变化后重建
-      const resizeObserver = new ResizeObserver(() => {
-        ScrollTrigger.getById("timeline-scroll-proxy")?.kill();
-        setup();
-        ScrollTrigger.refresh();
-      });
-      resizeObserver.observe(scroller);
-
-      // 图片加载后可能高度变化
-      const imgs = Array.from(scroller.querySelectorAll("img"));
-      imgs.forEach((img) => {
-        if (!img.complete) {
-          img.addEventListener("load", () => {
-            ScrollTrigger.getById("timeline-scroll-proxy")?.kill();
-            setup();
-            ScrollTrigger.refresh();
-          });
-        }
-      });
-
-      return () => {
-        resizeObserver.disconnect();
-        ScrollTrigger.getById("timeline-scroll-proxy")?.kill();
-      };
-    },
-    { scope: containerRef }
-  );
-
   return (
     <div
       ref={containerRef}
-      className="w-dvw h-dvh flex flex-col items-center justify-center "
+      className="w-dvw pt-40 flex flex-col items-center justify-center "
     >
-      <div className="flex gap-4 sm:gap-6 items-start justify-center w-4/5 max-w-lg max-h-3/5">
+      <div className="flex gap-4 sm:gap-6 items-start justify-center w-4/5 max-w-lg">
         <img
           src="https://public.zzfw.cc/gabagerecycle/timeline/Rabithua%20Image.jpeg"
           alt="Timeline Demo"
-          className="size-10 sm:size-30 object-cover sm:border-4 border-gray-50 rounded-xl -rotate-2 "
+          className="size-10 sticky top-40 sm:size-30 object-cover sm:border-4 bg-white border-gray-50 rounded-xl -rotate-2 "
         />
 
         <div className="relative [height:-webkit-fill-available] rounded-2xl text-lg sm:text-xl leading-tight overflow-hidden">
-          <div
-            ref={scrollBlockRef}
-            className="px-5 pr-10 py-10 h-full flex flex-col gap-4"
-          >
+          <div className="px-5 pr-10 py-10 h-full flex flex-col gap-4 overflow-scroll">
+            <Dot>
+              <div className="text-2xl font-bold text-black">
+                欸，你怎么来了！
+              </div>
+            </Dot>
             <Dot>
               <div>
-                Hi, 我是
+                我是
                 <PrimarySpan>于长野</PrimarySpan>
-                ，也可以叫我
+                <br />
+                也可以叫我
                 <PrimarySpan>rabithua</PrimarySpan>
               </div>
             </Dot>
@@ -131,51 +287,195 @@ export default function Timeline() {
                   杭州良渚
                 </PrimarySpan>
               </div>
-              {/* <div
-                ref={gridContainer}
-                className="w-full aspect-square grid-cols-2 grid-rows-2 auto-rows-[80px] gap-4 grid-flow-dense pr-2"
-              >
-                <BlockSwitcher
-                  {...{
-                    grid: { col: 2, row: 2 },
-                    blockData: {
-                      id: uuidv4(),
-                      type: BlockType.MAP,
-                      zoom: 10,
-                      title: "Hangzhou,China",
-                      center: { lat: 30.2741, lng: 120.1551 },
-                    },
-                  }}
-                  containerRef={gridContainer}
-                />
-              </div> */}
+              <div className="group flex flex-col gap-2">
+                <div className="w-full aspect-square sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
+                  <MapBlock
+                    center={{ lat: 30.36778, lng: 120.02722 }}
+                    zoom={10}
+                    title="Hangzhou,China"
+                  />
+                </div>
+                <div className="opacity-0 group-hover:opacity-100 duration-300 ml-4 text-sm">
+                  欢迎来串门～ 🤓
+                </div>
+              </div>
             </Dot>
-            <Dot length={20}>
+            <Dot>
               <div>
                 MBTI: <PrimarySpan>INFJ</PrimarySpan>
               </div>
               <img
                 src="https://public.zzfw.cc/gabagerecycle/timeline/infj.svg"
                 alt="MBTI: INFJ"
-                className=" w-full aspect-square object-cover sm:border-4 border-gray-50 rounded-xl"
+                className=" w-full aspect-square object-cover sm:border-4 bg-white border-gray-50 rounded-3xl"
               />
             </Dot>
             <Dot>
               <div>非计算机专业，大学期间出于兴趣自学编程和设计</div>
             </Dot>
             <Dot>
-              <div>
-                毕业后随朋友来到了杭州，艰难探索远程职业，做过一些杂乱的项目，算是勉强维持生计
+              <div className="text-black">爱用的技术栈和工具：</div>
+              <div className="w-full aspect-square grid grid-cols-5 grid-rows-4 gap-3 p-3 sm:border-4 bg-white border-gray-50 rounded-3xl">
+                {stacks.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full h-full"
+                    title={item.name}
+                    aria-label={item.name}
+                  >
+                    <img
+                      src={item.src}
+                      alt={item.name}
+                      loading="lazy"
+                      className="w-full h-full"
+                    />
+                  </a>
+                ))}
               </div>
             </Dot>
+
             <Dot>
               <div>
-                2024 年 8 月左右存款告急，Advx 2024 活动结束后加入 Bonjour
+                <PrimarySpan>2022 年毕业</PrimarySpan>
+                随小弟来到杭州，艰难探索远程职业，做过一些杂乱的项目，算是勉强维持生计
+              </div>
+            </Dot>
+
+            <Dot>
+              <div>
+                期间染上了<PrimarySpan>摄影</PrimarySpan>，买了台 Nikon
+                Z5，下面是一组很喜欢的小清新调色
+                <br />
+                <span className="text-base text-gray-300">
+                  <MapPin className="inline size-4 mr-1" />
+                  良渚遗址公园
+                </span>
+              </div>
+              <div className="w-full aspect-square sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
+                <a
+                  href="https://v.douyin.com/3bvCEsvQqOA/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src="https://public.zzfw.cc/gabagerecycle/timeline/IMG_0761.jpg"
+                    className="w-full h-full object-cover"
+                    alt="良渚遗址公园"
+                  />
+                </a>
+              </div>
+            </Dot>
+
+            <Dot>
+              <div>
+                喜欢<PrimarySpan>做饭</PrimarySpan>，偶尔希望成为一名大厨
+                <br />
+                <span className="text-base text-gray-300">
+                  <UtensilsCrossed className="inline size-4 mr-1" />
+                  最爱的酸豆角肉丝浇面
+                </span>
+              </div>
+              <div className="w-full aspect-square sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
+                <img
+                  src="https://public.zzfw.cc/gabagerecycle/timeline/%E9%85%B8%E8%B1%86%E8%A7%92%E8%82%89%E4%B8%9D%E6%89%93%E5%8D%A4%E9%9D%A2.png"
+                  className="w-full h-full object-cover"
+                  alt="最爱的酸豆角肉丝浇面"
+                />
+              </div>
+            </Dot>
+
+            <Dot>
+              <div>
+                很喜欢<PrimarySpan>房东的狗</PrimarySpan>
+                ，搬走后很久没有见到他们了
+                <br />
+                <span className="text-base text-gray-300">
+                  <Dog className="inline size-4 mr-1" />
+                  小光（黑白色）和表表（咖啡色）
+                </span>
+              </div>
+              <TimelineVideo src="https://public.zzfw.cc/gabagerecycle/timeline/IMG_1793.mov" />
+            </Dot>
+
+            <Dot>
+              <div>
+                <PrimarySpan>2024 年 5 月</PrimarySpan>
+                <br />
+                加入
+                <a
+                  href="https://adventure-x.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline w-fit"
+                >
+                  <PrimarySpan>
+                    <img
+                      src="https://public.zzfw.cc/gabagerecycle/timeline/AdventureX_Logo.svg"
+                      className="size-8 object-cover inline mr-1"
+                      alt="AdventureX Logo"
+                    />
+                    <span className="font-sans font-semibold">AdventureX</span>
+                  </PrimarySpan>
+                </a>
+                <br />
+                成为了构建团队的一员
+              </div>
+
+              <div className="w-full aspect-square sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
+                <img
+                  src="https://public.zzfw.cc/gabagerecycle/timeline/IMG_2042.jpg"
+                  className="w-full h-full object-cover"
+                  alt="AdventureX_2024"
+                />
+              </div>
+            </Dot>
+
+            <Dot>
+              <div>
+                <PrimarySpan>2024 年 8 月</PrimarySpan>
+                <br />
+                Advx2024 活动结束后
+                <br />
+                加入
+                <a
+                  href="https://bonjour.bio"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline w-fit"
+                >
+                  <PrimarySpan>
+                    <img
+                      src="https://public.zzfw.cc/gabagerecycle/timeline/Bonjour_Logo.svg"
+                      className="size-5 object-cover inline mr-1"
+                      alt="Bonjour Logo"
+                    />
+                    <span className="font-sans font-semibold">Bonjour!</span>
+                  </PrimarySpan>
+                </a>
+                <br />
+                <span className="text-base text-gray-300">
+                  <MessageSquareCodeIcon className="inline size-4 mr-1" />
+                  某次开会实况
+                </span>
+              </div>
+
+              <TimelineVideo src="https://public.zzfw.cc/gabagerecycle/timeline/IMG_5895.mov" />
+            </Dot>
+
+            <Dot>
+              <div className="text-black">最近在做：</div>
+              <div className="w-full aspect-square sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden p-4 font-sans">
+                <GithubRepoBlock
+                  owner="Rabithua"
+                  repo="Rote"
+                  branch="develop"
+                />
               </div>
             </Dot>
           </div>
-
-          <div className="absolute top-0 left-0 w-full h-full shadow-[inset_0_0_30px_30px_#ffffff] pointer-events-none"></div>
         </div>
       </div>
     </div>
