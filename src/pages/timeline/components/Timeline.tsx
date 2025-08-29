@@ -3,13 +3,16 @@ import MapBlock from "@/pages/blocks/components/blocks/MapBlock";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import {
+  ArrowUpRight,
   Dog,
   MapPin,
   MessageSquareCodeIcon,
-  SunDim,
   UtensilsCrossed,
 } from "lucide-react";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useRef } from "react";
+import Dot from "./timeline/Dot";
+import PrimarySpan from "./timeline/PrimarySpan";
+import TimelineVideo from "./timeline/TimelineVideo";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -123,132 +126,6 @@ const stacks: StackIcon[] = [
   },
 ];
 
-// 时间线刻度点，根据右侧内容高度自动生成刻度数量
-function Dot({
-  children,
-  length,
-}: {
-  children: React.ReactNode;
-  // 可选：强制指定刻度数量；不传则自动按高度计算
-  length?: number;
-}) {
-  const contentRef = useRef<HTMLDivElement>(null);
-  const [autoLength, setAutoLength] = useState(6);
-
-  useLayoutEffect(() => {
-    if (length !== undefined) {
-      setAutoLength(length);
-      return;
-    }
-    if (!contentRef.current) return;
-    const el = contentRef.current;
-    const TOP_LINE = 2;
-    const SEG_LINE = 1;
-    const GAP = 16;
-    const calc = () => {
-      const h = el.offsetHeight;
-      const n = Math.max(1, Math.round((h - TOP_LINE) / (SEG_LINE + GAP)));
-      setAutoLength(n + 4);
-    };
-    calc();
-    const ro = new ResizeObserver(calc);
-    ro.observe(el);
-    window.addEventListener("resize", calc);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener("resize", calc);
-    };
-  }, [length]);
-
-  return (
-    <div className="flex gap-4 items-start">
-      <div className="flex flex-col gap-4 translate-y-3">
-        <div className="w-5 h-[2px] shrink-0 bg-red-300" />
-        {Array.from({ length: autoLength }).map((_, index) => (
-          <div key={index} className="w-3 h-[1px] shrink-0 bg-black/30" />
-        ))}
-      </div>
-      <div ref={contentRef} className="flex flex-col gap-4 w-full">
-        {children}
-      </div>
-    </div>
-  );
-}
-
-function PrimarySpan({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="text-black mx-2  underline-offset-4 decoration-primary/20">
-      {children}
-    </span>
-  );
-}
-
-interface TimelineVideoProps {
-  src: string;
-  className?: string;
-  autoPlay?: boolean;
-  loop?: boolean;
-  muted?: boolean; // 默认静音可允许自动播放
-}
-
-function TimelineVideo({
-  src,
-  className = "",
-  autoPlay = false,
-  loop = false,
-  muted = false,
-}: TimelineVideoProps) {
-  const ref = useRef<HTMLVideoElement>(null);
-  const [, setPlaying] = useState(false);
-  const toggle = () => {
-    const v = ref.current;
-    if (!v) return;
-    if (v.paused) {
-      v.play();
-    } else {
-      v.pause();
-    }
-  };
-  const onPlay = () => setPlaying(true);
-  const onPause = () => setPlaying(false);
-  return (
-    <div
-      className={`relative w-full aspect-square sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden group ${className}`}
-    >
-      <SunDim className="absolute top-4 right-4 size-8 text-white z-10 bg-black/30 backdrop-blur-sm p-1 rounded-2xl opacity-60" />
-      <video
-        ref={ref}
-        src={src}
-        className="w-full h-full object-cover cursor-pointer"
-        onClick={toggle}
-        onPlay={onPlay}
-        onPause={onPause}
-        playsInline
-        preload="metadata"
-        autoPlay={autoPlay}
-        loop={loop}
-        muted={muted}
-        aria-label="点击播放或暂停视频"
-      />
-      {/* 中央播放/暂停按钮 */}
-      {/* <button
-        type="button"
-        onClick={toggle}
-        aria-label={playing ? "暂停视频" : "播放视频"}
-        className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${playing ? "opacity-0 group-hover:opacity-100" : "opacity-100"}`}
-      >
-        <span className="flex items-center justify-center size-16 rounded-full bg-black/40 backdrop-blur-sm text-white">
-          {playing ? (
-            <Pause className="size-8" />
-          ) : (
-            <Play className="size-8 translate-x-0.5" />
-          )}
-        </span>
-      </button> */}
-    </div>
-  );
-}
-
 export default function Timeline() {
   const containerRef = useRef<HTMLDivElement>(null);
   return (
@@ -354,12 +231,16 @@ export default function Timeline() {
                   良渚遗址公园
                 </span>
               </div>
-              <div className="w-full aspect-square sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
+              <div className="relative w-full aspect-square sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
                 <a
                   href="https://v.douyin.com/3bvCEsvQqOA/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
+                  <ArrowUpRight
+                    size={24}
+                    className="absolute top-4 right-4 size-8 text-white z-10 bg-black/30 backdrop-blur-sm p-1 rounded-2xl opacity-60"
+                  />
                   <img
                     src="https://public.zzfw.cc/gabagerecycle/timeline/IMG_0761.jpg"
                     className="w-full h-full object-cover"
