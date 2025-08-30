@@ -41,7 +41,7 @@ export default function Dot({
 
   return (
     <div className="flex gap-4 items-start">
-      <div className="flex flex-col gap-4 translate-y-3">
+      <div className="flex flex-col gap-4 mt-3">
         <div className="w-5 h-[2px] shrink-0 bg-red-300" />
         {Array.from({ length: autoLength }).map((_, index) => (
           <div key={index} className="w-3 h-[1px] shrink-0 bg-black/30" />
