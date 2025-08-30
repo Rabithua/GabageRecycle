@@ -6,6 +6,7 @@ import { SplitText } from "gsap/SplitText";
 
 import { useRef } from "react";
 import Timeline from "./components/Timeline";
+import PrimarySpan from "./components/timeline/PrimarySpan";
 
 gsap.registerPlugin(SplitText);
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -57,10 +58,12 @@ export default function TimelinePage() {
             ref={descRef}
             className="w-4/5 max-w-4xl text-2xl sm:text-5xl font-medium leading-tight"
           >
-            GAP
-            同时在寻找一生所爱的事业（或者在存款耗尽前找到维持生计的工作）。不想被限定为程序开发，在探索
-            UI
-            和交互设计，如何成为摄影师或者大厨，同时也在学习如何整理好自己的生活。
+            努力寻找一生所爱的事业
+            （或者在存款耗尽前找到维持生计的工作）。
+            <PrimarySpan>
+              不想被限定为程序开发，在探索 UI
+              和交互设计，如何成为摄影师或者大厨，同时也在学习如何整理好自己的生活。
+            </PrimarySpan>
           </h1>
         </div>
       </div>

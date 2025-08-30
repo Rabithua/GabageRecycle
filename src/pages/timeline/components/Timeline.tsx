@@ -13,6 +13,7 @@ import {
 import { useRef } from "react";
 import Dot from "./timeline/Dot";
 import PrimarySpan from "./timeline/PrimarySpan";
+import RecentRote from "./timeline/RecentRote";
 import TimelineVideo from "./timeline/TimelineVideo";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -382,6 +383,11 @@ export default function Timeline() {
             <div className="w-full aspect-square sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden p-4 font-sans">
               <GithubRepoBlock owner="Rabithua" repo="Rote" branch="develop" />
             </div>
+          </Dot>
+
+          <Dot>
+            <div className="text-black">这里有我的最新动态：</div>
+            <RecentRote skip={3} />
           </Dot>
         </div>
       </div>

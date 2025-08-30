@@ -163,7 +163,7 @@ export default function GithubRepoBlock({
                   </div>
                 ))}
               </div>
-              <div className="h-2 w-full bg-primary/10 blur-xs sticky -bottom-1 "></div>
+              <div className="h-2 w-full bg-white blur-xs sticky -bottom-1 "></div>
               <div className="h-2 w-full bg-white blur-sm sticky -bottom-1 "></div>
               <div className="h-2 w-full bg-white blur-sm sticky -bottom-1 "></div>
             </div>
