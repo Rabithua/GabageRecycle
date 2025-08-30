@@ -191,19 +191,7 @@ export default function Block({
         role="group"
         className={`group relative w-full z-10 h-full rounded-2xl border duration-100 overflow-hidden shadow-black/5 border-primary/20 bg-white flex items-center justify-center text-primary/70 ${baseTypeClass} ${className || ""}`}
       >
-        <Suspense
-          fallback={
-            <div
-              className="h-full w-full flex flex-col gap-3 animate-pulse select-none"
-              aria-busy="true"
-              aria-label="内容加载中"
-            >
-              <div className="h-4 w-1/3 bg-primary/20 rounded" />
-              <div className="h-6 w-2/3 bg-primary/20 rounded" />
-              <div className="flex-1 w-full bg-primary/10 rounded" />
-            </div>
-          }
-        >
+        <Suspense>
           {ContentComponent ? (
             <ContentComponent
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -215,7 +203,7 @@ export default function Block({
               {children}
             </ContentComponent>
           ) : (
-            <div className="w-full h-full flex items-center justify-center  p-4">
+            <div className="w-full h-full flex items-center justify-center">
               {children || "未知类型"}
             </div>
           )}

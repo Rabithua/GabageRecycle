@@ -32,15 +32,19 @@ export default function TextBlock({
       href={href}
       className={`w-full h-full p-4 line-clamp-6 overflow-hidden ${
         isEmojiOnly
-          ? "text-3xl text-center text-primary/70"
+          ? "flex justify-center items-center text-3xl text-primary/70"
           : " text-left text-gray-500"
       } cursor-pointer relative ${className || ""}`}
-      style={{
-        display: "-webkit-box",
-        WebkitBoxOrient: "vertical",
-        WebkitLineClamp: 6,
-        lineClamp: 6,
-      }}
+      style={
+        isEmojiOnly
+          ? {}
+          : {
+              display: "-webkit-box",
+              WebkitBoxOrient: "vertical",
+              WebkitLineClamp: 6,
+              lineClamp: 6,
+            }
+      }
       title={text || ""}
       rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
       target={href.startsWith("http") ? "_blank" : undefined}
