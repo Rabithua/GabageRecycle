@@ -45,7 +45,7 @@ export default function TimelineVideo({
         onPlay={onPlay}
         onPause={onPause}
         playsInline
-        preload="metadata"
+        preload="auto"
         autoPlay={autoPlay}
         loop={loop}
         muted={muted}
