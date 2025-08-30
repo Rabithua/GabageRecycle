@@ -143,7 +143,7 @@ export default function Timeline() {
     >
       <div
         ref={timelineRef}
-        className="relative flex gap-4 overflow-hidden sm:gap-12 items-start justify-center w-4/5 max-w-lg"
+        className="relative flex gap-4 sm:gap-12 items-start justify-center w-4/5 max-w-lg"
       >
         <img
           data-speed="clamp(-0.1)"
