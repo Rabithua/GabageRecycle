@@ -1,8 +1,8 @@
+import Block from "@/pages/blocks/components/Block";
 import {
   BlockType,
   type BlockProps,
 } from "@/pages/blocks/components/blocks.types";
-import BlockSwitcher from "@/pages/blocks/components/BlockSwitcher";
 import BackgroundText from "@/pages/home/components/BackgroudText";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
@@ -113,7 +113,9 @@ export default function Blocks() {
         <>
           被生活困住了，哪位好心人能伸出圆手
           <br />
-          给我一份工作 🤕 &gt;&gt;
+          给我一份工作 🤕
+          <br />
+          点击左侧图片滴滴我 &gt;&gt;
         </>
       ),
       blockData: {
@@ -133,7 +135,7 @@ export default function Blocks() {
     {
       grid: { col: 2, row: 1 },
       className: "p-2",
-      children: <>不给我工作？那就推着电瓶车回去罢 👊</>,
+      children: <>拖拽排序太难了，先摸了 🐟</>,
       blockData: {
         id: uuidv4(),
         type: BlockType.NORMAL,
@@ -152,13 +154,7 @@ export default function Blocks() {
           className="w-full font-['Noto_Serif_SC'] h-full grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 auto-rows-[80px] gap-4 grid-flow-dense pr-2"
         >
           {grids.map((grid, index) => {
-            return (
-              <BlockSwitcher
-                key={index}
-                {...grid}
-                containerRef={gridContainer}
-              />
-            );
+            return <Block key={index} {...grid} containerRef={gridContainer} />;
           })}
         </div>
       </div>

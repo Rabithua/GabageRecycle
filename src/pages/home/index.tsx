@@ -83,7 +83,7 @@ export default function Home() {
         className="w-dvw h-dvh absolute top-0 left-0 overflow-hidden z-1"
       />
 
-      <div className="md:flex flex-row items-center justify-between w-3/4 z-10">
+      <div className="sm:flex flex-row items-center justify-between w-3/4 z-10">
         <div className="space-y-4">
           <h1
             className="font-semibold leading-tight text-5xl pretty-text"

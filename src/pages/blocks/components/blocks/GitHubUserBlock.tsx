@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import Block from "./block";
 
 interface GitHubUserBlockProps {
   username: string;
   className?: string;
-  containerRef: React.RefObject<HTMLDivElement>;
 }
 
 interface GitHubUserData {
@@ -21,7 +19,6 @@ interface GitHubUserData {
 export default function GithubUserBlock({
   username,
   className,
-  containerRef,
 }: GitHubUserBlockProps) {
   const [data, setData] = useState<GitHubUserData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -55,10 +52,7 @@ export default function GithubUserBlock({
   }, [username]);
 
   return (
-    <Block
-      containerRef={containerRef}
-      className={`p-4 text-left ${className || ""}`}
-    >
+    <div className={`w-full h-full text-left ${className || ""}`}>
       {loading && (
         <div
           className="w-full h-full flex flex-col gap-4 animate-pulse text-xs text-gray-400"
@@ -138,6 +132,6 @@ export default function GithubUserBlock({
           </div>
         </div>
       )}
-    </Block>
+    </div>
   );
 }

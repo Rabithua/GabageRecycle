@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import Block from "./block";
 
 interface GitHubRepoBlockProps {
   owner: string;
   repo: string;
   branch?: string; // branch to show latest commit
   className?: string;
-  containerRef: React.RefObject<HTMLDivElement>;
 }
 
 interface RepoData {
@@ -47,7 +45,6 @@ export default function GithubRepoBlock({
   repo,
   branch,
   className,
-  containerRef,
 }: GitHubRepoBlockProps) {
   const [repoData, setRepoData] = useState<RepoData | null>(null);
   const [branchData, setBranchData] = useState<BranchCommitData | null>(null);
@@ -101,9 +98,8 @@ export default function GithubRepoBlock({
   }, [owner, repo, branch]);
 
   return (
-    <Block
-      containerRef={containerRef}
-      className={`p-4 flex flex-col items-start gap-4 ${className || ""}`}
+    <div
+      className={`w-full h-full flex flex-col items-start gap-4 ${className || ""}`}
     >
       {loading && (
         <div className="w-full h-full flex flex-col gap-3 animate-pulse text-xs text-gray-400">
@@ -117,7 +113,9 @@ export default function GithubRepoBlock({
           </div>
         </div>
       )}
-      {!loading && error && <div className="text-sm w-full text-primary text-center">{error}</div>}
+      {!loading && error && (
+        <div className="text-sm w-full text-primary text-center">{error}</div>
+      )}
       {!loading && !error && repoData && (
         <div className="flex flex-col w-full h-full">
           <div className="flex flex-col w-full shrink-0 mb-2">
@@ -165,7 +163,7 @@ export default function GithubRepoBlock({
                   </div>
                 ))}
               </div>
-              <div className="h-2 w-full bg-primary/10 blur-xs sticky -bottom-1 "></div>
+              <div className="h-2 w-full bg-white blur-xs sticky -bottom-1 "></div>
               <div className="h-2 w-full bg-white blur-sm sticky -bottom-1 "></div>
               <div className="h-2 w-full bg-white blur-sm sticky -bottom-1 "></div>
             </div>
@@ -194,6 +192,6 @@ export default function GithubRepoBlock({
           </div>
         </div>
       )}
-    </Block>
+    </div>
   );
 }
