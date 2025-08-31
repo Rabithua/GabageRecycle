@@ -51,15 +51,14 @@ export default function TimelinePage() {
 
   return (
     <main ref={containerRef} className="font-serif text-primary bg-primary/2">
-      <div ref={scrollContentRef}>
+      <div ref={scrollContentRef} className="pt-24">
         <Timeline />
         <div className="w-dvw h-dvh flex flex-col items-center justify-center">
           <h1
             ref={descRef}
             className="w-4/5 max-w-4xl text-2xl sm:text-5xl font-medium leading-tight"
           >
-            努力寻找一生所爱的事业
-            （或者在存款耗尽前找到维持生计的工作）。
+            努力寻找一生所爱的事业 （或者在存款耗尽前找到维持生计的工作）。
             <PrimarySpan>
               不想被限定为程序开发，在探索 UI
               和交互设计，如何成为摄影师或者大厨，同时也在学习如何整理好自己的生活。
