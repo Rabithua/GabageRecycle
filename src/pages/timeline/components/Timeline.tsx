@@ -1,8 +1,5 @@
 import GithubRepoBlock from "@/pages/blocks/components/blocks/GitHubRepoBlock";
 import MapBlock from "@/pages/blocks/components/blocks/MapBlock";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
 import {
   ArrowUpRight,
   Dog,
@@ -11,12 +8,11 @@ import {
   UtensilsCrossed,
 } from "lucide-react";
 import { useRef } from "react";
+import RabithuaSVG from "./Rabithua";
 import Dot from "./timeline/Dot";
 import PrimarySpan from "./timeline/PrimarySpan";
 import RecentRote from "./timeline/RecentRote";
 import TimelineVideo from "./timeline/TimelineVideo";
-
-gsap.registerPlugin(ScrollTrigger);
 
 // 技术 / 工具栈图标（远程静态资源）
 interface StackIcon {
@@ -129,43 +125,9 @@ const stacks: StackIcon[] = [
 ];
 
 export default function Timeline() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const timelineRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null!);
+  const timelineRef = useRef<HTMLDivElement>(null!);
   const avatarRef = useRef<HTMLImageElement>(null);
-  const exclamationRef = useRef<HTMLImageElement>(null);
-
-  useGSAP(
-    () => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: timelineRef.current,
-          endTrigger: timelineRef.current,
-          start: "top 96px",
-          end: "bottom center",
-          scrub: 1,
-          // markers: true,
-        },
-      });
-
-      tl.to(exclamationRef.current, {
-        opacity: 0,
-        scale: 0.3,
-        rotate: -20,
-        ease: "power1.inOut",
-        duration: 0.2,
-      });
-
-      tl.to(avatarRef.current, {
-        opacity: 0,
-        scale: 0.3,
-        ease: "power1.inOut",
-        duration: 1,
-      });
-    },
-    {
-      scope: containerRef,
-    }
-  );
 
   return (
     <div
@@ -173,24 +135,14 @@ export default function Timeline() {
       className="relative flex gap-4 mx-auto sm:gap-12 items-start justify-center px-4 max-w-lg"
     >
       <div
-        data-speed="clamp(-0.1)"
+        data-speed="clamp(-0.05)"
         ref={avatarRef}
-        className="relative size-10 sm:size-30 shrink-0"
+        className="relative size-10 sm:size-40 md:size-60 shrink-0"
       >
-        <img
-          src="https://public.zzfw.cc/gabagerecycle/timeline/Rabithua%20Image.jpeg"
-          alt="Timeline Demo"
-          className="w-full h-full object-cover"
-        />
-        <img
-          ref={exclamationRef}
-          src="https://public.zzfw.cc/gabagerecycle/timeline/!.svg"
-          alt="!"
-          className="absolute -right-4 -top-4 size-5 sm:size-10 object-cover"
-        />
+        <RabithuaSVG containerRef={containerRef} timelineRef={timelineRef} />
       </div>
 
-      <div className="relative text-lg sm:text-xl leading-tight h-full flex flex-col gap-1">
+      <div className="relative text-lg sm:text-xl leading-tight h-full flex flex-col gap-1 ">
         <Dot>
           <div className="text-2xl font-bold text-black">欸，你怎么来了！</div>
         </Dot>
@@ -228,11 +180,19 @@ export default function Timeline() {
           <div>
             MBTI: <PrimarySpan>INFJ</PrimarySpan>
           </div>
-          <img
-            src="https://public.zzfw.cc/gabagerecycle/timeline/infj.svg"
-            alt="MBTI: INFJ"
-            className=" w-full aspect-square object-cover sm:border-4 bg-white border-gray-50 rounded-3xl"
-          />
+
+          <div className="group flex flex-col gap-2">
+            <div className="w-full aspect-square sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
+              <img
+                src="https://public.zzfw.cc/gabagerecycle/timeline/infj.svg"
+                alt="MBTI: INFJ"
+                className=" w-full aspect-square object-cover sm:border-4 bg-white border-gray-50 rounded-3xl"
+              />
+            </div>
+            <div className="opacity-0 group-hover:opacity-100 duration-300 ml-4 text-sm">
+              感谢 raisa 制作的插画 🙏
+            </div>
+          </div>
         </Dot>
         <Dot>
           <div>非计算机专业，大学期间出于兴趣自学编程和设计</div>
@@ -403,14 +363,6 @@ export default function Timeline() {
             <br />
             希望能好好整理一下自己，学习点新东西，减少焦虑
             <br />
-          </div>
-
-          <div className="w-full aspect-square sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
-            <img
-              src="https://public.zzfw.cc/gabagerecycle/timeline/IMG_6371.GIF"
-              className="w-full h-full object-cover"
-              alt="EveDayOneCat"
-            />
           </div>
         </Dot>
 
