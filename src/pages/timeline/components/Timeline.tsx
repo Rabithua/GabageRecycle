@@ -132,6 +132,7 @@ export default function Timeline() {
   const containerRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const avatarRef = useRef<HTMLImageElement>(null);
+  const exclamationRef = useRef<HTMLImageElement>(null);
 
   useGSAP(
     () => {
@@ -146,9 +147,16 @@ export default function Timeline() {
         },
       });
 
+      tl.to(exclamationRef.current, {
+        opacity: 0,
+        scale: 0.3,
+        rotate: -20,
+        ease: "power1.inOut",
+        duration: 0.2,
+      });
+
       tl.to(avatarRef.current, {
         opacity: 0,
-        rotateY: 360,
         scale: 0.3,
         ease: "power1.inOut",
         duration: 1,
@@ -164,13 +172,23 @@ export default function Timeline() {
       ref={timelineRef}
       className="relative flex gap-4 mx-auto sm:gap-12 items-start justify-center px-4 max-w-lg"
     >
-      <img
-        ref={avatarRef}
+      <div
         data-speed="clamp(-0.1)"
-        src="https://public.zzfw.cc/gabagerecycle/timeline/Rabithua%20Image.jpeg"
-        alt="Timeline Demo"
-        className="size-10 sm:size-30 object-cover"
-      />
+        ref={avatarRef}
+        className="relative size-10 sm:size-30 shrink-0"
+      >
+        <img
+          src="https://public.zzfw.cc/gabagerecycle/timeline/Rabithua%20Image.jpeg"
+          alt="Timeline Demo"
+          className="w-full h-full object-cover"
+        />
+        <img
+          ref={exclamationRef}
+          src="https://public.zzfw.cc/gabagerecycle/timeline/!.svg"
+          alt="!"
+          className="absolute -right-4 -top-4 size-5 sm:size-10 object-cover"
+        />
+      </div>
 
       <div className="relative text-lg sm:text-xl leading-tight h-full flex flex-col gap-1">
         <Dot>
