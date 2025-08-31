@@ -142,7 +142,7 @@ export default function Timeline() {
           start: "top 96px",
           end: "bottom center",
           scrub: 1,
-          markers: true,
+          // markers: true,
         },
       });
 
