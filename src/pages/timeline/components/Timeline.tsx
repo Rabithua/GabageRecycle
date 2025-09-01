@@ -15,8 +15,8 @@ import Dot from "./timeline/Dot";
 import PrimarySpan from "./timeline/PrimarySpan";
 import RecentRote from "./timeline/RecentRote";
 import TimelineVideo from "./timeline/TimelineVideo";
+import { useTranslation } from "react-i18next";
 
-// 技术 / 工具栈图标（远程静态资源）
 interface StackIcon {
   name: string;
   src: string;
@@ -148,6 +148,10 @@ const socialMedia: SocialMedia[] = [
 ];
 
 export default function Timeline() {
+  const { t } = useTranslation("translation", {
+    keyPrefix: "page.timeline",
+  });
+
   const timelineRef = useRef<HTMLDivElement>(null!);
   const avatarRef = useRef<HTMLImageElement>(null);
 
