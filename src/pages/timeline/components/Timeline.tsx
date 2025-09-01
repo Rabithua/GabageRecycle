@@ -10,12 +10,12 @@ import {
   UtensilsCrossed,
 } from "lucide-react";
 import { useRef, type JSX } from "react";
+import { useTranslation } from "react-i18next";
 import RabithuaSVG from "./Rabithua";
 import Dot from "./timeline/Dot";
 import PrimarySpan from "./timeline/PrimarySpan";
 import RecentRote from "./timeline/RecentRote";
 import TimelineVideo from "./timeline/TimelineVideo";
-import { useTranslation } from "react-i18next";
 
 interface StackIcon {
   name: string;
@@ -170,23 +170,23 @@ export default function Timeline() {
 
       <div className="relative text-lg sm:text-xl leading-tight h-full flex flex-col gap-1 ">
         <Dot>
-          <div className="text-2xl font-bold text-black">欸，你怎么来了！</div>
+          <div className="text-2xl font-bold text-black">{t("greeting")}</div>
         </Dot>
         <Dot>
           <div>
-            我是
-            <PrimarySpan>于长野</PrimarySpan>
+            {t("iAm")}
+            <PrimarySpan>{t("nameZh")}</PrimarySpan>
             <br />
-            也可以叫我
-            <PrimarySpan>rabithua</PrimarySpan>
+            {t("alsoCallMe")}
+            <PrimarySpan>{t("nameAlias")}</PrimarySpan>
           </div>
         </Dot>
         <Dot>
           <div>
-            现居
+            {t("liveIn")}
             <PrimarySpan>
               <MapPin className="inline size-5 mr-1" />
-              杭州良渚
+              {t("locationName")}
             </PrimarySpan>
           </div>
           <div className="group flex flex-col gap-2">
@@ -198,7 +198,7 @@ export default function Timeline() {
               />
             </div>
             <div className="opacity-0 group-hover:opacity-100 duration-300 ml-4 text-sm">
-              欢迎来串门～ 🤓
+              {t("welcomeVisit")}
             </div>
           </div>
         </Dot>
@@ -216,15 +216,15 @@ export default function Timeline() {
               />
             </div>
             <div className="opacity-0 group-hover:opacity-100 duration-300 ml-4 text-sm">
-              感谢 raisa 制作的插画 🙏
+              {t("thanksIllustration")}
             </div>
           </div>
         </Dot>
         <Dot>
-          <div>非计算机专业，大学期间出于兴趣自学编程和设计</div>
+          <div>{t("nonCs")}</div>
         </Dot>
         <Dot>
-          <div className="text-black">爱用的技术栈和工具：</div>
+          <div className="text-black">{t("favoriteStacks")}</div>
           <div className="w-full aspect-square grid grid-cols-5 grid-rows-4 gap-3 p-3 border-4 bg-white border-gray-50 rounded-3xl">
             {stacks.map((item) => (
               <a
@@ -249,19 +249,20 @@ export default function Timeline() {
 
         <Dot>
           <div>
-            <PrimarySpan>2022 年毕业</PrimarySpan>
-            随小弟来到杭州，艰难探索远程职业，做过一些杂乱的项目，算是勉强维持生计
+            <PrimarySpan>{t("graduate2022")}</PrimarySpan>
+            {t("graduateStory")}
           </div>
         </Dot>
 
         <Dot>
           <div>
-            期间染上了<PrimarySpan>摄影</PrimarySpan>，买了台 Nikon
-            Z5，下面是一组很喜欢的小清新调色
+            {t("addictedToPhotographyPrefix")}
+            <PrimarySpan>{t("photography")}</PrimarySpan>，
+            {t("photographyBought")}
             <br />
             <span className="text-base text-gray-300">
               <MapPin className="inline size-4 mr-1" />
-              良渚遗址公园
+              {t("liangzhuPark")}
             </span>
           </div>
           <div className="relative w-full aspect-square border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
@@ -277,7 +278,7 @@ export default function Timeline() {
               <img
                 src="https://public.zzfw.cc/gabagerecycle/timeline/IMG_0761.jpg"
                 className="w-full h-full object-cover"
-                alt="良渚遗址公园"
+                alt={t("liangzhuPark")}
               />
             </a>
           </div>
@@ -285,30 +286,32 @@ export default function Timeline() {
 
         <Dot>
           <div>
-            喜欢<PrimarySpan>做饭</PrimarySpan>，偶尔希望成为一名大厨
+            {t("likePrefix")}
+            <PrimarySpan>{t("cooking")}</PrimarySpan>，{t("chefWish")}
             <br />
             <span className="text-base text-gray-300">
               <UtensilsCrossed className="inline size-4 mr-1" />
-              最爱的酸豆角肉丝浇面
+              {t("favoriteDish")}
             </span>
           </div>
           <div className="w-full aspect-square border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
             <img
               src="https://public.zzfw.cc/gabagerecycle/timeline/%E9%85%B8%E8%B1%86%E8%A7%92%E8%82%89%E4%B8%9D%E6%89%93%E5%8D%A4%E9%9D%A2.png"
               className="w-full h-full object-cover"
-              alt="最爱的酸豆角肉丝浇面"
+              alt={t("favoriteDish")}
             />
           </div>
         </Dot>
 
         <Dot>
           <div>
-            很喜欢<PrimarySpan>房东的狗</PrimarySpan>
-            ，搬走后很久没有见到他们了
+            {t("likeLandlordDogPrefix")}
+            <PrimarySpan>{t("landlordDog")}</PrimarySpan>
+            {t("missDogs")}
             <br />
             <span className="text-base text-gray-300">
               <Dog className="inline size-4 mr-1" />
-              小光（黑白色）和表表（咖啡色）
+              {t("dogsNames")}
             </span>
           </div>
           <TimelineVideo
@@ -319,9 +322,9 @@ export default function Timeline() {
 
         <Dot>
           <div>
-            <PrimarySpan>2024 年 5 月</PrimarySpan>
+            <PrimarySpan>{t("date202405")}</PrimarySpan>
             <br />
-            加入
+            {t("join")}
             <a
               href="https://adventure-x.org"
               target="_blank"
@@ -338,7 +341,7 @@ export default function Timeline() {
               </PrimarySpan>
             </a>
             <br />
-            成为了构建团队的一员
+            {t("teamMember")}
           </div>
 
           <div className="w-full aspect-square border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
@@ -352,11 +355,11 @@ export default function Timeline() {
 
         <Dot>
           <div>
-            <PrimarySpan>2024 年 8 月</PrimarySpan>
+            <PrimarySpan>{t("date202408")}</PrimarySpan>
             <br />
-            Advx2024 活动结束后
+            {t("afterAdvx2024")}
             <br />
-            加入
+            {t("join")}
             <a
               href="https://bonjour.bio"
               target="_blank"
@@ -375,7 +378,7 @@ export default function Timeline() {
             <br />
             <span className="text-base text-gray-300">
               <MessageSquareCodeIcon className="inline size-4 mr-1" />
-              某次开会实况
+              {t("meetingRecord")}
             </span>
           </div>
 
@@ -387,32 +390,33 @@ export default function Timeline() {
 
         <Dot>
           <div>
-            <PrimarySpan>2025 年 7 月末</PrimarySpan>
+            <PrimarySpan>{t("date202507End")}</PrimarySpan>
             <br />
-            Advx2025 活动结束后，<PrimarySpan>退出了 Bonjour</PrimarySpan>
+            {t("afterAdvx2025")}
+            <PrimarySpan>{t("quitBonjour")}</PrimarySpan>
             <br />
-            加上一个月前结束了一年的恋爱，愈发感觉自己的生活像一团乱麻
+            {t("lifeMess")}
             <br />
-            希望能好好整理一下自己，学习点新东西，减少焦虑
+            {t("wantImprove")}
             <br />
           </div>
         </Dot>
 
         <Dot>
-          <div className="text-black">最近在做：</div>
+          <div className="text-black">{t("recentDoing")}</div>
           <div className="w-full aspect-square border-4 bg-white border-gray-50 rounded-3xl overflow-hidden p-4 font-sans">
             <GithubRepoBlock owner="Rabithua" repo="Rote" branch="develop" />
           </div>
         </Dot>
 
         <Dot>
-          <div className="text-black">这里有我的最新动态：</div>
+          <div className="text-black">{t("latestActivities")}</div>
           <RecentRote skip={3} />
         </Dot>
 
         <Dot length={0}>
           <div className="flex items-center gap-4">
-            <div className=" shrink-0 text-lg text-gray-300">找到我:</div>
+            <div className=" shrink-0 text-lg text-gray-300">{t("findMe")}</div>
             <div className="grow grid grid-cols-10 grid-rows-1 gap-3 text-gray-300">
               {socialMedia.map((item) => (
                 <a
