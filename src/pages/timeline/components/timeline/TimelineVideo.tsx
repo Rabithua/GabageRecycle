@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 
 export interface TimelineVideoProps {
   src: string;
+  poster: string;
   className?: string;
   autoPlay?: boolean;
   loop?: boolean;
@@ -14,6 +15,7 @@ export interface TimelineVideoProps {
  */
 export default function TimelineVideo({
   src,
+  poster,
   className = "",
   autoPlay = false,
   loop = false,
@@ -40,6 +42,7 @@ export default function TimelineVideo({
       <video
         ref={ref}
         src={src}
+        poster={poster}
         className="w-full h-full object-cover"
         onClick={toggle}
         onPlay={onPlay}

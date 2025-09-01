@@ -72,7 +72,7 @@ export default function RecentRote({
 
   return (
     <div
-      className={`relative w-full h-full aspect-square text-black sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden group cursor-pointer ${className}`}
+      className={`relative w-full h-full aspect-square text-black border-4 bg-white border-gray-50 rounded-3xl overflow-hidden group cursor-pointer ${className}`}
     >
       {loading && (
         <div

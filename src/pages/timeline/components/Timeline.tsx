@@ -163,7 +163,7 @@ export default function Timeline() {
             </PrimarySpan>
           </div>
           <div className="group flex flex-col gap-2">
-            <div className="w-full aspect-square sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
+            <div className="w-full aspect-square border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
               <MapBlock
                 center={{ lat: 30.36778, lng: 120.02722 }}
                 zoom={10}
@@ -181,11 +181,11 @@ export default function Timeline() {
           </div>
 
           <div className="group flex flex-col gap-2">
-            <div className="w-full aspect-square sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
+            <div className="w-full aspect-square border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
               <img
                 src="https://public.zzfw.cc/gabagerecycle/timeline/infj.svg"
                 alt="MBTI: INFJ"
-                className=" w-full aspect-square object-cover sm:border-4 bg-white border-gray-50 rounded-3xl"
+                className=" w-full aspect-square object-cover border-4 bg-white border-gray-50 rounded-3xl"
               />
             </div>
             <div className="opacity-0 group-hover:opacity-100 duration-300 ml-4 text-sm">
@@ -198,7 +198,7 @@ export default function Timeline() {
         </Dot>
         <Dot>
           <div className="text-black">爱用的技术栈和工具：</div>
-          <div className="w-full aspect-square grid grid-cols-5 grid-rows-4 gap-3 p-3 sm:border-4 bg-white border-gray-50 rounded-3xl">
+          <div className="w-full aspect-square grid grid-cols-5 grid-rows-4 gap-3 p-3 border-4 bg-white border-gray-50 rounded-3xl">
             {stacks.map((item) => (
               <a
                 key={item.name}
@@ -237,7 +237,7 @@ export default function Timeline() {
               良渚遗址公园
             </span>
           </div>
-          <div className="relative w-full aspect-square sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
+          <div className="relative w-full aspect-square border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
             <a
               href="https://v.douyin.com/3bvCEsvQqOA/"
               target="_blank"
@@ -265,7 +265,7 @@ export default function Timeline() {
               最爱的酸豆角肉丝浇面
             </span>
           </div>
-          <div className="w-full aspect-square sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
+          <div className="w-full aspect-square border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
             <img
               src="https://public.zzfw.cc/gabagerecycle/timeline/%E9%85%B8%E8%B1%86%E8%A7%92%E8%82%89%E4%B8%9D%E6%89%93%E5%8D%A4%E9%9D%A2.png"
               className="w-full h-full object-cover"
@@ -284,7 +284,10 @@ export default function Timeline() {
               小光（黑白色）和表表（咖啡色）
             </span>
           </div>
-          <TimelineVideo src="https://public.zzfw.cc/gabagerecycle/timeline/IMG_1793.mov" />
+          <TimelineVideo
+            poster="https://public.zzfw.cc/gabagerecycle/timeline/IMG_1793_POSTER.png"
+            src="https://public.zzfw.cc/gabagerecycle/timeline/IMG_1793.mov"
+          />
         </Dot>
 
         <Dot>
@@ -311,7 +314,7 @@ export default function Timeline() {
             成为了构建团队的一员
           </div>
 
-          <div className="w-full aspect-square sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
+          <div className="w-full aspect-square border-4 bg-white border-gray-50 rounded-3xl overflow-hidden">
             <img
               src="https://public.zzfw.cc/gabagerecycle/timeline/IMG_2042.jpg"
               className="w-full h-full object-cover"
@@ -349,7 +352,10 @@ export default function Timeline() {
             </span>
           </div>
 
-          <TimelineVideo src="https://public.zzfw.cc/gabagerecycle/timeline/IMG_5895.mov" />
+          <TimelineVideo
+            poster="https://public.zzfw.cc/gabagerecycle/timeline/IMG_5895_POSTER.png"
+            src="https://public.zzfw.cc/gabagerecycle/timeline/IMG_5895.mov"
+          />
         </Dot>
 
         <Dot>
@@ -367,7 +373,7 @@ export default function Timeline() {
 
         <Dot>
           <div className="text-black">最近在做：</div>
-          <div className="w-full aspect-square sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden p-4 font-sans">
+          <div className="w-full aspect-square border-4 bg-white border-gray-50 rounded-3xl overflow-hidden p-4 font-sans">
             <GithubRepoBlock owner="Rabithua" repo="Rote" branch="develop" />
           </div>
         </Dot>

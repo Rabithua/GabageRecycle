@@ -31,6 +31,7 @@ export default function RabithuaSVG({
       tl.to("#Exclamation", {
         autoAlpha: 0,
         scale: 0.1,
+        transformOrigin: "0% 100%",
         ease,
         duration: 0.5,
       },"+=0.5");

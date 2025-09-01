@@ -50,7 +50,7 @@ export default function TimelinePage() {
   );
 
   return (
-    <main ref={containerRef} className="font-serif text-primary bg-primary/2">
+    <main ref={containerRef} className="font-serif text-primary grid-background">
       <div ref={scrollContentRef} className="pt-24">
         <Timeline />
         <div className="w-dvw h-dvh flex flex-col items-center justify-center">
