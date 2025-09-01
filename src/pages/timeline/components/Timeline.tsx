@@ -3,6 +3,7 @@ import MapBlock from "@/pages/blocks/components/blocks/MapBlock";
 import type { TFunction } from "i18next";
 import {
   ArrowUpRight,
+  ArrowUpRightIcon,
   Dog,
   Github,
   MapPin,
@@ -144,6 +145,61 @@ const socialMedia: SocialMedia[] = [
     ),
     name: "Twitter",
     url: "https://twitter.com/rabithua",
+  },
+];
+
+const friends = [
+  {
+    name: "相白清",
+    url: "https://sansuiz.cn",
+  },
+  {
+    name: "Mashiro",
+    url: "https://2heng.xin",
+  },
+  {
+    name: "LOGI",
+    url: "https://logi.im",
+  },
+  {
+    name: "沐森西",
+    url: "https://musenxi.com/",
+  },
+  {
+    name: "ZGGSONG",
+    url: "https://zggsong.com",
+  },
+  {
+    name: "小维博客",
+    url: "https://blog.isww.cn/",
+  },
+  {
+    name: "CKylin",
+    url: "https://www.ckylin.site/",
+  },
+  {
+    name: "Simon He",
+    url: "https://simonme.netlify.app/",
+  },
+  {
+    name: "LogDict",
+    url: "https://www.logdict.com/",
+  },
+  {
+    name: "Skywt",
+    url: "https://skywt.cn/",
+  },
+  {
+    name: "fzf404",
+    url: "https://fzf404.art/",
+  },
+  {
+    name: "乙未博客",
+    url: "https://yvii.cn",
+  },
+  {
+    name: "桑桑",
+    url: "https://libra.wiki/",
   },
 ];
 
@@ -414,7 +470,7 @@ export default function Timeline({ t }: TimelineProps) {
           <RecentRote skip={3} />
         </Dot>
 
-        <Dot length={0}>
+        <Dot length={2}>
           <div className="flex items-center gap-4">
             <div className=" shrink-0 text-lg text-gray-300">{t("findMe")}</div>
             <div className="grow grid grid-cols-10 grid-rows-1 gap-3 text-gray-300">
@@ -431,6 +487,31 @@ export default function Timeline({ t }: TimelineProps) {
                   {item.icon}
                 </a>
               ))}
+            </div>
+          </div>
+        </Dot>
+
+        <Dot length={12}>
+          <div className=" shrink-0 text-lg text-gray-300">
+            {t("friendsTitle")}
+          </div>
+
+          <div className="group space-y-4 text-sm font-mono">
+            <div className="grid sm:grid-cols-3 grid-cols-2 gap-2">
+              {friends.map((friend) => (
+                <a
+                  href={friend.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className=" text-left truncate text-gray-300 hover:text-gray-500 duration-300"
+                >
+                  {friend.name}
+                  <ArrowUpRightIcon className="size-3 inline-block ml-1" />
+                </a>
+              ))}
+            </div>
+            <div className="opacity-0 group-hover:opacity-100 duration-300 text-xs">
+              {t("friendsNote")}
             </div>
           </div>
         </Dot>

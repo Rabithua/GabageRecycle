@@ -156,7 +156,7 @@ export default function RabithuaSVG({
         transformOrigin: "50% 100%",
         autoAlpha: 0,
         ease: "power4.inOut",
-        duration: 8,
+        duration: 10,
       });
     },
     {
