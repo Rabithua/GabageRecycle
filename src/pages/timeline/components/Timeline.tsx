@@ -125,7 +125,6 @@ const stacks: StackIcon[] = [
 ];
 
 export default function Timeline() {
-  const containerRef = useRef<HTMLDivElement>(null!);
   const timelineRef = useRef<HTMLDivElement>(null!);
   const avatarRef = useRef<HTMLImageElement>(null);
 
@@ -139,7 +138,7 @@ export default function Timeline() {
         ref={avatarRef}
         className="relative size-10 sm:size-40 md:size-60 shrink-0"
       >
-        <RabithuaSVG containerRef={containerRef} timelineRef={timelineRef} />
+        <RabithuaSVG timelineRef={timelineRef} />
       </div>
 
       <div className="relative text-lg sm:text-xl leading-tight h-full flex flex-col gap-1 ">
