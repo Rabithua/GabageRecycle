@@ -3,11 +3,13 @@ import MapBlock from "@/pages/blocks/components/blocks/MapBlock";
 import {
   ArrowUpRight,
   Dog,
+  Github,
   MapPin,
   MessageSquareCodeIcon,
+  Twitter,
   UtensilsCrossed,
 } from "lucide-react";
-import { useRef } from "react";
+import { useRef, type JSX } from "react";
 import RabithuaSVG from "./Rabithua";
 import Dot from "./timeline/Dot";
 import PrimarySpan from "./timeline/PrimarySpan";
@@ -18,6 +20,12 @@ import TimelineVideo from "./timeline/TimelineVideo";
 interface StackIcon {
   name: string;
   src: string;
+  url: string;
+}
+
+interface SocialMedia {
+  name: string;
+  icon: JSX.Element;
   url: string;
 }
 
@@ -121,6 +129,21 @@ const stacks: StackIcon[] = [
     name: "VS Code",
     src: "https://public.zzfw.cc/gabagerecycle/timeline/stacks/VSCode%20Icon.svg",
     url: "https://code.visualstudio.com",
+  },
+];
+
+const socialMedia: SocialMedia[] = [
+  {
+    icon: <Github className="w-full h-full hover:text-gray-500 duration-300" />,
+    name: "GitHub",
+    url: "https://github.com/rabithua",
+  },
+  {
+    icon: (
+      <Twitter className="w-full h-full hover:text-gray-500 duration-300" />
+    ),
+    name: "Twitter",
+    url: "https://twitter.com/rabithua",
   },
 ];
 
@@ -381,6 +404,27 @@ export default function Timeline() {
         <Dot>
           <div className="text-black">这里有我的最新动态：</div>
           <RecentRote skip={3} />
+        </Dot>
+
+        <Dot length={0}>
+          <div className="flex items-center gap-4">
+            <div className=" shrink-0 text-lg text-gray-300">找到我:</div>
+            <div className="grow grid grid-cols-10 grid-rows-1 gap-3 text-gray-300">
+              {socialMedia.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full h-full"
+                  title={item.name}
+                  aria-label={item.name}
+                >
+                  {item.icon}
+                </a>
+              ))}
+            </div>
+          </div>
         </Dot>
       </div>
     </div>
