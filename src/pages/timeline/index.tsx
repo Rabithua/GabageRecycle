@@ -5,6 +5,7 @@ import ScrollSmoother from "gsap/ScrollSmoother";
 import { SplitText } from "gsap/SplitText";
 
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import Timeline from "./components/Timeline";
 import PrimarySpan from "./components/timeline/PrimarySpan";
 
@@ -15,6 +16,10 @@ export default function TimelinePage() {
   const containerRef = useRef(null);
   const scrollContentRef = useRef(null);
   const descRef = useRef(null);
+  const { t } = useTranslation("translation", {
+    keyPrefix: "page.timeline",
+    lng: "en",
+  });
 
   useGSAP(
     () => {
@@ -50,19 +55,19 @@ export default function TimelinePage() {
   );
 
   return (
-    <main ref={containerRef} className="font-serif text-primary grid-background">
+    <main
+      ref={containerRef}
+      className="font-serif text-primary grid-background"
+    >
       <div ref={scrollContentRef} className="pt-24">
-        <Timeline />
+        <Timeline t={t} />
         <div className="w-dvw h-dvh flex flex-col items-center justify-center">
           <h1
             ref={descRef}
             className="w-4/5 max-w-4xl text-2xl sm:text-5xl font-medium leading-tight"
           >
-            努力寻找一生所爱的事业 （或者在存款耗尽前找到维持生计的工作）。
-            <PrimarySpan>
-              不想被限定为程序开发，在探索 UI
-              和交互设计，如何成为摄影师或者大厨，同时也在学习如何整理好自己的生活。
-            </PrimarySpan>
+            {t("motto")}
+            <PrimarySpan>{t("mottoHighlight")}</PrimarySpan>
           </h1>
         </div>
       </div>

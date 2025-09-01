@@ -1,5 +1,6 @@
 import GithubRepoBlock from "@/pages/blocks/components/blocks/GitHubRepoBlock";
 import MapBlock from "@/pages/blocks/components/blocks/MapBlock";
+import type { TFunction } from "i18next";
 import {
   ArrowUpRight,
   Dog,
@@ -10,7 +11,6 @@ import {
   UtensilsCrossed,
 } from "lucide-react";
 import { useRef, type JSX } from "react";
-import { useTranslation } from "react-i18next";
 import RabithuaSVG from "./Rabithua";
 import Dot from "./timeline/Dot";
 import PrimarySpan from "./timeline/PrimarySpan";
@@ -147,11 +147,11 @@ const socialMedia: SocialMedia[] = [
   },
 ];
 
-export default function Timeline() {
-  const { t } = useTranslation("translation", {
-    keyPrefix: "page.timeline",
-  });
+interface TimelineProps {
+  t: TFunction;
+}
 
+export default function Timeline({ t }: TimelineProps) {
   const timelineRef = useRef<HTMLDivElement>(null!);
   const avatarRef = useRef<HTMLImageElement>(null);
 
