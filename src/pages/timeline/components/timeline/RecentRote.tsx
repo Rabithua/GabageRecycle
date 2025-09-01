@@ -115,12 +115,7 @@ export default function RecentRote({
       )}
 
       {!loading && data && (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href={`${baseUrl}/rote/${data.id}`}
-          className="h-full flex flex-col gap-2 p-4"
-        >
+        <div className="h-full flex flex-col gap-2 p-4">
           <a
             target="_blank"
             rel="noopener noreferrer"
@@ -146,7 +141,12 @@ export default function RecentRote({
             </div>
           </a>
 
-          <div className="relative overflow-scroll grow flex flex-col gap-2">
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={`${baseUrl}/rote/${data.id}`}
+            className="relative overflow-scroll grow flex flex-col gap-2"
+          >
             <div className=" grow overflow-hidden">
               <p className="text-base leading-snug opacity-90 break-words whitespace-pre-wrap">
                 {data.content}
@@ -173,8 +173,8 @@ export default function RecentRote({
                 ))}
               </div>
             )}
-          </div>
-        </a>
+          </a>
+        </div>
       )}
     </div>
   );
