@@ -18,7 +18,6 @@ export default function TimelinePage() {
   const descRef = useRef(null);
   const { t } = useTranslation("translation", {
     keyPrefix: "page.timeline",
-    lng: "en",
   });
 
   useGSAP(
