@@ -214,17 +214,17 @@ export default function Timeline({ t }: TimelineProps) {
   return (
     <div
       ref={timelineRef}
-      className="relative flex gap-4 mx-auto sm:gap-12 items-start justify-center px-4 max-w-lg"
+      className="relative flex gap-4 mx-auto sm:gap-12 items-start justify-center px-4 w-full max-w-lg"
     >
       <div
         data-speed="clamp(-0.05)"
         ref={avatarRef}
-        className="relative size-10 sm:size-40 md:size-60 shrink-0"
+        className="relative hidden sm:block sm:size-40 md:size-60 shrink-0"
       >
         <RabithuaSVG timelineRef={timelineRef} />
       </div>
 
-      <div className="relative text-lg sm:text-xl leading-tight h-full flex flex-col gap-1 ">
+      <div className="relative w-[-webkit-fill-available] sm:w-100 text-lg sm:text-xl leading-tight h-full flex flex-col gap-1 ">
         <Dot>
           <div className="text-2xl font-bold text-black">{t("greeting")}</div>
         </Dot>

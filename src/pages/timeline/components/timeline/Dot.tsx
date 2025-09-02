@@ -40,7 +40,7 @@ export default function Dot({
   }, [length]);
 
   return (
-    <div className="flex gap-4 items-start sm:w-[400px]">
+    <div className="flex gap-4 items-start w-[-webkit-fill-available] sm:w-100">
       <div className="flex flex-col gap-4 mt-3">
         <div className="w-5 h-[2px] shrink-0 bg-red-300" />
         {Array.from({ length: autoLength }).map((_, index) => (
