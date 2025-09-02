@@ -9,7 +9,7 @@ export default function Apple() {
   const { t } = useTranslation("translation", {
     keyPrefix: "page.apple",
   });
-  const containerRef = useRef(null); // This should be managed by your routing logic
+  const containerRef = useRef(null);
 
   useGSAP(
     () => {

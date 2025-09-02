@@ -10,7 +10,7 @@ export default function Tree() {
   const { t } = useTranslation("translation", {
     keyPrefix: "page.tree",
   });
-  const containerRef = useRef(null); // This should be managed by your routing logic
+  const containerRef = useRef(null);
 
   useGSAP(
     () => {
