@@ -10,7 +10,6 @@ export default function SliderText({
 }: {
   children: React.ReactNode;
 }) {
-  const containerRef = useRef(null);
   const textRef = useRef(null);
 
   useGSAP(
@@ -30,7 +29,7 @@ export default function SliderText({
         immediateRender: true,
       });
     },
-    { scope: containerRef }
+    { scope: textRef }
   );
 
   return (
