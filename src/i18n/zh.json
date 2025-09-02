@@ -63,5 +63,21 @@
       "friendsTitle": "这些是我的朋友们 🪴",
       "friendsNote": "* 部分是来自博客时代的旧友"
     }
+  },
+  "blocks": {
+    "githubUser": {
+      "followers": "粉丝",
+      "following": "关注",
+      "repos": "仓库",
+      "rateLimited": "* 403 表示当前 IP 调用过于频繁被限流",
+      "loadingLabel": "加载 GitHub 用户"
+    },
+    "githubRepo": {
+      "stars": "Stars",
+      "forks": "Forks",
+      "issues": "Issues",
+      "rateLimited": "* 403 表示当前 IP 调用过于频繁被限流",
+      "loadingLabel": "加载 GitHub 仓库"
+    }
   }
 }

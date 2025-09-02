@@ -63,5 +63,21 @@
       "friendsTitle": "These are my friends 🪴",
       "friendsNote": "* Some are old friends from the blogging era"
     }
+  },
+  "blocks": {
+    "githubUser": {
+      "followers": "followers",
+      "following": "following",
+      "repos": "repos",
+      "rateLimited": "* 403 means the current IP has been rate limited due to too many requests",
+      "loadingLabel": "Loading GitHub user"
+    },
+    "githubRepo": {
+      "stars": "Stars",
+      "forks": "Forks",
+      "issues": "Issues",
+      "rateLimited": "* 403 means the current IP has been rate limited due to too many requests",
+      "loadingLabel": "Loading GitHub repo"
+    }
   }
 }
