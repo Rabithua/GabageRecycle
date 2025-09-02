@@ -1,16 +1,15 @@
 import { useGSAP } from "@gsap/react";
-import BackgroundText from "../home/components/BackgroudText";
-import SliderText from "../home/components/SliderText";
 import gsap from "gsap";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
+import BackgroundText from "../home/components/BackgroudText";
+import SliderText from "../home/components/SliderText";
 
 export default function Apple() {
   const { t } = useTranslation("translation", {
     keyPrefix: "page.apple",
   });
   const containerRef = useRef(null); // This should be managed by your routing logic
-  const appleRef = useRef(null);
 
   useGSAP(
     () => {
@@ -21,7 +20,7 @@ export default function Apple() {
           opacity: 0,
           duration: 1,
         })
-        .to(appleRef.current, {
+        .to("#apple", {
           scale: 1.05,
           right: "-15%",
           bottom: "-35%",
@@ -51,7 +50,6 @@ export default function Apple() {
 
       <div className="w-dvw h-dvh absolute top-0 left-0 overflow-hidden select-none">
         <img
-          ref={appleRef}
           id="apple"
           src="/pages/apple/apple.svg"
           alt="Apple"
