@@ -4,8 +4,8 @@ import { Observer } from "gsap/Observer";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import Home from "@/pages/home";
 import Apple from "@/pages/apple";
+import Home from "@/pages/home";
 import Tree from "@/pages/tree";
 import { ChevronsUp } from "lucide-react";
 import Blocks from "../blocks";
@@ -18,22 +18,18 @@ export default function FadingScroll() {
   const { t } = useTranslation("translation", {
     keyPrefix: "page.scroll",
   });
-  const containerRef = useRef(null); // This should be managed by your routing logic
-  const scrollTipRef = useRef(null);
-  const [currentPageIndex, setCurrentPageIndex] = useState(0); // This should be managed by your routing logic
 
-  // GSAP observer to handle scroll events
+  const containerRef = useRef(null);
+  const [currentPageIndex, setCurrentPageIndex] = useState(0);
+
   useGSAP(
-    () => {
+    (_context, contextSafe) => {
       let isAnimating = false;
-      function changePage(type: "up" | "down") {
+      const changePage = contextSafe!((type: "up" | "down") => {
         if (isAnimating) return;
         isAnimating = true;
 
-        console.log(`Changing page ${type}`);
-
         if (type === "up") {
-          console.log("Changing page up");
           // Add logic to change to the previous page
           setCurrentPageIndex((prevIndex) => {
             const newIndex =
@@ -41,7 +37,6 @@ export default function FadingScroll() {
             return newIndex;
           });
         } else {
-          console.log("Changing page down");
           // Add logic to change to the next page
           setCurrentPageIndex((prevIndex) => {
             const newIndex = prevIndex + 1 >= pages.length ? 0 : prevIndex + 1;
@@ -53,14 +48,14 @@ export default function FadingScroll() {
         setTimeout(() => {
           isAnimating = false;
         }, 1000);
-      }
+      });
 
       Observer.create({
-        target: window, // can be any element (selector text is fine)
-        type: "wheel,touch,scroll,pointer", // comma-delimited list of what to listen for
-        dragMinimum: 10, // minimum distance before it starts observing
-        tolerance: 10, // how far the mouse must move before it starts observing
-        preventDefault: false, // prevent default scrolling behavior
+        target: window,
+        type: "wheel,touch,scroll,pointer",
+        dragMinimum: 10,
+        tolerance: 10,
+        preventDefault: false,
         onUp: (self) => {
           if (self.deltaY < -50) {
             console.log("Scrolling up detected");
@@ -84,7 +79,7 @@ export default function FadingScroll() {
         // onStopDelay: 0.5, // delay before the onStop callback is triggered
       });
 
-      gsap.from(scrollTipRef.current, {
+      gsap.from("#tip", {
         duration: 1,
         opacity: 0.2,
         ease: "Sine.inOut",
@@ -100,7 +95,7 @@ export default function FadingScroll() {
       {pages[currentPageIndex]}
 
       <div
-        ref={scrollTipRef}
+        id="tip"
         className={
           "flex gap-2 items-center font-light text-sm text-primary justify-center fixed bottom-4 left-1/2 transform -translate-x-1/2 z-10 opacity-60"
         }
