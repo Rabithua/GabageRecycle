@@ -1,7 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import BackgroundText from "./components/BackgroudText";
 import SliderText from "./components/SliderText";
@@ -11,48 +11,13 @@ gsap.registerPlugin(SplitText);
 // 猫咪相关的 emojis
 const catEmojis = ["🐟", "🐾", "🐈", "😻", "🐠", "🧶", "🪴", "🐭"];
 
-const spawnTreat = () => {
-  // 随机选择一个 emoji
-  const randomEmoji = catEmojis[(Math.random() * catEmojis.length) | 0];
-
-  // 生成一个 treat 元素
-  const treat = document.createElement("span");
-  treat.className = "treat";
-  treat.textContent = randomEmoji;
-  treat.style.position = "absolute";
-  treat.style.fontSize = Math.random() * 4 + 1 + "rem"; // 随机字体大小
-  treat.style.pointerEvents = "none"; // 忽略鼠标事件
-
-  // 随机定位
-  const startX = Math.random() * window.innerWidth;
-  const startY = -50;
-  treat.style.left = `${startX}px`;
-  treat.style.top = `${startY}px`;
-
-  // Add to the foreground element instead of body
-  document.getElementById("foreground")?.appendChild(treat);
-
-  // GSAP 动画
-  gsap.to(treat, {
-    y: window.innerHeight + 100,
-    x: (Math.random() - 0.5) * 200,
-    rotation: (Math.random() - 0.5) * 360,
-    opacity: 0,
-    duration: 3 + Math.random() * 2,
-    ease: "power1.in",
-    onComplete: () => {
-      treat.remove();
-    },
-  });
-};
-
 export default function Home() {
   const { t } = useTranslation("translation", {
     keyPrefix: "page.home",
   });
   const containerRef = useRef(null); // This should be managed by your routing logic
 
-  useGSAP(
+  const { contextSafe } = useGSAP(
     () => {
       const timeline = gsap.timeline();
 
@@ -64,11 +29,40 @@ export default function Home() {
     { scope: containerRef }
   );
 
-  useEffect(() => {
-    spawnTreat();
-    const interval = setInterval(spawnTreat, 4000);
-    return () => clearInterval(interval);
-  }, []);
+  const spawnTreat = contextSafe(() => {
+    // 随机选择一个 emoji
+    const randomEmoji = catEmojis[(Math.random() * catEmojis.length) | 0];
+
+    // 生成一个 treat 元素
+    const treat = document.createElement("span");
+    treat.className = "treat";
+    treat.textContent = randomEmoji;
+    treat.style.position = "absolute";
+    treat.style.fontSize = Math.random() * 4 + 1 + "rem"; // 随机字体大小
+    treat.style.pointerEvents = "none"; // 忽略鼠标事件
+
+    // 随机定位
+    const startX = Math.random() * window.innerWidth;
+    const startY = -50;
+    treat.style.left = `${startX}px`;
+    treat.style.top = `${startY}px`;
+
+    // Add to the foreground element instead of body
+    document.getElementById("foreground")?.appendChild(treat);
+
+    // GSAP 动画
+    gsap.to(treat, {
+      y: window.innerHeight + 100,
+      x: (Math.random() - 0.5) * 200,
+      rotation: (Math.random() - 0.5) * 360,
+      opacity: 0,
+      duration: 3 + Math.random() * 2,
+      ease: "power1.in",
+      onComplete: () => {
+        treat.remove();
+      },
+    });
+  });
 
   return (
     <main
