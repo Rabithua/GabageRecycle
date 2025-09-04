@@ -56,7 +56,7 @@ export default function TimelinePage() {
   return (
     <main
       ref={containerRef}
-      className="font-serif text-primary grid-background"
+      className="font-serif text-primary grid-background [mask-image:linear-gradient(0deg,#000_calc(100%-10%),transparent)]"
     >
       <div ref={scrollContentRef} className="pt-24">
         <Timeline t={t} />
@@ -70,8 +70,6 @@ export default function TimelinePage() {
           </h1>
         </div>
       </div>
-
-      <div className="fixed top-0 left-0 w-dvw h-dvh shadow-[inset_0_0_30px_30px_#ffffff] pointer-events-none"></div>
     </main>
   );
 }

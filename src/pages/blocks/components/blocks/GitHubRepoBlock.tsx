@@ -144,7 +144,7 @@ export default function GithubRepoBlock({
             )}
           </div>
           {(branchData || commits.length > 0) && (
-            <div className="relative w-full mb-1 text-[11px] text-gray-500 space-y-2 grow min-h-0 overflow-y-scroll">
+            <div className="relative w-full mb-1 text-[11px] text-gray-500 space-y-2 grow min-h-0 overflow-y-scroll [mask-image:linear-gradient(180deg,#000_calc(100%-10%),transparent)]">
               {/* {branchData && (
                 <div>
                   Branch:{" "}
@@ -173,9 +173,6 @@ export default function GithubRepoBlock({
                   </div>
                 ))}
               </div>
-              <div className="h-2 w-full bg-white blur-xs sticky -bottom-1 "></div>
-              <div className="h-2 w-full bg-white blur-sm sticky -bottom-1 "></div>
-              <div className="h-2 w-full bg-white blur-sm sticky -bottom-1 "></div>
             </div>
           )}
           <div className="mt-auto shrink-0 flex flex-wrap gap-x-4 gap-y-2 text-[11px] text-gray-500">
