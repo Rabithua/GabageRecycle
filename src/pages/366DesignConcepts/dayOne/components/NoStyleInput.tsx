@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
+import AnimateText from "./AnimateText";
 
 export default function NoStyleInput({
   value,
@@ -40,7 +41,6 @@ export default function NoStyleInput({
     />
   ) : (
     <span
-      tabIndex={0}
       role="button"
       aria-label="No Style Input Display"
       className={`cursor-pointer truncate ${className}`}
@@ -51,7 +51,7 @@ export default function NoStyleInput({
         }
       }}
     >
-      {value || placeholder || ""}
+      <AnimateText>{value || placeholder || "Click to edit"}</AnimateText>
     </span>
   );
 }

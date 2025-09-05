@@ -43,7 +43,7 @@ export default function DayOne() {
     <section
       ref={containerRef}
       id="firstContainer"
-      className="w-full h-full bg-[#CCB689] shadow-[inset_0_0_0_0.2cqw_#00000010] rounded-[17.5%] overflow- selectColor"
+      className="w-full h-full bg-[#CCB689] shadow-[inset_0_0_0_0.2cqw_#00000010] rounded-[17.5%] overflow-hidden selectColor"
       style={{ containerType: "inline-size" }}
     >
       <div
@@ -147,7 +147,7 @@ export default function DayOne() {
                     setNewTodo("");
                   }
                 }}
-                placeholder="Add a new task"
+                placeholder="Add a new note"
               />
             </div>
           </div>
