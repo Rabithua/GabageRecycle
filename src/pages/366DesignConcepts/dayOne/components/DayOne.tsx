@@ -13,7 +13,11 @@ export default function DayOne() {
   const [todos, setTodos] = useState([
     { id: 1, text: "Whole milk", completed: true },
     { id: 2, text: "Tomatos", completed: false },
-    { id: 3, text: "Chicken tenders", completed: false },
+    {
+      id: 3,
+      text: "Chicken tenders，Chicken tenders，Chicken tenders，Chicken tenders，Chicken tenders",
+      completed: false,
+    },
     { id: 4, text: "Orange juice", completed: false },
   ]);
   const listRef = useRef<HTMLDivElement>(null);
@@ -74,11 +78,11 @@ export default function DayOne() {
             {todos.map((todo) => (
               <div
                 key={todo.id}
-                className={`w-full flex duration-300 gap-[3.5%] items-center ${
+                className={`w-full flex duration-300 gap-[3.5%] items-start ${
                   !todo.completed ? " text-[#715c42]/40" : "text-[#715c42]"
                 }`}
               >
-                <div className="shrink-0 w-[6cqw] h-[6cqw] relative">
+                <div className="shrink-0 w-[6cqw] h-[6cqw] relative flex items-center mt-[1.5cqw] line-clamp-1">
                   <input
                     className="block cursor-pointer w-full h-full accent-[#715c42]/60 rounded-full appearance-none checked:bg-[#715c42]/60 border-[#715c42]/40 border-[0.4cqw] duration-300"
                     style={{ outline: "none" }}
@@ -100,7 +104,7 @@ export default function DayOne() {
                   />
                 </div>
 
-                <div className="text-[6cqw] truncate">
+                <div className="text-[6cqw]">
                   <NoStyleInput
                     value={todo.text}
                     onChange={(value) =>

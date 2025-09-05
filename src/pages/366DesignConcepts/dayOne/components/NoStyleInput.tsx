@@ -43,8 +43,9 @@ export default function NoStyleInput({
     <span
       role="button"
       aria-label="No Style Input Display"
-      className={`cursor-pointer truncate ${className}`}
+      className={`cursor-pointer ${className}`}
       onClick={() => setEditing(true)}
+      title={value || placeholder || "Click to edit"}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
           setEditing(true);
