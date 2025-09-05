@@ -4,11 +4,11 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
 import "./index.css";
 
+import DesignConcepts from "./pages/366DesignConcepts";
 import Apple from "./pages/apple";
 import Block from "./pages/blocks";
 import Home from "./pages/home";
 import Scroll from "./pages/scroll";
-import Template from "./pages/template";
 import Timeline from "./pages/timeline";
 import Tree from "./pages/tree";
 
@@ -23,7 +23,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/apple" element={<Apple />} />
         <Route path="/blocks" element={<Block />} />
         <Route path="/timeline" element={<Timeline />} />
-        <Route path="/template" element={<Template />} />
+        <Route path="/366designconcepts" element={<DesignConcepts />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

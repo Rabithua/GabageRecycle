@@ -9,7 +9,15 @@
 
 
 @utility font-basic {
-    font-family: 'Playwrite AU QLD', 'Noto Serif SC', sans-serif;
+    font-family: 'Playwrite AU QLD', 'LXGW WenKai Mono TC', 'Noto Serif SC', sans-serif;
+}
+
+@utility font-serif {
+    font-family: 'Noto Serif SC', serif;
+}
+
+@utility font-wenkai {
+    font-family: 'LXGW WenKai Mono TC', monospace, 'Noto Serif SC', serif;
 }
 
 /* home page use start */
