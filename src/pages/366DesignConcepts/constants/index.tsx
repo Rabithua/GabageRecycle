@@ -31,7 +31,7 @@ const daysComponents = [
   },
   {
     component: <DayOne />,
-    title: "Note",
+    title: "MusicPlayer",
     author: author_rabithua,
     createAt: "2024-09-05",
   }

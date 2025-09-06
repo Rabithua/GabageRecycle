@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import type { IAudioMetadata } from "music-metadata";
 import * as musicMetadata from "music-metadata";
 import { useEffect, useRef, useState } from "react";
+import MusicToggle from "./components/MusicToggle";
 
 // 将 Uint8Array 转换为 Base64 字符串的辅助函数
 function arrayBufferToBase64(buffer: Uint8Array): string {
@@ -15,13 +16,6 @@ function arrayBufferToBase64(buffer: Uint8Array): string {
   }
   return btoa(binary);
 }
-
-// 将秒数格式化为 MM:SS 格式
-// function formatTime(seconds: number): string {
-//   const mins = Math.floor(seconds / 60);
-//   const secs = Math.floor(seconds % 60);
-//   return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
-// }
 
 export default function DayOne() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -286,23 +280,11 @@ export default function DayOne() {
                 onTouchStart={startRewind}
                 onTouchEnd={stopRewind}
               />
-              <div>
-                {isPlaying ? (
-                  <img
-                    alt="Pause"
-                    src="https://public.zzfw.cc/gabagerecycle/366DesignConcepts/dayone/Pause.svg"
-                    className="size-[16cqw] cursor-pointer"
-                    onClick={togglePlay}
-                  />
-                ) : (
-                  <img
-                    alt="Play"
-                    src="https://public.zzfw.cc/gabagerecycle/366DesignConcepts/dayone/_Play.svg"
-                    className="size-[16cqw] cursor-pointer"
-                    onClick={togglePlay}
-                  />
-                )}
-              </div>
+              <MusicToggle
+                className="size-[16cqw]"
+                isPlaying={isPlaying}
+                onToggle={togglePlay}
+              />
               <img
                 alt="快进5秒，长按连续快进"
                 src="https://public.zzfw.cc/gabagerecycle/366DesignConcepts/dayone/Next.svg"
