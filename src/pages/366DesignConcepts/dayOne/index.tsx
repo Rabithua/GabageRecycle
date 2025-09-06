@@ -3,7 +3,7 @@ import SliderText from "@/pages/home/components/SliderText";
 import { arrayBufferToBase64 } from "@/utils/file";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
-import { AudioLines } from "lucide-react";
+import { AudioLines, InfinityIcon } from "lucide-react";
 import type { IAudioMetadata } from "music-metadata";
 import * as musicMetadata from "music-metadata";
 import { useEffect, useRef, useState, type JSX } from "react";
@@ -49,8 +49,13 @@ export default function DayOne({
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
+  const [isLooping, setIsLooping] = useState<boolean>(false);
   const rewindIntervalRef = useRef<number | null>(null);
   const forwardIntervalRef = useRef<number | null>(null);
+
+  const toggleLoop = () => {
+    setIsLooping((prev) => !prev);
+  };
 
   useEffect(() => {
     const fetchMetadata = async () => {
@@ -291,8 +296,24 @@ export default function DayOne({
             src={musicUrl}
             onTimeUpdate={updateProgress}
             onLoadedMetadata={updateProgress}
-            onEnded={() => setIsPlaying(false)}
+            onEnded={() => {
+              if (!isLooping) {
+                setIsPlaying(false);
+              }
+            }}
+            loop={isLooping}
           />
+
+          <button
+            type="button"
+            onClick={toggleLoop}
+            title={isLooping ? "Disable Loop" : "Enable Loop"}
+            className={`cursor-pointer absolute size-[20cqw] top-[12cqw] right-[12cqw] z-10 rounded-full p-[2cqw] flex justify-center items-center transition-colors backdrop-blur-2xl bg-white/10 ${
+              isLooping ? " text-white" : " text-white/40"
+            }`}
+          >
+            <InfinityIcon className="size-[14cqw]" />
+          </button>
 
           {metadata.common.picture && metadata.common.picture.length > 0 && (
             <img
@@ -304,21 +325,21 @@ export default function DayOne({
             />
           )}
 
-          <div className="absolute bottom-0 w-full h-2/3 [mask-image:linear-gradient(0deg,#000_calc(100%-40%),transparent)] z-5 bg-black/20 backdrop-blur-2xl"></div>
-
           <div className="flex flex-col items-center text-white z-10 w-full">
+            <div className="absolute bottom-0 w-full h-2/3 [mask-image:linear-gradient(0deg,#000000_calc(100%-60%),transparent)] z-5 bg-black/20 backdrop-blur-2xl"></div>
+
             <p className="text-[8cqw] font-bold">
               <SliderText>
                 {metadata.common.title || "Unknown Title"}
               </SliderText>
             </p>
-            <p className="text-[8cqw] opacity-80">
+            <p className="text-[8cqw]">
               <SliderText>
                 {metadata.common.artist || "Unknown Artist"}
               </SliderText>
             </p>
 
-            <div className="flex gap-[3cqw] mt-[4cqw] items-center justify-around w-full">
+            <div className="flex gap-[3cqw] mt-[6cqw] items-center justify-around w-full z-10 opacity-80">
               <img
                 alt="Rewind 5s, long press to seek"
                 src="https://public.zzfw.cc/gabagerecycle/366DesignConcepts/dayone/Previous.svg"
@@ -349,7 +370,7 @@ export default function DayOne({
             </div>
 
             <div
-              className="w-full h-[2cqw] mt-[6cqw] bg-white/30 rounded-full overflow-hidden cursor-pointer"
+              className="w-full h-[2cqw] mt-[6cqw] bg-white/30 rounded-full overflow-hidden cursor-pointer z-10 opacity-80"
               onClick={setProgress}
             >
               <div
