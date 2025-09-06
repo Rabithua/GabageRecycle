@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
 import "./index.css";
 
-import DesignConcepts from "./pages/366DesignConcepts/dayOne";
+import DesignConcepts from "./pages/366DesignConcepts";
 import Apple from "./pages/apple";
 import Block from "./pages/blocks";
 import Home from "./pages/home";
