@@ -5,7 +5,7 @@ import { useRef } from "react";
 
 gsap.registerPlugin(SplitText);
 
-export default function AnimateText({
+export default function DayOneAnimateText({
   children,
 }: {
   children: React.ReactNode;

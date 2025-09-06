@@ -6,14 +6,13 @@ export default function DesignConcepts() {
   const params = useParams();
   console.log(params);
 
-  // 安全地计算当前日的索引，并检查是否有效
-  const dayIndex = params.day ? Number(params.day) - 1 : 0;
+  const dayIndex = params.day ? Number(params.day) : 0;
   const isValidDay = dayIndex >= 0 && dayIndex < daysComponents.length;
 
-  // 安全地获取当前日的组件和作者信息
   const currentComponent = isValidDay
     ? daysComponents[dayIndex].component
     : null;
+
   const currentAuthor = isValidDay ? daysComponents[dayIndex].author : null;
 
   return (
@@ -25,11 +24,25 @@ export default function DesignConcepts() {
           </div>
         )}
         <div className="fixed bottom-4 right-4 text-[1cqw] text-gray-300 flex flex-col items-end gap-2 font-extralight [&_a]:text-gray-500">
+          {isValidDay && (
+            <SliderText>
+              Day {dayIndex}:&nbsp;
+              <a
+                href={`/366DesignConcepts/${dayIndex}`}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                {daysComponents[dayIndex].title}
+              </a>
+            </SliderText>
+          )}
           <SliderText>366DesignConcepts</SliderText>
-          <SliderText>
-            Made by&nbsp;
-            {currentAuthor || <span>Unknown</span>}
-          </SliderText>
+          {currentAuthor && (
+            <SliderText>
+              Made by&nbsp;
+              {currentAuthor || <span>Unknown</span>}
+            </SliderText>
+          )}
           <SliderText>
             Inspaired by&nbsp;
             <a

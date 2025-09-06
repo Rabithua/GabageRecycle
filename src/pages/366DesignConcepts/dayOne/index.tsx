@@ -3,7 +3,7 @@ import { gsap } from "gsap";
 import { Check, Edit3Icon } from "lucide-react";
 import moment from "moment";
 import { useRef, useState } from "react";
-import NoStyleInput from "./NoStyleInput";
+import NoStyleInput from "./components/NoStyleInput";
 
 export default function DayOne() {
   const containerRef = useRef<HTMLDivElement>(null);
