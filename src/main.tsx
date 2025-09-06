@@ -23,7 +23,9 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/apple" element={<Apple />} />
         <Route path="/blocks" element={<Block />} />
         <Route path="/timeline" element={<Timeline />} />
+        {/* 366 Design Concepts 兼容预留社媒链接 */}
         <Route path="/366designconcepts-dayone" element={<DesignConcepts />} />
+        <Route path="/366designconcepts/:day" element={<DesignConcepts />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

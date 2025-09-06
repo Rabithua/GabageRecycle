@@ -3,7 +3,6 @@ import { gsap } from "gsap";
 import { Check, Edit3Icon } from "lucide-react";
 import moment from "moment";
 import { useRef, useState } from "react";
-import "../styles/index.css";
 import NoStyleInput from "./NoStyleInput";
 
 export default function DayOne() {
@@ -47,16 +46,15 @@ export default function DayOne() {
     <section
       ref={containerRef}
       id="firstContainer"
-      className="w-full h-full bg-[#CCB689] shadow-[inset_0_0_0_0.2cqw_#00000010] rounded-[17.5%] overflow-hidden selectColor"
-      style={{ containerType: "inline-size" }}
+      className={`@container size-full bg-[#CCB689] shadow-[inset_0_0_0_0.2cqw_#00000010] rounded-[17.5%] overflow-hidden [&_div]:selection:bg-[#715c4230] [&_div]:selection:text-[#715c42]`}
     >
       <div
         id="secondContainer"
-        className="w-full h-full rounded-[17.5%] rounded-br-[33%] shadow-[inset_0_0_0_0.2cqw_#00000010] bg-[#E5D4B1]"
+        className="size-full rounded-[17.5%] rounded-br-[33%] shadow-[inset_0_0_0_0.2cqw_#00000010] bg-[#E5D4B1]"
       >
         <div
           id="thirdContainer"
-          className="w-full h-full flex flex-col py-[10%] px-[8%] shadow-[inset_0_0_0_0.2cqw_#00000010] bg-[#FFF4DE] rounded-[17.5%] rounded-br-[45%] overflow-hidden"
+          className="size-full flex flex-col py-[10%] px-[8%] shadow-[inset_0_0_0_0.2cqw_#00000010] bg-[#FFF4DE] rounded-[17.5%] rounded-br-[45%] overflow-hidden"
         >
           <div className="shrink-0 flex justify-between items-center mb-[6%]">
             <div className="font-medium text-[4cqw] text-[#715c42]/60 tracking-widest">
@@ -84,7 +82,7 @@ export default function DayOne() {
               >
                 <div className="shrink-0 w-[6cqw] h-[6cqw] relative flex items-center mt-[1.5cqw] line-clamp-1">
                   <input
-                    className="block cursor-pointer w-full h-full accent-[#715c42]/60 rounded-full appearance-none checked:bg-[#715c42]/60 border-[#715c42]/40 border-[0.4cqw] duration-300"
+                    className="block cursor-pointer size-full accent-[#715c42]/60 rounded-full appearance-none checked:bg-[#715c42]/60 border-[#715c42]/40 border-[0.4cqw] duration-300"
                     style={{ outline: "none" }}
                     aria-label="Mark todo as completed"
                     type="checkbox"
@@ -100,7 +98,7 @@ export default function DayOne() {
                     }
                   />
                   <Check
-                    className={`pointer-events-none absolute top-0 left-0 w-full h-full text-white ${todo.completed ? "scale-80" : "scale-0"} duration-300`}
+                    className={`pointer-events-none absolute top-0 left-0 size-full text-white ${todo.completed ? "scale-80" : "scale-0"} duration-300`}
                   />
                 </div>
 
