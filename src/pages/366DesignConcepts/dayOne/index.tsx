@@ -6,14 +6,41 @@ import { gsap } from "gsap";
 import { AudioLines } from "lucide-react";
 import type { IAudioMetadata } from "music-metadata";
 import * as musicMetadata from "music-metadata";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type JSX } from "react";
 import MusicPlayerSkeleton from "./components/Skeleton";
 
+/**
+ * A music player component styled as a retro audio player with modern UI features.
+ *
+ * This component displays an audio player with album art (if available),
+ * title, artist information, and standard playback controls. It fetches metadata
+ * from an audio file URL and provides interactive functionality including:
+ *
+ * - Play/pause toggle
+ * - Forward/rewind (single tap for 5s, long press for continuous seeking)
+ * - Progress bar with click-to-seek functionality
+ * - Loading state with skeleton UI
+ * - Error handling with user-friendly messages
+ *
+ * The component uses GSAP for animations and is responsive with container queries.
+ *
+ * @param {Object} props - The component props
+ * @param {string} [props.musicUrl="https://public.zzfw.cc/gabagerecycle/366DesignConcepts/dayone/%E6%B5%B7%E5%BA%95%E6%97%B6%E5%85%89%E6%9C%BA%20-%20%E8%A7%A3%E5%86%B3.mp3"] - URL of the audio file to play
+ * @returns {JSX.Element} The rendered music player component
+ *
+ * @requires musicMetadata - For parsing audio file metadata
+ * @requires gsap - For animations
+ * @requires useGSAP - GSAP React hook
+ * @requires MusicPlayerSkeleton - Skeleton loading component
+ * @requires SliderText - Text animation component
+ * @requires MusicToggle - Play/pause button component
+ * @requires arrayBufferToBase64 - Utility function to convert array buffer to base64
+ */
 export default function DayOne({
   musicUrl = "https://public.zzfw.cc/gabagerecycle/366DesignConcepts/dayone/%E6%B5%B7%E5%BA%95%E6%97%B6%E5%85%89%E6%9C%BA%20-%20%E8%A7%A3%E5%86%B3.mp3",
 }: {
   musicUrl?: string;
-}) {
+}): JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [metadata, setMetadata] = useState<IAudioMetadata | null>(null);
@@ -244,7 +271,7 @@ export default function DayOne({
       className={`@container size-full bg-black/20 border-white/20 border-[0.5cqw] rounded-[17.5%] overflow-hidden [&_div]:selection:bg-[#ffffff] [&_div]:selection:text-[#000000]`}
     >
       {loading && (
-        <div className="size-full flex flex-col items-center justify-end px-[12cqw] py-[8cqw] gap-[6cqw]">
+        <div className="relative size-full flex flex-col items-center justify-end px-[12cqw] py-[8cqw] gap-[6cqw]">
           <MusicPlayerSkeleton />
         </div>
       )}
