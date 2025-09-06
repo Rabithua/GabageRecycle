@@ -83,7 +83,9 @@ export default function Home() {
             className="font-semibold leading-tight text-5xl pretty-text"
             dangerouslySetInnerHTML={{ __html: t("title") }}
           />
-          <SliderText>{t("subtitle")}</SliderText>
+          <SliderText className="text-secondary font-extralight">
+            {t("subtitle")}
+          </SliderText>
         </div>
         <div
           onClick={spawnTreat}

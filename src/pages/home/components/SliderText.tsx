@@ -1,20 +1,21 @@
 import { useGSAP } from "@gsap/react";
-import { useRef } from "react";
-import { SplitText } from "gsap/SplitText";
 import gsap from "gsap";
+import { SplitText } from "gsap/SplitText";
+import { useRef } from "react";
 
 gsap.registerPlugin(SplitText);
 
 export default function SliderText({
   children,
+  className,
 }: {
   children: React.ReactNode;
+  className?: string;
 }) {
   const textRef = useRef(null);
 
   useGSAP(
     () => {
-
       const split = new SplitText(textRef.current, {
         type: "words, chars",
       });
@@ -33,8 +34,8 @@ export default function SliderText({
   );
 
   return (
-    <p ref={textRef} className="text-secondary font-extralight">
+    <span ref={textRef} className={className || ""}>
       {children}
-    </p>
+    </span>
   );
 }

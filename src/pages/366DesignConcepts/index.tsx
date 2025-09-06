@@ -1,6 +1,6 @@
 import { daysComponents } from "@/pages/366DesignConcepts/constants";
 import { useParams } from "react-router";
-import AnimateText from "./dayOne/components/AnimateText";
+import SliderText from "../home/components/SliderText";
 
 export default function DesignConcepts() {
   const params = useParams();
@@ -21,16 +21,16 @@ export default function DesignConcepts() {
       <div className="w-4/5 max-w-xl aspect-square overflow-hidden">
         {currentComponent || (
           <div className="@container flex items-center justify-center w-full h-full text-[10cqw] font-mono">
-            <AnimateText>404</AnimateText>
+            <SliderText>404</SliderText>
           </div>
         )}
         <div className="fixed bottom-4 right-4 text-[1cqw] text-gray-300 flex flex-col items-end gap-2 font-extralight [&_a]:text-gray-500">
-          <div>366DesignConcepts</div>
-          <div>
+          <SliderText>366DesignConcepts</SliderText>
+          <SliderText>
             Made by&nbsp;
             {currentAuthor || <span>Unknown</span>}
-          </div>
-          <div>
+          </SliderText>
+          <SliderText>
             Inspaired by&nbsp;
             <a
               href="https://x.com/sovpal"
@@ -39,7 +39,7 @@ export default function DesignConcepts() {
             >
               @sovpal
             </a>
-          </div>
+          </SliderText>
         </div>
       </div>
     </main>

@@ -45,7 +45,9 @@ export default function Apple() {
         <h1 className=" font-semibold leading-tight text-5xl pretty-text">
           {t("title")}
         </h1>
-        <SliderText>{t("subtitle")}</SliderText>
+        <SliderText className="text-secondary font-extralight">
+          {t("subtitle")}
+        </SliderText>
       </div>
 
       <div className="w-dvw h-dvh absolute top-0 left-0 overflow-hidden select-none">
