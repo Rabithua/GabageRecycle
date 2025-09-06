@@ -10,7 +10,8 @@
  */
 
 import { author_rabithua } from "@/pages/366DesignConcepts/constants/author";
-import DayOne from "@/pages/366DesignConcepts/dayOne";
+import DayZero from "@/pages/366DesignConcepts/dayZero";
+import DayOne from "../dayOne";
 
 /**
  * Array of day components used for rendering daily design concepts.
@@ -23,11 +24,17 @@ import DayOne from "@/pages/366DesignConcepts/dayOne";
  */
 const daysComponents = [
   {
-    component: <DayOne />,
+    component: <DayZero />,
     title: "Note",
     author: author_rabithua,
     createAt: "2024-09-05",
   },
+  {
+    component: <DayOne />,
+    title: "Note",
+    author: author_rabithua,
+    createAt: "2024-09-05",
+  }
 ];
 
 export { daysComponents };

@@ -1,41 +1,200 @@
+import SliderText from "@/pages/home/components/SliderText";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
-import { Check, Edit3Icon } from "lucide-react";
-import moment from "moment";
-import { useRef, useState } from "react";
-import NoStyleInput from "./components/NoStyleInput";
+import type { IAudioMetadata } from "music-metadata";
+import * as musicMetadata from "music-metadata";
+import { useEffect, useRef, useState } from "react";
+
+// 将 Uint8Array 转换为 Base64 字符串的辅助函数
+function arrayBufferToBase64(buffer: Uint8Array): string {
+  let binary = "";
+  const bytes = new Uint8Array(buffer);
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
+}
+
+// 将秒数格式化为 MM:SS 格式
+// function formatTime(seconds: number): string {
+//   const mins = Math.floor(seconds / 60);
+//   const secs = Math.floor(seconds % 60);
+//   return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
+// }
 
 export default function DayOne() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [title, setTitle] = useState("Groceries list");
-  const [newTodo, setNewTodo] = useState("");
-  const [todos, setTodos] = useState([
-    { id: 1, text: "Whole milk", completed: true },
-    { id: 2, text: "Tomatos", completed: false },
-    {
-      id: 3,
-      text: "Chicken tenders，Chicken tenders，Chicken tenders，Chicken tenders，Chicken tenders",
-      completed: false,
-    },
-    { id: 4, text: "Orange juice", completed: false },
-  ]);
-  const listRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [metadata, setMetadata] = useState<IAudioMetadata | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [currentTime, setCurrentTime] = useState<number>(0);
+  const [duration, setDuration] = useState<number>(0);
+  const rewindIntervalRef = useRef<number | null>(null);
+  const forwardIntervalRef = useRef<number | null>(null);
+  const musicUrl =
+    "https://public.zzfw.cc/gabagerecycle/366DesignConcepts/dayone/%E6%B5%B7%E5%BA%95%E6%97%B6%E5%85%89%E6%9C%BA%20-%20%E8%A7%A3%E5%86%B3.mp3";
+
+  useEffect(() => {
+    const fetchMetadata = async () => {
+      try {
+        setLoading(true);
+
+        // 获取音乐文件
+        const response = await fetch(musicUrl);
+        const buffer = await response.arrayBuffer();
+
+        // 解析元数据
+        const metadata = await musicMetadata.parseBuffer(
+          new Uint8Array(buffer),
+          { size: buffer.byteLength, mimeType: "audio/mpeg" }
+        );
+
+        console.log("音乐元数据：", metadata);
+        setMetadata(metadata);
+      } catch (err) {
+        console.error("解析音乐元数据时出错:", err);
+        setError(err instanceof Error ? err.message : "未知错误");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMetadata();
+  }, []);
+
+  // 清理定时器
+  useEffect(() => {
+    return () => {
+      if (rewindIntervalRef.current !== null) {
+        clearInterval(rewindIntervalRef.current);
+      }
+      if (forwardIntervalRef.current !== null) {
+        clearInterval(forwardIntervalRef.current);
+      }
+    };
+  }, []);
+
+  // 音频播放控制
+  const togglePlay = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  // 快退5秒
+  const handlePrevious = () => {
+    if (audioRef.current) {
+      const newTime = Math.max(audioRef.current.currentTime - 5, 0);
+      audioRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
+
+      if (!isPlaying) {
+        audioRef.current.play();
+        setIsPlaying(true);
+      }
+    }
+  };
+
+  // 快进5秒
+  const handleNext = () => {
+    if (audioRef.current) {
+      const newTime = Math.min(
+        audioRef.current.currentTime + 5,
+        audioRef.current.duration
+      );
+      audioRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
+
+      if (!isPlaying) {
+        audioRef.current.play();
+        setIsPlaying(true);
+      }
+    }
+  };
+
+  // 开始长按快退
+  const startRewind = () => {
+    if (rewindIntervalRef.current !== null) return;
+
+    // 先执行一次快退
+    handlePrevious();
+
+    // 然后设置间隔持续快退
+    rewindIntervalRef.current = window.setInterval(() => {
+      if (audioRef.current) {
+        const newTime = Math.max(audioRef.current.currentTime - 2, 0);
+        audioRef.current.currentTime = newTime;
+        setCurrentTime(newTime);
+      }
+    }, 200); // 每200毫秒快退2秒
+  };
+
+  // 结束长按快退
+  const stopRewind = () => {
+    if (rewindIntervalRef.current !== null) {
+      clearInterval(rewindIntervalRef.current);
+      rewindIntervalRef.current = null;
+    }
+  };
+
+  // 开始长按快进
+  const startForward = () => {
+    if (forwardIntervalRef.current !== null) return;
+
+    // 先执行一次快进
+    handleNext();
+
+    // 然后设置间隔持续快进
+    forwardIntervalRef.current = window.setInterval(() => {
+      if (audioRef.current) {
+        const newTime = Math.min(
+          audioRef.current.currentTime + 2,
+          audioRef.current.duration
+        );
+        audioRef.current.currentTime = newTime;
+        setCurrentTime(newTime);
+      }
+    }, 200); // 每200毫秒快进2秒
+  };
+
+  // 结束长按快进
+  const stopForward = () => {
+    if (forwardIntervalRef.current !== null) {
+      clearInterval(forwardIntervalRef.current);
+      forwardIntervalRef.current = null;
+    }
+  };
+
+  // 更新进度条
+  const updateProgress = () => {
+    if (audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime);
+      setDuration(audioRef.current.duration);
+    }
+  };
+
+  // 设置进度
+  const setProgress = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (audioRef.current) {
+      const progressBar = e.currentTarget;
+      const clickPosition =
+        (e.clientX - progressBar.getBoundingClientRect().left) /
+        progressBar.offsetWidth;
+      audioRef.current.currentTime = clickPosition * audioRef.current.duration;
+    }
+  };
 
   useGSAP(
     () => {
-      const tl = gsap.timeline();
-
-      tl.from("#thirdContainer", {
-        borderRadius: "17.5%",
-        duration: 0.5,
-        ease: "ease.inOut",
-      });
-
-      tl.from("#secondContainer", {
-        borderRadius: "17.5%",
-        duration: 1,
-        ease: "ease.inOut",
-      });
+      gsap.set(containerRef.current, { autoAlpha: 1 });
     },
     {
       scope: containerRef,
@@ -45,116 +204,130 @@ export default function DayOne() {
   return (
     <section
       ref={containerRef}
-      id="firstContainer"
-      className={`@container size-full bg-[#CCB689] shadow-[inset_0_0_0_0.2cqw_#00000010] rounded-[17.5%] overflow-hidden [&_div]:selection:bg-[#715c4230] [&_div]:selection:text-[#715c42]`}
+      className={`@container size-full bg-black/20 border-white/20 border-[0.5cqw] rounded-[17.5%] overflow-hidden [&_div]:selection:bg-[#ffffff] [&_div]:selection:text-[#000000]`}
     >
-      <div
-        id="secondContainer"
-        className="size-full rounded-[17.5%] rounded-br-[33%] shadow-[inset_0_0_0_0.2cqw_#00000010] bg-[#E5D4B1]"
-      >
-        <div
-          id="thirdContainer"
-          className="size-full flex flex-col py-[10%] px-[8%] shadow-[inset_0_0_0_0.2cqw_#00000010] bg-[#FFF4DE] rounded-[17.5%] rounded-br-[45%] overflow-hidden"
-        >
-          <div className="shrink-0 flex justify-between items-center mb-[6%]">
-            <div className="font-medium text-[4cqw] text-[#715c42]/60 tracking-widest">
-              NOTES
+      {loading && (
+        <div className="size-full flex flex-col items-center justify-end px-[12cqw] py-[8cqw] gap-[6cqw]">
+          {/* 骨架屏 - 专辑封面 */}
+          <div className="size-full absolute top-0 left-0 z-0 bg-gradient-to-b from-gray-200 to-gray-300 animate-pulse"></div>
+
+          {/* 骨架屏 - 渐变遮罩 */}
+          <div className="absolute bottom-0 w-full h-2/3 [mask-image:linear-gradient(0deg,#000_calc(100%-40%),transparent)] z-5 bg-black/20 backdrop-blur-2xl"></div>
+
+          <div className="flex flex-col items-center z-10 w-full">
+            {/* 骨架屏 - 歌曲标题 */}
+            <div className="w-3/4 h-[8cqw] bg-white/30 rounded-full animate-pulse mb-2"></div>
+
+            {/* 骨架屏 - 歌手名 */}
+            <div className="w-1/2 h-[8cqw] bg-white/20 rounded-full animate-pulse"></div>
+
+            {/* 骨架屏 - 控制按钮 */}
+            <div className="flex gap-[3cqw] mt-[4cqw] items-center justify-around w-full">
+              <div className="size-[14cqw] rounded-full bg-white/30 animate-pulse"></div>
+              <div className="size-[16cqw] rounded-full bg-white/30 animate-pulse"></div>
+              <div className="size-[14cqw] rounded-full bg-white/30 animate-pulse"></div>
             </div>
-            <div className="text-[#715c42]/40 text-[4cqw]">
-              {moment().format("MMM D, YYYY")}
-            </div>
-          </div>
 
-          <div className="shrink-0 font-medium text-[#715c42] text-[10cqw] leading-[1.1] truncate">
-            <NoStyleInput value={title} onChange={(value) => setTitle(value)} />
-          </div>
-
-          <div
-            ref={listRef}
-            className="grow flex flex-col mb-[2%] py-[3%] gap-[5%] overflow-scroll [mask-image:linear-gradient(180deg,transparent_0%,#000_10%,#000_90%,transparent_100%)] [-webkit-mask-image:linear-gradient(180deg,transparent_0%,#000_10%,#000_90%,transparent_100%)]"
-          >
-            {todos.map((todo) => (
-              <div
-                key={todo.id}
-                className={`w-full flex duration-300 gap-[3.5%] items-start ${
-                  !todo.completed ? " text-[#715c42]/40" : "text-[#715c42]"
-                }`}
-              >
-                <div className="shrink-0 w-[6cqw] h-[6cqw] relative flex items-center mt-[1.5cqw] line-clamp-1">
-                  <input
-                    className="block cursor-pointer size-full accent-[#715c42]/60 rounded-full appearance-none checked:bg-[#715c42]/60 border-[#715c42]/40 border-[0.4cqw] duration-300"
-                    style={{ outline: "none" }}
-                    aria-label="Mark todo as completed"
-                    type="checkbox"
-                    checked={todo.completed}
-                    onChange={() =>
-                      setTodos((prevTodos) =>
-                        prevTodos.map((t) =>
-                          t.id === todo.id
-                            ? { ...t, completed: !t.completed }
-                            : t
-                        )
-                      )
-                    }
-                  />
-                  <Check
-                    className={`pointer-events-none absolute top-0 left-0 size-full text-white ${todo.completed ? "scale-80" : "scale-0"} duration-300`}
-                  />
-                </div>
-
-                <div className="text-[6cqw]">
-                  <NoStyleInput
-                    value={todo.text}
-                    onChange={(value) =>
-                      setTodos((prevTodos) =>
-                        value.trim() === ""
-                          ? prevTodos.filter((t) => t.id !== todo.id)
-                          : prevTodos.map((t) =>
-                              t.id === todo.id ? { ...t, text: value } : t
-                            )
-                      )
-                    }
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="shrink-0 flex items-center gap-[2%]">
-            <Edit3Icon className="shrink-0 text-[#715c4280] w-[6cqw] h-[6cqw]" />
-            <div className="font-normal text-[#715c4280] text-[7cqw] leading-[1.1] truncate">
-              <NoStyleInput
-                value={newTodo}
-                onChange={(value) => setNewTodo(value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && newTodo.trim()) {
-                    setTodos((prevTodos) => {
-                      const newList = [
-                        ...prevTodos,
-                        {
-                          id: Date.now(),
-                          text: newTodo.trim(),
-                          completed: false,
-                        },
-                      ];
-                      setTimeout(() => {
-                        if (listRef.current) {
-                          listRef.current.scrollTo({
-                            top: listRef.current.scrollHeight,
-                            behavior: "smooth",
-                          });
-                        }
-                      }, 0);
-                      return newList;
-                    });
-                    setNewTodo("");
-                  }
-                }}
-                placeholder="Add a new note"
-              />
+            {/* 骨架屏 - 进度条 */}
+            <div className="w-full h-[2cqw] mt-[6cqw] bg-white/10 rounded-full overflow-hidden">
+              <div className="h-full w-1/3 bg-white/30 rounded-full animate-pulse"></div>
             </div>
           </div>
         </div>
-      </div>
+      )}
+      {error && <p className="text-red-500">错误: {error}</p>}
+      {metadata && (
+        <div className="size-full relative flex flex-col items-center justify-end px-[12cqw] py-[8cqw] gap-[6cqw]">
+          {/* 音频元素 */}
+          <audio
+            ref={audioRef}
+            src={musicUrl}
+            onTimeUpdate={updateProgress}
+            onLoadedMetadata={updateProgress}
+            onEnded={() => setIsPlaying(false)}
+          />
+
+          {
+            /* 显示专辑封面，如果有的话 */
+            metadata.common.picture && metadata.common.picture.length > 0 && (
+              <img
+                src={`data:${metadata.common.picture[0].format};base64,${arrayBufferToBase64(
+                  metadata.common.picture[0].data
+                )}`}
+                alt="Album Art"
+                className="size-full object-cover absolute top-0 left-0 z-0"
+              />
+            )
+          }
+
+          <div className="absolute bottom-0 w-full h-2/3 [mask-image:linear-gradient(0deg,#000_calc(100%-40%),transparent)] z-5 bg-black/20 backdrop-blur-2xl"></div>
+
+          <div className="flex flex-col items-center text-white z-10 w-full">
+            <p className="text-[8cqw] font-bold">
+              <SliderText>
+                {metadata.common.title || "Unknown Title"}
+              </SliderText>
+            </p>
+            <p className="text-[8cqw] opacity-80">
+              <SliderText>
+                {metadata.common.artist || "Unknown Artist"}
+              </SliderText>
+            </p>
+
+            <div className="flex gap-[3cqw] mt-[4cqw] items-center justify-around w-full">
+              <img
+                alt="快退5秒，长按连续快退"
+                src="https://public.zzfw.cc/gabagerecycle/366DesignConcepts/dayone/Previous.svg"
+                className="size-[14cqw] cursor-pointer"
+                onClick={handlePrevious}
+                onMouseDown={startRewind}
+                onMouseUp={stopRewind}
+                onMouseLeave={stopRewind}
+                onTouchStart={startRewind}
+                onTouchEnd={stopRewind}
+              />
+              <div>
+                {isPlaying ? (
+                  <img
+                    alt="Pause"
+                    src="https://public.zzfw.cc/gabagerecycle/366DesignConcepts/dayone/Pause.svg"
+                    className="size-[16cqw] cursor-pointer"
+                    onClick={togglePlay}
+                  />
+                ) : (
+                  <img
+                    alt="Play"
+                    src="https://public.zzfw.cc/gabagerecycle/366DesignConcepts/dayone/_Play.svg"
+                    className="size-[16cqw] cursor-pointer"
+                    onClick={togglePlay}
+                  />
+                )}
+              </div>
+              <img
+                alt="快进5秒，长按连续快进"
+                src="https://public.zzfw.cc/gabagerecycle/366DesignConcepts/dayone/Next.svg"
+                className="size-[14cqw] cursor-pointer"
+                onClick={handleNext}
+                onMouseDown={startForward}
+                onMouseUp={stopForward}
+                onMouseLeave={stopForward}
+                onTouchStart={startForward}
+                onTouchEnd={stopForward}
+              />
+            </div>
+
+            <div
+              className="w-full h-[2cqw] mt-[6cqw] bg-white/30 rounded-full overflow-hidden cursor-pointer"
+              onClick={setProgress}
+            >
+              <div
+                className="h-full bg-white rounded-full"
+                style={{ width: `${(currentTime / duration) * 100 || 0}%` }}
+              ></div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
