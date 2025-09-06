@@ -1,23 +1,19 @@
+import MusicToggle from "@/pages/366DesignConcepts/dayOne/components/MusicToggle";
 import SliderText from "@/pages/home/components/SliderText";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
+import { AudioLines } from "lucide-react";
 import type { IAudioMetadata } from "music-metadata";
 import * as musicMetadata from "music-metadata";
 import { useEffect, useRef, useState } from "react";
-import MusicToggle from "./components/MusicToggle";
+import MusicPlayerSkeleton from "./components/Skeleton";
+import { arrayBufferToBase64 } from "@/utils/file";
 
-// 将 Uint8Array 转换为 Base64 字符串的辅助函数
-function arrayBufferToBase64(buffer: Uint8Array): string {
-  let binary = "";
-  const bytes = new Uint8Array(buffer);
-  const len = bytes.byteLength;
-  for (let i = 0; i < len; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return btoa(binary);
-}
-
-export default function DayOne() {
+export default function DayOne({
+  musicUrl = "https://public.zzfw.cc/gabagerecycle/366DesignConcepts/dayone/%E6%B5%B7%E5%BA%95%E6%97%B6%E5%85%89%E6%9C%BA%20-%20%E8%A7%A3%E5%86%B3.mp3",
+}: {
+  musicUrl?: string;
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [metadata, setMetadata] = useState<IAudioMetadata | null>(null);
@@ -28,36 +24,82 @@ export default function DayOne() {
   const [duration, setDuration] = useState<number>(0);
   const rewindIntervalRef = useRef<number | null>(null);
   const forwardIntervalRef = useRef<number | null>(null);
-  const musicUrl =
-    "https://public.zzfw.cc/gabagerecycle/366DesignConcepts/dayone/%E6%B5%B7%E5%BA%95%E6%97%B6%E5%85%89%E6%9C%BA%20-%20%E8%A7%A3%E5%86%B3.mp3";
 
   useEffect(() => {
     const fetchMetadata = async () => {
       try {
         setLoading(true);
+        setError(null);
 
-        // 获取音乐文件
+        try {
+          new URL(musicUrl);
+        } catch {
+          throw new Error("音乐文件 URL 格式无效");
+        }
+
         const response = await fetch(musicUrl);
+
+        if (!response.ok) {
+          throw new Error(
+            `获取音乐文件失败: ${response.status} ${response.statusText}`
+          );
+        }
+
+        const contentType = response.headers.get("content-type");
+        if (contentType && !contentType.startsWith("audio/")) {
+          console.warn("文件可能不是音频格式:", contentType);
+        }
+
         const buffer = await response.arrayBuffer();
 
-        // 解析元数据
+        if (!buffer || buffer.byteLength === 0) {
+          throw new Error("音乐文件内容为空");
+        }
+
         const metadata = await musicMetadata.parseBuffer(
           new Uint8Array(buffer),
           { size: buffer.byteLength, mimeType: "audio/mpeg" }
         );
 
-        console.log("音乐元数据：", metadata);
+        if (!metadata) {
+          throw new Error("无法解析音乐文件元数据");
+        }
+
         setMetadata(metadata);
-      } catch (err) {
-        console.error("解析音乐元数据时出错:", err);
-        setError(err instanceof Error ? err.message : "未知错误");
+      } catch (err: unknown) {
+        console.error("获取音乐元数据时发生错误:", err);
+
+        let errorMessage = "未知错误";
+
+        if (err instanceof TypeError && err.message.includes("fetch")) {
+          errorMessage = "网络连接错误，请检查网络状态";
+        } else if (
+          err instanceof TypeError &&
+          err.message.includes("Failed to fetch")
+        ) {
+          errorMessage = "无法访问音乐文件，请检查文件是否存在";
+        } else if (err instanceof Error && err.name === "AbortError") {
+          errorMessage = "请求被取消";
+        } else if (err instanceof Error && err.message.includes("CORS")) {
+          errorMessage = "跨域访问被拒绝，请检查文件权限";
+        } else if (err instanceof Error) {
+          errorMessage = err.message;
+        }
+
+        setError(errorMessage);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchMetadata();
-  }, []);
+    // 只有当 musicUrl 存在时才执行
+    if (musicUrl) {
+      fetchMetadata();
+    } else {
+      setLoading(false);
+      setError("请提供有效的音乐文件 URL");
+    }
+  }, [musicUrl]);
 
   // 清理定时器
   useEffect(() => {
@@ -202,34 +244,17 @@ export default function DayOne() {
     >
       {loading && (
         <div className="size-full flex flex-col items-center justify-end px-[12cqw] py-[8cqw] gap-[6cqw]">
-          {/* 骨架屏 - 专辑封面 */}
-          <div className="size-full absolute top-0 left-0 z-0 bg-gradient-to-b from-gray-200 to-gray-300 animate-pulse"></div>
-
-          {/* 骨架屏 - 渐变遮罩 */}
-          <div className="absolute bottom-0 w-full h-2/3 [mask-image:linear-gradient(0deg,#000_calc(100%-40%),transparent)] z-5 bg-black/20 backdrop-blur-2xl"></div>
-
-          <div className="flex flex-col items-center z-10 w-full">
-            {/* 骨架屏 - 歌曲标题 */}
-            <div className="w-3/4 h-[8cqw] bg-white/30 rounded-full animate-pulse mb-2"></div>
-
-            {/* 骨架屏 - 歌手名 */}
-            <div className="w-1/2 h-[8cqw] bg-white/20 rounded-full animate-pulse"></div>
-
-            {/* 骨架屏 - 控制按钮 */}
-            <div className="flex gap-[3cqw] mt-[4cqw] items-center justify-around w-full">
-              <div className="size-[14cqw] rounded-full bg-white/30 animate-pulse"></div>
-              <div className="size-[16cqw] rounded-full bg-white/30 animate-pulse"></div>
-              <div className="size-[14cqw] rounded-full bg-white/30 animate-pulse"></div>
-            </div>
-
-            {/* 骨架屏 - 进度条 */}
-            <div className="w-full h-[2cqw] mt-[6cqw] bg-white/10 rounded-full overflow-hidden">
-              <div className="h-full w-1/3 bg-white/30 rounded-full animate-pulse"></div>
-            </div>
-          </div>
+          <MusicPlayerSkeleton />
         </div>
       )}
-      {error && <p className="text-red-500">错误: {error}</p>}
+      {error && (
+        <div className="size-full relative flex flex-col items-center justify-center gap-[6cqw]">
+          <AudioLines className="size-[20cqw] text-white" />
+          <p className="text-[4cqw] text-white max-w-[80%] text-center">
+            <SliderText>{error}</SliderText>
+          </p>
+        </div>
+      )}
       {metadata && (
         <div className="size-full relative flex flex-col items-center justify-end px-[12cqw] py-[8cqw] gap-[6cqw]">
           {/* 音频元素 */}
@@ -241,18 +266,15 @@ export default function DayOne() {
             onEnded={() => setIsPlaying(false)}
           />
 
-          {
-            /* 显示专辑封面，如果有的话 */
-            metadata.common.picture && metadata.common.picture.length > 0 && (
-              <img
-                src={`data:${metadata.common.picture[0].format};base64,${arrayBufferToBase64(
-                  metadata.common.picture[0].data
-                )}`}
-                alt="Album Art"
-                className="size-full object-cover absolute top-0 left-0 z-0"
-              />
-            )
-          }
+          {metadata.common.picture && metadata.common.picture.length > 0 && (
+            <img
+              src={`data:${metadata.common.picture[0].format};base64,${arrayBufferToBase64(
+                metadata.common.picture[0].data
+              )}`}
+              alt="Album Art"
+              className="size-full object-cover absolute top-0 left-0 z-0"
+            />
+          )}
 
           <div className="absolute bottom-0 w-full h-2/3 [mask-image:linear-gradient(0deg,#000_calc(100%-40%),transparent)] z-5 bg-black/20 backdrop-blur-2xl"></div>
 
