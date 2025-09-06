@@ -1,5 +1,6 @@
 import MusicToggle from "@/pages/366DesignConcepts/dayOne/components/MusicToggle";
 import SliderText from "@/pages/home/components/SliderText";
+import { arrayBufferToBase64 } from "@/utils/file";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { AudioLines } from "lucide-react";
@@ -7,7 +8,6 @@ import type { IAudioMetadata } from "music-metadata";
 import * as musicMetadata from "music-metadata";
 import { useEffect, useRef, useState } from "react";
 import MusicPlayerSkeleton from "./components/Skeleton";
-import { arrayBufferToBase64 } from "@/utils/file";
 
 export default function DayOne({
   musicUrl = "https://public.zzfw.cc/gabagerecycle/366DesignConcepts/dayone/%E6%B5%B7%E5%BA%95%E6%97%B6%E5%85%89%E6%9C%BA%20-%20%E8%A7%A3%E5%86%B3.mp3",
@@ -34,26 +34,26 @@ export default function DayOne({
         try {
           new URL(musicUrl);
         } catch {
-          throw new Error("音乐文件 URL 格式无效");
+          throw new Error("Invalid music file URL format");
         }
 
         const response = await fetch(musicUrl);
 
         if (!response.ok) {
           throw new Error(
-            `获取音乐文件失败: ${response.status} ${response.statusText}`
+            `Failed to fetch music file: ${response.status} ${response.statusText}`
           );
         }
 
         const contentType = response.headers.get("content-type");
         if (contentType && !contentType.startsWith("audio/")) {
-          console.warn("文件可能不是音频格式:", contentType);
+          console.warn("File might not be an audio format:", contentType);
         }
 
         const buffer = await response.arrayBuffer();
 
         if (!buffer || buffer.byteLength === 0) {
-          throw new Error("音乐文件内容为空");
+          throw new Error("Music file content is empty");
         }
 
         const metadata = await musicMetadata.parseBuffer(
@@ -62,26 +62,27 @@ export default function DayOne({
         );
 
         if (!metadata) {
-          throw new Error("无法解析音乐文件元数据");
+          throw new Error("Failed to parse music file metadata");
         }
 
         setMetadata(metadata);
       } catch (err: unknown) {
-        console.error("获取音乐元数据时发生错误:", err);
+        console.error("Error fetching music metadata:", err);
 
-        let errorMessage = "未知错误";
+        let errorMessage = "An unknown error occurred";
 
         if (err instanceof TypeError && err.message.includes("fetch")) {
-          errorMessage = "网络连接错误，请检查网络状态";
+          errorMessage = "Network error, please check your connection";
         } else if (
           err instanceof TypeError &&
           err.message.includes("Failed to fetch")
         ) {
-          errorMessage = "无法访问音乐文件，请检查文件是否存在";
+          errorMessage =
+            "Failed to access music file, please check if it exists";
         } else if (err instanceof Error && err.name === "AbortError") {
-          errorMessage = "请求被取消";
+          errorMessage = "The request was aborted";
         } else if (err instanceof Error && err.message.includes("CORS")) {
-          errorMessage = "跨域访问被拒绝，请检查文件权限";
+          errorMessage = "CORS policy blocked the request";
         } else if (err instanceof Error) {
           errorMessage = err.message;
         }
@@ -92,16 +93,16 @@ export default function DayOne({
       }
     };
 
-    // 只有当 musicUrl 存在时才执行
+    // Only fetch if musicUrl is provided
     if (musicUrl) {
       fetchMetadata();
     } else {
       setLoading(false);
-      setError("请提供有效的音乐文件 URL");
+      setError("Please provide a valid music file URL");
     }
   }, [musicUrl]);
 
-  // 清理定时器
+  // Cleanup timers on component unmount
   useEffect(() => {
     return () => {
       if (rewindIntervalRef.current !== null) {
@@ -113,7 +114,7 @@ export default function DayOne({
     };
   }, []);
 
-  // 音频播放控制
+  // Toggle play/pause
   const togglePlay = () => {
     if (audioRef.current) {
       if (isPlaying) {
@@ -125,7 +126,7 @@ export default function DayOne({
     }
   };
 
-  // 快退5秒
+  // Rewind by 5 seconds
   const handlePrevious = () => {
     if (audioRef.current) {
       const newTime = Math.max(audioRef.current.currentTime - 5, 0);
@@ -139,7 +140,7 @@ export default function DayOne({
     }
   };
 
-  // 快进5秒
+  // Forward by 5 seconds
   const handleNext = () => {
     if (audioRef.current) {
       const newTime = Math.min(
@@ -156,24 +157,24 @@ export default function DayOne({
     }
   };
 
-  // 开始长按快退
+  // Start rewinding on long press
   const startRewind = () => {
     if (rewindIntervalRef.current !== null) return;
 
-    // 先执行一次快退
+    // Rewind once immediately
     handlePrevious();
 
-    // 然后设置间隔持续快退
+    // Then set an interval for continuous rewinding
     rewindIntervalRef.current = window.setInterval(() => {
       if (audioRef.current) {
         const newTime = Math.max(audioRef.current.currentTime - 2, 0);
         audioRef.current.currentTime = newTime;
         setCurrentTime(newTime);
       }
-    }, 200); // 每200毫秒快退2秒
+    }, 200); // Rewind 2 seconds every 200ms
   };
 
-  // 结束长按快退
+  // Stop rewinding on release
   const stopRewind = () => {
     if (rewindIntervalRef.current !== null) {
       clearInterval(rewindIntervalRef.current);
@@ -181,14 +182,14 @@ export default function DayOne({
     }
   };
 
-  // 开始长按快进
+  // Start forwarding on long press
   const startForward = () => {
     if (forwardIntervalRef.current !== null) return;
 
-    // 先执行一次快进
+    // Forward once immediately
     handleNext();
 
-    // 然后设置间隔持续快进
+    // Then set an interval for continuous forwarding
     forwardIntervalRef.current = window.setInterval(() => {
       if (audioRef.current) {
         const newTime = Math.min(
@@ -198,10 +199,10 @@ export default function DayOne({
         audioRef.current.currentTime = newTime;
         setCurrentTime(newTime);
       }
-    }, 200); // 每200毫秒快进2秒
+    }, 200); // Forward 2 seconds every 200ms
   };
 
-  // 结束长按快进
+  // Stop forwarding on release
   const stopForward = () => {
     if (forwardIntervalRef.current !== null) {
       clearInterval(forwardIntervalRef.current);
@@ -209,7 +210,7 @@ export default function DayOne({
     }
   };
 
-  // 更新进度条
+  // Update progress bar and time displays
   const updateProgress = () => {
     if (audioRef.current) {
       setCurrentTime(audioRef.current.currentTime);
@@ -217,7 +218,7 @@ export default function DayOne({
     }
   };
 
-  // 设置进度
+  // Set progress on progress bar click
   const setProgress = (e: React.MouseEvent<HTMLDivElement>) => {
     if (audioRef.current) {
       const progressBar = e.currentTarget;
@@ -257,7 +258,7 @@ export default function DayOne({
       )}
       {metadata && (
         <div className="size-full relative flex flex-col items-center justify-end px-[12cqw] py-[8cqw] gap-[6cqw]">
-          {/* 音频元素 */}
+          {/* Audio element */}
           <audio
             ref={audioRef}
             src={musicUrl}
@@ -292,7 +293,7 @@ export default function DayOne({
 
             <div className="flex gap-[3cqw] mt-[4cqw] items-center justify-around w-full">
               <img
-                alt="快退5秒，长按连续快退"
+                alt="Rewind 5s, long press to seek"
                 src="https://public.zzfw.cc/gabagerecycle/366DesignConcepts/dayone/Previous.svg"
                 className="size-[14cqw] cursor-pointer"
                 onClick={handlePrevious}
@@ -308,7 +309,7 @@ export default function DayOne({
                 onToggle={togglePlay}
               />
               <img
-                alt="快进5秒，长按连续快进"
+                alt="Forward 5s, long press to seek"
                 src="https://public.zzfw.cc/gabagerecycle/366DesignConcepts/dayone/Next.svg"
                 className="size-[14cqw] cursor-pointer"
                 onClick={handleNext}
