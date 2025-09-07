@@ -1,4 +1,4 @@
-import MusicToggle from "@/pages/366DesignConcepts/dayOne/components/MusicToggle";
+import MusicControler from "@/pages/366DesignConcepts/dayOne/components/MusicControler";
 import SliderText from "@/pages/home/components/SliderText";
 import { arrayBufferToBase64 } from "@/utils/file";
 import { useGSAP } from "@gsap/react";
@@ -52,6 +52,11 @@ export default function DayOne({
   const [isLooping, setIsLooping] = useState<boolean>(false);
   const rewindIntervalRef = useRef<number | null>(null);
   const forwardIntervalRef = useRef<number | null>(null);
+
+  // Seek configuration constants
+  const SHORT_JUMP = 5; // seconds for single click
+  const STEP_DELTA = 2; // seconds per step during long press
+  const STEP_MS = 200; // ms between continuous steps
 
   const toggleLoop = () => {
     setIsLooping((prev) => !prev);
@@ -136,12 +141,15 @@ export default function DayOne({
 
   // Cleanup timers on component unmount
   useEffect(() => {
+    const r = rewindIntervalRef.current;
+    const f = forwardIntervalRef.current;
+
     return () => {
-      if (rewindIntervalRef.current !== null) {
-        clearInterval(rewindIntervalRef.current);
+      if (r !== null) {
+        clearInterval(r as unknown as number);
       }
-      if (forwardIntervalRef.current !== null) {
-        clearInterval(forwardIntervalRef.current);
+      if (f !== null) {
+        clearInterval(f as unknown as number);
       }
     };
   }, []);
@@ -158,89 +166,60 @@ export default function DayOne({
     }
   };
 
-  // Rewind by 5 seconds
-  const handlePrevious = () => {
-    if (audioRef.current) {
-      const newTime = Math.max(audioRef.current.currentTime - 5, 0);
-      audioRef.current.currentTime = newTime;
-      setCurrentTime(newTime);
+  // Generic seek helper: delta in seconds (negative = backward)
+  const seekBy = (delta: number) => {
+    if (!audioRef.current) return;
+    const audio = audioRef.current;
+    const target = Math.max(
+      0,
+      Math.min(audio.currentTime + delta, audio.duration || Infinity)
+    );
+    audio.currentTime = target;
+    setCurrentTime(target);
 
-      if (!isPlaying) {
-        audioRef.current.play();
-        setIsPlaying(true);
-      }
+    if (!isPlaying) {
+      audio.play();
+      setIsPlaying(true);
     }
   };
 
-  // Forward by 5 seconds
-  const handleNext = () => {
-    if (audioRef.current) {
-      const newTime = Math.min(
-        audioRef.current.currentTime + 5,
-        audioRef.current.duration
-      );
-      audioRef.current.currentTime = newTime;
-      setCurrentTime(newTime);
+  // Unified click handler: pass delta in seconds (negative = rewind)
+  const handleSeek = (delta: number) => seekBy(delta);
 
-      if (!isPlaying) {
-        audioRef.current.play();
-        setIsPlaying(true);
-      }
+  // Start a continuous seek on long press. intervalRef is the ref that stores the interval id.
+  const startContinuousSeek = (
+    intervalRef: React.MutableRefObject<number | null>,
+    immediateDelta: number,
+    stepDelta: number,
+    stepMs = 200
+  ) => {
+    if (intervalRef.current !== null) return;
+
+    // perform one immediate jump
+    seekBy(immediateDelta);
+
+    // then continue stepping
+    intervalRef.current = window.setInterval(() => {
+      seekBy(stepDelta);
+    }, stepMs) as unknown as number;
+  };
+
+  const stopContinuousSeek = (
+    intervalRef: React.MutableRefObject<number | null>
+  ) => {
+    if (intervalRef.current !== null) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
   };
 
-  // Start rewinding on long press
-  const startRewind = () => {
-    if (rewindIntervalRef.current !== null) return;
-
-    // Rewind once immediately
-    handlePrevious();
-
-    // Then set an interval for continuous rewinding
-    rewindIntervalRef.current = window.setInterval(() => {
-      if (audioRef.current) {
-        const newTime = Math.max(audioRef.current.currentTime - 2, 0);
-        audioRef.current.currentTime = newTime;
-        setCurrentTime(newTime);
-      }
-    }, 200); // Rewind 2 seconds every 200ms
-  };
-
-  // Stop rewinding on release
-  const stopRewind = () => {
-    if (rewindIntervalRef.current !== null) {
-      clearInterval(rewindIntervalRef.current);
-      rewindIntervalRef.current = null;
-    }
-  };
-
-  // Start forwarding on long press
-  const startForward = () => {
-    if (forwardIntervalRef.current !== null) return;
-
-    // Forward once immediately
-    handleNext();
-
-    // Then set an interval for continuous forwarding
-    forwardIntervalRef.current = window.setInterval(() => {
-      if (audioRef.current) {
-        const newTime = Math.min(
-          audioRef.current.currentTime + 2,
-          audioRef.current.duration
-        );
-        audioRef.current.currentTime = newTime;
-        setCurrentTime(newTime);
-      }
-    }, 200); // Forward 2 seconds every 200ms
-  };
-
-  // Stop forwarding on release
-  const stopForward = () => {
-    if (forwardIntervalRef.current !== null) {
-      clearInterval(forwardIntervalRef.current);
-      forwardIntervalRef.current = null;
-    }
-  };
+  // Rewind/forward wrappers using the generic helpers
+  const startRewind = () =>
+    startContinuousSeek(rewindIntervalRef, -SHORT_JUMP, -STEP_DELTA, STEP_MS);
+  const stopRewind = () => stopContinuousSeek(rewindIntervalRef);
+  const startForward = () =>
+    startContinuousSeek(forwardIntervalRef, SHORT_JUMP, STEP_DELTA, STEP_MS);
+  const stopForward = () => stopContinuousSeek(forwardIntervalRef);
 
   // Update progress bar and time displays
   const updateProgress = () => {
@@ -339,35 +318,16 @@ export default function DayOne({
               </SliderText>
             </p>
 
-            <div className="flex gap-[3cqw] mt-[6cqw] items-center justify-around w-full z-10 opacity-80">
-              <img
-                alt="Rewind 5s, long press to seek"
-                src="https://public.zzfw.cc/gabagerecycle/366DesignConcepts/dayone/Previous.svg"
-                className="size-[14cqw] cursor-pointer"
-                onClick={handlePrevious}
-                onMouseDown={startRewind}
-                onMouseUp={stopRewind}
-                onMouseLeave={stopRewind}
-                onTouchStart={startRewind}
-                onTouchEnd={stopRewind}
-              />
-              <MusicToggle
-                className="size-[16cqw]"
-                isPlaying={isPlaying}
-                onToggle={togglePlay}
-              />
-              <img
-                alt="Forward 5s, long press to seek"
-                src="https://public.zzfw.cc/gabagerecycle/366DesignConcepts/dayone/Next.svg"
-                className="size-[14cqw] cursor-pointer"
-                onClick={handleNext}
-                onMouseDown={startForward}
-                onMouseUp={stopForward}
-                onMouseLeave={stopForward}
-                onTouchStart={startForward}
-                onTouchEnd={stopForward}
-              />
-            </div>
+            <MusicControler
+              className="flex gap-[3cqw] mt-[6cqw] items-center justify-around w-full z-10 opacity-80"
+              isPlaying={isPlaying}
+              onToggle={togglePlay}
+              onSeek={handleSeek}
+              onStartRewind={startRewind}
+              onStopRewind={stopRewind}
+              onStartForward={startForward}
+              onStopForward={stopForward}
+            />
 
             <div
               className="w-full h-[2cqw] mt-[6cqw] bg-white/30 rounded-full overflow-hidden cursor-pointer z-10 opacity-80"
