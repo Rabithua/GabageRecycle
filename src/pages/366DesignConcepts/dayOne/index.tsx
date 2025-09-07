@@ -326,7 +326,7 @@ export default function DayOne({
           )}
 
           <div className="flex flex-col items-center text-white z-10 w-full">
-            <div className="absolute bottom-0 w-full h-2/3 [mask-image:linear-gradient(0deg,#000000_calc(100%-60%),transparent)] z-5 bg-black/20 backdrop-blur-2xl"></div>
+            <div className="absolute bottom-0 w-full h-2/3 [mask-image:linear-gradient(0deg,#000000_calc(100%-60%),transparent)] z-5 bg-black/20 backdrop-blur-2xl pointer-events-none"></div>
 
             <p className="text-[8cqw] font-bold">
               <SliderText>
