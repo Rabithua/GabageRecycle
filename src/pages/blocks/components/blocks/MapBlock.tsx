@@ -87,7 +87,7 @@ export default function MapBlock(props: MapBlockProps) {
       )}
       {title && (
         <div
-          className="absolute p-2 bottom-2 max-w-4/5 truncate left-2 border border-black/6 rounded-lg bg-white/80 backdrop-blur-2xl font-sans text-black/80 text-sm"
+          className="absolute p-2 bottom-4 max-w-4/5 truncate left-4 border border-black/3 rounded-lg bg-white/60 backdrop-blur-xs font-sans text-black/80 text-sm"
           title={title}
         >
           {title}
