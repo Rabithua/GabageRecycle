@@ -1,5 +1,5 @@
+import AnimateText from "@/components/AnimateText";
 import { useLayoutEffect, useRef, useState } from "react";
-import DayOneAnimateText from "./AnimateText";
 
 export default function NoStyleInput({
   value,
@@ -52,9 +52,9 @@ export default function NoStyleInput({
         }
       }}
     >
-      <DayOneAnimateText>
+      <AnimateText type="chars" duration={1} stagger={0.1} filter="blur(4cqw)">
         {value || placeholder || "Click to edit"}
-      </DayOneAnimateText>
+      </AnimateText>
     </span>
   );
 }

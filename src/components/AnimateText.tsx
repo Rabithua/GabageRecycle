@@ -5,24 +5,39 @@ import { useRef } from "react";
 
 gsap.registerPlugin(SplitText);
 
-export default function DayOneAnimateText({
+export default function AnimateText({
   children,
+  type = "lines",
+  duration = 2,
+  stagger = 0.5,
+  filter,
 }: {
   children: React.ReactNode;
+  type?: "lines" | "words" | "chars";
+  duration?: number;
+  stagger?: number;
+  filter?: gsap.TweenValue;
 }) {
   const textRef = useRef(null);
 
   useGSAP(
     () => {
       const split = new SplitText(textRef.current, {
-        type: "words, chars",
+        type: "lines, words, chars",
       });
 
-      gsap.from(split.chars, {
-        duration: 2,
+      const target =
+        type === "lines"
+          ? split.lines
+          : type === "words"
+            ? split.words
+            : split.chars;
+
+      gsap.from(target, {
+        duration,
         opacity: 0,
-        filter: "blur(2px)",
-        stagger: 0.1,
+        filter,
+        stagger,
         ease: "expo.out",
         immediateRender: true,
       });

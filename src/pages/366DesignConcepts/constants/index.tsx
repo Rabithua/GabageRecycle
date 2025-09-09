@@ -12,6 +12,7 @@
 import { author_rabithua } from "@/pages/366DesignConcepts/constants/author";
 import DayZero from "@/pages/366DesignConcepts/dayZero";
 import DayOne from "../dayOne";
+import DayThree from "../dayThree";
 
 /**
  * Array of day components used for rendering daily design concepts.
@@ -34,7 +35,13 @@ const daysComponents = [
     title: "MusicPlayer",
     author: author_rabithua,
     createAt: "2024-09-05",
-  }
+  },
+  {
+    component: <DayThree />,
+    title: "Glassmorphism",
+    author: author_rabithua,
+    createAt: "2024-09-09",
+  },
 ];
 
 export { daysComponents };
