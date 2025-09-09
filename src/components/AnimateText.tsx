@@ -8,15 +8,18 @@ gsap.registerPlugin(SplitText);
 export default function AnimateText({
   children,
   type = "lines",
-  duration = 2,
-  stagger = 0.5,
-  filter,
+  vars = {
+    opacity: 0,
+    duration: 2,
+    stagger: 0.1,
+    filter: "blur(32px)",
+    ease: "expo.out",
+    immediateRender: true,
+  },
 }: {
   children: React.ReactNode;
   type?: "lines" | "words" | "chars";
-  duration?: number;
-  stagger?: number;
-  filter?: gsap.TweenValue;
+  vars?: gsap.TweenVars;
 }) {
   const textRef = useRef(null);
 
@@ -34,12 +37,7 @@ export default function AnimateText({
             : split.chars;
 
       gsap.from(target, {
-        duration,
-        opacity: 0,
-        filter,
-        stagger,
-        ease: "expo.out",
-        immediateRender: true,
+        ...vars,
       });
     },
     { scope: textRef }

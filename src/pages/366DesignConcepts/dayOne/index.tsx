@@ -1,5 +1,5 @@
+import AnimateText from "@/components/AnimateText";
 import MusicControler from "@/pages/366DesignConcepts/dayOne/components/MusicControler";
-import SliderText from "@/pages/home/components/SliderText";
 import { arrayBufferToBase64 } from "@/utils/file";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
@@ -263,7 +263,19 @@ export default function DayOne({
         <div className="size-full relative flex flex-col items-center justify-center gap-[6cqw]">
           <AudioLines className="size-[20cqw] text-white" />
           <p className="text-[4cqw] text-white max-w-[80%] text-center">
-            <SliderText>{error}</SliderText>
+            <AnimateText
+              vars={{
+                duration: 2,
+                opacity: 0,
+                filter: "blur(32px)",
+                x: -100,
+                stagger: 0.1,
+                ease: "expo.out",
+                immediateRender: true,
+              }}
+            >
+              {error}
+            </AnimateText>
           </p>
         </div>
       )}
@@ -308,14 +320,34 @@ export default function DayOne({
             <div className="absolute bottom-0 w-full h-2/3 [mask-image:linear-gradient(0deg,#000000_calc(100%-60%),transparent)] z-5 bg-black/20 backdrop-blur-2xl pointer-events-none"></div>
 
             <p className="text-[8cqw] font-bold">
-              <SliderText>
+              <AnimateText
+                vars={{
+                  duration: 2,
+                  opacity: 0,
+                  filter: "blur(32px)",
+                  x: -100,
+                  stagger: 0.1,
+                  ease: "expo.out",
+                  immediateRender: true,
+                }}
+              >
                 {metadata.common.title || "Unknown Title"}
-              </SliderText>
+              </AnimateText>
             </p>
             <p className="text-[8cqw]">
-              <SliderText>
+              <AnimateText
+                vars={{
+                  duration: 2,
+                  opacity: 0,
+                  filter: "blur(32px)",
+                  x: -100,
+                  stagger: 0.1,
+                  ease: "expo.out",
+                  immediateRender: true,
+                }}
+              >
                 {metadata.common.artist || "Unknown Artist"}
-              </SliderText>
+              </AnimateText>
             </p>
 
             <MusicControler

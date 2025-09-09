@@ -52,7 +52,16 @@ export default function NoStyleInput({
         }
       }}
     >
-      <AnimateText type="chars" duration={1} stagger={0.1} filter="blur(4cqw)">
+      <AnimateText
+        type="chars"
+        vars={{
+          opacity: 0,
+          duration: 1,
+          stagger: 0.1,
+          filter: "blur(1cqw)",
+          ease: "ease",
+        }}
+      >
         {value || placeholder || "Click to edit"}
       </AnimateText>
     </span>
