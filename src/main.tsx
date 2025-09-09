@@ -11,6 +11,7 @@ import Home from "./pages/home";
 import Scroll from "./pages/scroll";
 import Timeline from "./pages/timeline";
 import Tree from "./pages/tree";
+import Apple2025 from "./pages/apple2025";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -26,6 +27,7 @@ createRoot(document.getElementById("root")!).render(
         {/* 366 Design Concepts 兼容预留社媒链接 */}
         <Route path="/366designconcepts-dayone" element={<DesignConcepts />} />
         <Route path="/366designconcepts/:day" element={<DesignConcepts />} />
+        <Route path="/apple2025" element={<Apple2025 />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
