@@ -43,5 +43,5 @@ export default function AnimateText({
     { scope: textRef }
   );
 
-  return <p ref={textRef}>{children}</p>;
+  return <span ref={textRef}>{children}</span>;
 }
