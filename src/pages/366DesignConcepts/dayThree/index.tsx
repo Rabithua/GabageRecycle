@@ -61,7 +61,7 @@ export default function DayThree(): JSX.Element {
             {moment().format("DD/MM/YYYY")}
           </p>
         </div>
-        <div className="grow relative text-[8cqw] leading-[1.2] overflow-y-scroll [mask-image:linear-gradient(180deg,#000_calc(100%-10%),transparent)]">
+        <div className="grow relative text-[8cqw] font-basic leading-[1.2] overflow-y-scroll [mask-image:linear-gradient(180deg,#000_calc(100%-10%),transparent)]">
           <div className="relative z-10">
             {reply ? (
               <AnimateText

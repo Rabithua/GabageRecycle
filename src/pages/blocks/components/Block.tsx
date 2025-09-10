@@ -206,7 +206,7 @@ export default function Block({
       <div
         ref={blockRef}
         role="group"
-        className={`group relative w-full z-10 h-full rounded-2xl border duration-100 overflow-hidden shadow-black/5 border-primary/20 bg-white flex items-center justify-center text-primary/70 ${baseTypeClass} ${className || ""}`}
+        className={`group relative w-full z-10 h-full rounded-2xl border duration-100 overflow-hidden shadow-black/5 border-primary/5 bg-white flex items-center justify-center text-primary/70 ${baseTypeClass} ${className || ""}`}
       >
         <Suspense>
           {ContentComponent ? (

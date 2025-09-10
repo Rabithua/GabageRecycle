@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=LXGW+WenKai+Mono+TC&family=Noto+Serif+SC:wght@200..900&family=Playwrite+AU+QLD:wght@100..400&display=swap");
+
 @import "tailwindcss";
 
 @theme {
@@ -10,14 +12,20 @@
 
 @utility font-basic {
     font-family: 'Playwrite AU QLD', 'Noto Serif SC', sans-serif;
+    font-weight: normal;
+    font-style: normal;
 }
 
 @utility font-serif {
     font-family: 'Noto Serif SC', serif;
+    font-weight: normal;
+    font-style: normal;
 }
 
 @utility font-wenkai {
     font-family: 'LXGW WenKai Mono TC', monospace, 'Noto Serif SC', serif;
+    font-weight: normal;
+    font-style: normal;
 }
 
 /* home page use start */

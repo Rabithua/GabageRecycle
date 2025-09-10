@@ -56,7 +56,7 @@ export default function TimelinePage() {
   return (
     <main
       ref={containerRef}
-      className="font-serif text-primary grid-background sm:[mask-image:linear-gradient(0deg,#000_calc(100%-10%),transparent)] sm:[-webkit-mask-image:linear-gradient(0deg,#000_calc(100%-10%),transparent)]"
+      className="font-basic text-primary grid-background sm:[mask-image:linear-gradient(0deg,#000_calc(100%-10%),transparent)] sm:[-webkit-mask-image:linear-gradient(0deg,#000_calc(100%-10%),transparent)]"
     >
       <div ref={scrollContentRef} className="pt-24">
         <Timeline t={t} />
