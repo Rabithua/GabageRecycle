@@ -7,7 +7,7 @@ export default function DayThree(): JSX.Element {
   const isRequestedRef = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const prompt = encodeURIComponent(
-    `Today is ${moment().format("DD/MM/YYYY")}, did anything happen on this day in history?`
+    `Today is ${moment().format("DD/MM/YYYY")}, did anything happen on this day in history? Only one event.`
   );
   const url = `https://llm.rote.ink/?prompt=${prompt}`;
 
