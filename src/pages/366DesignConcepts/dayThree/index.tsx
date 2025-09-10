@@ -65,12 +65,12 @@ export default function DayThree(): JSX.Element {
           <div className="relative z-10">
             {reply ? (
               <AnimateText
-                type="words"
+                type="chars"
                 vars={{
                   duration: 1,
                   opacity: 0,
                   filter: "blur(1cqw)",
-                  stagger: 0.05,
+                  stagger: 0.02,
                   ease: "expo.out",
                   immediateRender: true,
                 }}
