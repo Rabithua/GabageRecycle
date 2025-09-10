@@ -7,7 +7,7 @@ export default function DayThree(): JSX.Element {
   const isRequestedRef = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const prompt = encodeURIComponent(
-    "Imitate a madman to reply to me, within 100 words, only need to reply to the word itself and the reply should not carry the word -assistant."
+    `Today is ${moment().format("DD/MM/YYYY")}, did anything happen on this day in history?`
   );
   const url = `https://llm.rote.ink/?prompt=${prompt}`;
 
@@ -57,7 +57,7 @@ export default function DayThree(): JSX.Element {
       <div className="size-full space-y-[4cqw] font-serif p-[8cqw] bg-white border-black/5 border-[0.3cqw] rounded-[17.5%] overflow-hidden flex flex-col">
         <div className="flex items-start justify-between shrink-0">
           <Ollama className="size-[20cqw]" />
-          <p className="text-[6cqw] mt-[6cqw] shrink-0 font-mono text-black/10">
+          <p className="text-[6cqw] mt-[2cqw] shrink-0 font-mono text-black/10">
             {moment().format("DD/MM/YYYY")}
           </p>
         </div>
