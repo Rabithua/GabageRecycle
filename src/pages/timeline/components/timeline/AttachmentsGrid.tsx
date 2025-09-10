@@ -30,9 +30,9 @@ export default function AttachmentsGrid({
                 : attachments.length % 2 === 0
                   ? "aspect-square w-[calc(1/2*100%-3px)]"
                   : attachments.length === 1
-                    ? "w-full max-w-[500px] rounded-md border-[0.5px]"
+                    ? "w-full max-w-[500px] rounded-md"
                     : "aspect-square w-[calc(1/3*100%-3px)]"
-            } bg-foreground/3 grow object-cover`}
+            } bg-gray-100 grow object-cover`}
             src={src}
             loading="lazy"
             decoding="async"

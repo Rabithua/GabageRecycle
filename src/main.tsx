@@ -4,13 +4,14 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
 import "./index.css";
 
+import DesignConcepts from "./pages/366DesignConcepts";
 import Apple from "./pages/apple";
 import Block from "./pages/blocks";
 import Home from "./pages/home";
 import Scroll from "./pages/scroll";
-import Template from "./pages/template";
 import Timeline from "./pages/timeline";
 import Tree from "./pages/tree";
+import Apple2025 from "./pages/apple2025";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -23,7 +24,10 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/apple" element={<Apple />} />
         <Route path="/blocks" element={<Block />} />
         <Route path="/timeline" element={<Timeline />} />
-        <Route path="/template" element={<Template />} />
+        {/* 366 Design Concepts 兼容预留社媒链接 */}
+        <Route path="/366designconcepts-dayone" element={<DesignConcepts />} />
+        <Route path="/366designconcepts/:day" element={<DesignConcepts />} />
+        <Route path="/apple2025" element={<Apple2025 />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

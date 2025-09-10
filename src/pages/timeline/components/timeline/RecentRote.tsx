@@ -72,7 +72,7 @@ export default function RecentRote({
 
   return (
     <div
-      className={`relative w-full h-full aspect-square text-black sm:border-4 bg-white border-gray-50 rounded-3xl overflow-hidden group cursor-pointer ${className}`}
+      className={`relative w-full h-full aspect-square text-black border-4 bg-white border-gray-50 rounded-3xl overflow-hidden group cursor-pointer ${className}`}
     >
       {loading && (
         <div
@@ -115,12 +115,7 @@ export default function RecentRote({
       )}
 
       {!loading && data && (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href={`${baseUrl}/rote/${data.id}`}
-          className="h-full flex flex-col gap-2 p-4"
-        >
+        <div className="h-full flex flex-col gap-2 p-4">
           <a
             target="_blank"
             rel="noopener noreferrer"
@@ -146,15 +141,16 @@ export default function RecentRote({
             </div>
           </a>
 
-          <div className="relative overflow-scroll grow flex flex-col gap-2">
-            <div className=" grow overflow-hidden">
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={`${baseUrl}/rote/${data.id}`}
+            className="relative overflow-scroll grow flex flex-col gap-2"
+          >
+            <div className=" grow overflow-hidden [mask-image:linear-gradient(180deg,#000_calc(100%-25%),transparent)]">
               <p className="text-base leading-snug opacity-90 break-words whitespace-pre-wrap">
                 {data.content}
               </p>
-
-              <div className="h-2 w-full bg-white blur-xs sticky -bottom-1 "></div>
-              <div className="h-2 w-full bg-white blur-sm sticky -bottom-1 "></div>
-              <div className="h-2 w-full bg-white blur-sm sticky -bottom-1 "></div>
             </div>
 
             {data.attachments && data.attachments.length > 0 && (
@@ -173,8 +169,8 @@ export default function RecentRote({
                 ))}
               </div>
             )}
-          </div>
-        </a>
+          </a>
+        </div>
       )}
     </div>
   );

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface GitHubRepoBlockProps {
   owner: string;
@@ -51,6 +52,7 @@ export default function GithubRepoBlock({
   const [commits, setCommits] = useState<CommitData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { t } = useTranslation(undefined, { keyPrefix: "blocks.githubRepo" });
 
   useEffect(() => {
     let cancelled = false;
@@ -102,7 +104,10 @@ export default function GithubRepoBlock({
       className={`w-full h-full flex flex-col items-start gap-4 ${className || ""}`}
     >
       {loading && (
-        <div className="w-full h-full flex flex-col gap-3 animate-pulse text-xs text-gray-400">
+        <div
+          className="w-full h-full flex flex-col gap-3 animate-pulse text-xs text-gray-400"
+          aria-label={t("loadingLabel")}
+        >
           <div className="h-5 w-40 bg-gray-200/60 rounded" />
           <div className="h-3 w-full bg-gray-200/50 rounded" />
           <div className="h-3 w-5/6 bg-gray-200/50 rounded" />
@@ -114,7 +119,12 @@ export default function GithubRepoBlock({
         </div>
       )}
       {!loading && error && (
-        <div className="text-sm w-full text-primary text-center">{error}</div>
+        <div className="text-sm w-full h-full flex flex-col justify-center items-center">
+          {error}
+          <div className="text-xs text-gray-200 font-light">
+            {t("rateLimited")}
+          </div>
+        </div>
       )}
       {!loading && !error && repoData && (
         <div className="flex flex-col w-full h-full">
@@ -134,7 +144,7 @@ export default function GithubRepoBlock({
             )}
           </div>
           {(branchData || commits.length > 0) && (
-            <div className="relative w-full mb-1 text-[11px] text-gray-500 space-y-2 grow min-h-0 overflow-y-scroll">
+            <div className="relative w-full mb-1 text-[11px] text-gray-500 space-y-2 grow min-h-0 overflow-y-scroll [mask-image:linear-gradient(180deg,#000_calc(100%-10%),transparent)]">
               {/* {branchData && (
                 <div>
                   Branch:{" "}
@@ -163,9 +173,6 @@ export default function GithubRepoBlock({
                   </div>
                 ))}
               </div>
-              <div className="h-2 w-full bg-white blur-xs sticky -bottom-1 "></div>
-              <div className="h-2 w-full bg-white blur-sm sticky -bottom-1 "></div>
-              <div className="h-2 w-full bg-white blur-sm sticky -bottom-1 "></div>
             </div>
           )}
           <div className="mt-auto shrink-0 flex flex-wrap gap-x-4 gap-y-2 text-[11px] text-gray-500">
@@ -178,15 +185,15 @@ export default function GithubRepoBlock({
               <strong className="text-gray-700">
                 {repoData.stargazers_count}
               </strong>{" "}
-              Stars
+              {t("stars")}
             </span>
             <span>
               <strong className="text-gray-700">{repoData.forks_count}</strong>{" "}
-              Forks
+              {t("forks")}
             </span>
             <span>
               <strong className="text-gray-700">{repoData.open_issues}</strong>{" "}
-              Issues
+              {t("issues")}
             </span>
             <span> {new Date(repoData.updated_at).toLocaleDateString()}</span>
           </div>

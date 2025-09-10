@@ -12,6 +12,14 @@
     font-family: 'Playwrite AU QLD', 'Noto Serif SC', sans-serif;
 }
 
+@utility font-serif {
+    font-family: 'Noto Serif SC', serif;
+}
+
+@utility font-wenkai {
+    font-family: 'LXGW WenKai Mono TC', monospace, 'Noto Serif SC', serif;
+}
+
 /* home page use start */
 @utility pretty-text {
     background-image: linear-gradient(180deg, #62E09F, #07C160);
@@ -21,8 +29,8 @@
 }
 
 @utility grid-background {
-    background-image: linear-gradient(to right, #f3f4f6 1px, transparent 1px),
-        linear-gradient(to bottom, #f3f4f6 1px, transparent 1px);
+    background-image: linear-gradient(to right, #f3f4f660 1px, transparent 1px),
+        linear-gradient(to bottom, #f3f4f660 1px, transparent 1px);
     background-size: 20px 20px;
     background-position: 0 0;
 

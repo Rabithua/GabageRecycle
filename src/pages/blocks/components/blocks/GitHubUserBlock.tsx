@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface GitHubUserBlockProps {
   username: string;
@@ -23,6 +24,8 @@ export default function GithubUserBlock({
   const [data, setData] = useState<GitHubUserData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  // 使用 keyPrefix 作为作用域，避免重复书写 blocks.githubUser 前缀
+  const { t } = useTranslation(undefined, { keyPrefix: "blocks.githubUser" });
 
   useEffect(() => {
     let cancelled = false;
@@ -56,7 +59,7 @@ export default function GithubUserBlock({
       {loading && (
         <div
           className="w-full h-full flex flex-col gap-4 animate-pulse text-xs text-gray-400"
-          aria-label="Loading GitHub user"
+          aria-label={t("loadingLabel")}
         >
           <div className="flex gap-4 items-center">
             <div className="size-12 rounded-4xl bg-gray-200/60" />
@@ -77,7 +80,14 @@ export default function GithubUserBlock({
           </div>
         </div>
       )}
-      {!loading && error && <div className="text-sm text-primary">{error}</div>}
+      {!loading && error && (
+        <div className="text-sm w-full h-full flex flex-col justify-center items-center">
+          {error}
+          <div className="text-xs text-gray-200 font-light">
+            {t("rateLimited")}
+          </div>
+        </div>
+      )}
       {!loading && !error && data && (
         <div className="flex flex-col gap-2 w-full h-full">
           <div className="flex gap-4 items-center">
@@ -118,15 +128,15 @@ export default function GithubUserBlock({
             <div className="mt-auto flex gap-4 text-[11px] text-gray-500">
               <span>
                 <strong className="text-gray-700">{data.followers}</strong>{" "}
-                followers
+                {t("followers")}
               </span>
               <span>
                 <strong className="text-gray-700">{data.following}</strong>{" "}
-                following
+                {t("following")}
               </span>
               <span>
                 <strong className="text-gray-700">{data.public_repos}</strong>{" "}
-                repos
+                {t("repos")}
               </span>
             </div>
           </div>

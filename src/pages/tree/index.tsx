@@ -2,15 +2,15 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useTranslation } from "react-i18next";
 
+import { useRef } from "react";
 import BackgroundText from "../home/components/BackgroudText";
 import SliderText from "../home/components/SliderText";
-import { useRef } from "react";
 
 export default function Tree() {
   const { t } = useTranslation("translation", {
     keyPrefix: "page.tree",
   });
-  const containerRef = useRef(null); // This should be managed by your routing logic
+  const containerRef = useRef(null);
 
   useGSAP(
     () => {
@@ -35,7 +35,9 @@ export default function Tree() {
         <h1 className=" font-semibold leading-tight text-5xl pretty-text">
           {t("title")}
         </h1>
-        <SliderText>{t("subtitle")}</SliderText>
+        <SliderText className="text-secondary font-extralight">
+          {t("subtitle")}
+        </SliderText>
       </div>
 
       <div className="w-dvw h-dvh absolute top-0 left-0 overflow-hidden select-none">
