@@ -10,9 +10,11 @@
  */
 
 import { author_rabithua } from "@/pages/366DesignConcepts/constants/author";
+import DayOne from "@/pages/366DesignConcepts/dayOne";
+import DayThree from "@/pages/366DesignConcepts/dayThree";
+import DayThree_Slot from "@/pages/366DesignConcepts/dayThree/slot";
+import DayTwo from "@/pages/366DesignConcepts/dayTwo";
 import DayZero from "@/pages/366DesignConcepts/dayZero";
-import DayOne from "../dayOne";
-import DayThree from "../dayThree";
 
 /**
  * Array of day components used for rendering daily design concepts.
@@ -37,10 +39,17 @@ const daysComponents = [
     createAt: "2024-09-05",
   },
   {
-    component: <DayThree />,
+    component: <DayTwo />,
     title: "Ollama Chatbot",
     author: author_rabithua,
     createAt: "2024-09-09",
+  },
+  {
+    component: <DayThree />,
+    title: "Calendar",
+    author: author_rabithua,
+    createAt: "2024-09-10",
+    slot: <DayThree_Slot />,
   },
 ];
 

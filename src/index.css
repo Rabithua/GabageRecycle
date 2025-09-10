@@ -52,4 +52,34 @@
     }
 }
 
+
+@utility grid-background-black {
+    background-image: linear-gradient(to right, #3CE58A06 1px, transparent 1px),
+        linear-gradient(to bottom, #3CE58A08 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-position: 0 0;
+
+    /* 核心代码：用伪元素和渐变来创建虚化效果 */
+    position: relative;
+    /* 关键：为伪元素定位 */
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        pointer-events: none;
+        /* 让鼠标穿透，不影响点击 */
+
+        /* 使用径向渐变，从中心向四周变透明 */
+        background: radial-gradient(ellipse at center,
+                transparent 80%,
+                #030A06 100%);
+        /* 这里的 'white' 替换成你的背景色 */
+    }
+}
+
+
 /* home page use end */
