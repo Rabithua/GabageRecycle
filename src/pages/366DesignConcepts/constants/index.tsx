@@ -38,7 +38,7 @@ const daysComponents = [
   },
   {
     component: <DayThree />,
-    title: "Glassmorphism",
+    title: "Ollama Chatbot",
     author: author_rabithua,
     createAt: "2024-09-09",
   },
