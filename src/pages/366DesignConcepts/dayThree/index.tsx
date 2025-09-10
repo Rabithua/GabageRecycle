@@ -54,7 +54,7 @@ export default function DayThree(): JSX.Element {
       ref={containerRef}
       className="@container size-full [&_div]:selection:bg-black [&_div]:selection:text-white"
     >
-      <div className="size-full space-y-[4cqw] font-serif p-[8cqw] bg-white border-black/5 border-[0.3cqw] rounded-[17.5%] overflow-hidden flex flex-col">
+      <div className="size-full space-y-[4cqw] font-basic p-[8cqw] bg-white border-black/5 border-[0.3cqw] rounded-[17.5%] overflow-hidden flex flex-col">
         <div className="flex items-start justify-between shrink-0">
           <Ollama className="size-[20cqw]" />
           <p className="text-[6cqw] mt-[2cqw] shrink-0 font-mono text-black/10">
@@ -84,7 +84,7 @@ export default function DayThree(): JSX.Element {
             )}
           </div>
         </div>
-        <div className="shrink-0 text-[6cqw] text-black/10">
+        <div className="shrink-0 text-[5cqw] text-black/10">
           llama-4-scout-17b-16e-instruct
         </div>
       </div>
