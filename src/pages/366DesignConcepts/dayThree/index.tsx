@@ -7,7 +7,7 @@ export default function DayThree(): JSX.Element {
   const isRequestedRef = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const prompt = encodeURIComponent(
-    `Today is ${moment().format("DD/MM/YYYY")}, did anything happen on this day in history? Only one event.`
+    `现在是${moment().format("DD/MM/YYYY hh:mm")}。分析今日黄历运势，回复100字以内的中文内容。 no markdown, no explanation.`
   );
   const url = `https://llm.rote.ink/?prompt=${prompt}`;
 
