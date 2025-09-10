@@ -47,7 +47,7 @@ export default function Dot({
           <div key={index} className="w-3 h-[1px] shrink-0 bg-black/30" />
         ))}
       </div>
-      <div ref={contentRef} className="flex flex-col gap-4 w-full">
+      <div ref={contentRef} className="flex flex-col gap-4 w-full leading-relaxed">
         {children}
       </div>
     </div>
