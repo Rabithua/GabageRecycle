@@ -10,11 +10,13 @@
  */
 
 import { author_rabithua } from "@/pages/366DesignConcepts/constants/author";
+
 import DayOne from "@/pages/366DesignConcepts/dayOne";
 import DayThree from "@/pages/366DesignConcepts/dayThree";
 import DayThree_Slot from "@/pages/366DesignConcepts/dayThree/slot";
 import DayTwo from "@/pages/366DesignConcepts/dayTwo";
 import DayZero from "@/pages/366DesignConcepts/dayZero";
+import TodayGoldPrice from "../todaygoldprice";
 
 /**
  * Array of day components used for rendering daily design concepts.
@@ -50,6 +52,12 @@ const daysComponents = [
     author: author_rabithua,
     createAt: "2024-09-10",
     slot: <DayThree_Slot />,
+  },
+  {
+    component: <TodayGoldPrice />,
+    title: "Today Gold Price",
+    author: author_rabithua,
+    createAt: "2024-09-16",
   },
 ];
 

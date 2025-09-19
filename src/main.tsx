@@ -27,6 +27,7 @@ createRoot(document.getElementById("root")!).render(
         {/* 366 Design Concepts 兼容预留社媒链接 */}
         <Route path="/366designconcepts-dayone" element={<DesignConcepts />} />
         <Route path="/366designconcepts/:day" element={<DesignConcepts />} />
+        <Route path="/366/:day" element={<DesignConcepts />} />
         <Route path="/apple2025" element={<Apple2025 />} />
       </Routes>
     </BrowserRouter>
