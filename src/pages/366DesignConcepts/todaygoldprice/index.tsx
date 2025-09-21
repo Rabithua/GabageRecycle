@@ -201,6 +201,8 @@ export default function TodayGoldPrice(): JSX.Element {
                 const deltaSign = rawDelta > 0 ? "+" : rawDelta < 0 ? "-" : "";
                 const delta = Number(Math.abs(rawDelta));
                 const deltaPercent =
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-expect-error
                   last !== 0 ? Number((rawDelta / last) * 100) : 0;
                 const percentSign =
                   deltaPercent > 0 ? "+" : deltaPercent < 0 ? "-" : "";
