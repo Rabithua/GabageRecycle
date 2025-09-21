@@ -26,7 +26,7 @@ export default function Chart({
 
   // SVG 配置（padding 固定，宽高由容器测量）
   const padding = useMemo(
-    () => ({ top: 40, right: 10, bottom: 40, left: 10 }),
+    () => ({ top: 40, right: 15, bottom: 40, left: 15 }),
     []
   );
 

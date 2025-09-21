@@ -184,8 +184,8 @@ export default function TodayGoldPrice(): JSX.Element {
           </div>
         ) : (
           <>
-            <div className="flex flex-col gap-[2cqw]">
-              <div className="shrink-0 uppercase text-[#9C9996] font-medium text-[4cqw]">
+            <div className="flex flex-col">
+              <div className="shrink-0 uppercase mb-[4cqw] text-[#9C9996] font-medium text-[4cqw]">
                 <AnimateText>RealTime Gold Price</AnimateText>
               </div>
 
@@ -207,11 +207,11 @@ export default function TodayGoldPrice(): JSX.Element {
 
                 return (
                   <div
-                    className={`shrink-0 leading-[5cqw] font-semibold text-[5cqw] ${rawDelta > 0 ? "text-[#41A669]" : "text-red-400"}`}
+                    className={` shrink-0 leading-[5cqw] font-semibold text-[5cqw] ${rawDelta > 0 ? "text-[#41A669]" : "text-red-400"}`}
                   >
                     <span className="mr-1">{deltaSign}</span>
-                    <Counter value={delta} precision={4} /> ({percentSign}
-                    <Counter value={Math.abs(deltaPercent)} precision={4} />
+                    <Counter value={delta} precision={2} /> ({percentSign}
+                    <Counter value={Math.abs(deltaPercent)} precision={2} />
                     %)
                   </div>
                 );
