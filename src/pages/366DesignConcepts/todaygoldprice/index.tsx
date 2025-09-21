@@ -1,8 +1,8 @@
+import AnimateText from "@/components/AnimateText";
 import { useEffect, useRef, useState, type JSX } from "react";
 import Chart from "./components/Chart";
 import Counter from "./components/Count";
 import { type ApiWrapper, type HistoryEntry, type HistoryWrapper } from "./lib";
-import AnimateText from "@/components/AnimateText";
 
 const HISTORYLIMIT = 20;
 
@@ -172,9 +172,9 @@ export default function TodayGoldPrice(): JSX.Element {
         {/** Skeleton when data not ready */}
         {!hasData ? (
           <div className="animate-pulse flex flex-col gap-[2cqw]">
-            <div className="h-[4cqw] w-1/3 bg-[#D9D6D1] rounded" />
-            <div className="h-[14cqw] w-2/3 bg-[#D9D6D1] rounded mt-[1cqw]" />
-            <div className="h-[5cqw] w-1/4 bg-[#D9D6D1] rounded mt-[1cqw]" />
+            <div className="h-[4cqw] w-2/3 bg-[#D9D6D1] rounded" />
+            <div className="h-[14cqw] w-4/5 bg-[#D9D6D1] rounded mt-[1cqw]" />
+            <div className="h-[5cqw] w-1/2 bg-[#D9D6D1] rounded mt-[1cqw]" />
             <div className="grow mt-[2cqw] bg-[#D9D6D1] rounded" />
             {error && (
               <div className="text-red-600 text-[3cqw] mt-[1cqw]">
@@ -185,8 +185,8 @@ export default function TodayGoldPrice(): JSX.Element {
         ) : (
           <>
             <div className="flex flex-col gap-[2cqw]">
-              <div className="shrink-0 text-[#9C9996] font-medium text-[4cqw]">
-                <AnimateText>实时国际金价</AnimateText>
+              <div className="shrink-0 uppercase text-[#9C9996] font-medium text-[4cqw]">
+                <AnimateText>RealTime Gold Price</AnimateText>
               </div>
 
               <div className="shrink-0 text-[#171716] font-semibold text-[14cqw] leading-[12cqw]">
@@ -196,8 +196,7 @@ export default function TodayGoldPrice(): JSX.Element {
 
               {/** delta and percent (assume hasData true) */}
               {(() => {
-                const last =
-                  chartDataCnyGram[chartDataCnyGram.length - 1]?.value;
+                const last = 800;
                 const rawDelta = priceCnyGram! - last!;
                 const deltaSign = rawDelta > 0 ? "+" : rawDelta < 0 ? "-" : "";
                 const delta = Number(Math.abs(rawDelta));

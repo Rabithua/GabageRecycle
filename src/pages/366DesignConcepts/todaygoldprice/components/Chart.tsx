@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import Counter from "./Count";
+import Tooltip from "./Tooltip";
 
 export default function Chart({
   data,
@@ -186,7 +186,7 @@ export default function Chart({
           ref={pathRef}
           d={linePath}
           fill="none"
-          stroke="black"
+          stroke="#9C9996"
           strokeWidth="4"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -203,7 +203,7 @@ export default function Chart({
                 cx={point.x}
                 cy={point.y}
                 r={isHovered ? "12" : "8"}
-                fill="#black"
+                fill="#9C9996"
                 stroke="none"
                 style={{
                   opacity: shouldShow ? 1 : 0,
@@ -232,28 +232,14 @@ export default function Chart({
       {/* Tooltip - 只在hover数据点时显示 */}
       {hover && (
         <div
-          className="absolute z-10 bg-black text-[#E3E0DB] px-[2cqw] py-[1cqw] rounded-[3cqw] shadow-lg pointer-events-none text-[4cqw] font-medium"
+          className="absolute z-10 "
           style={{
             left: hover.x,
             top: `calc(${hover.y}px - 14cqw)`,
             transform: "translateX(-50%)",
           }}
         >
-          <div className="whitespace-nowrap text-[1.5cqw] font-bold">
-            {new Date(hover.time).toLocaleString()}
-          </div>
-          <div>
-            ¥{<Counter duration={0.2} value={hover.value} precision={4} />}
-          </div>
-          {/* 小尾巴 */}
-          <div
-            className="absolute left-1/2 top-full w-0 h-0 -translate-x-1/2"
-            style={{
-              borderLeft: "0.8cqw solid transparent",
-              borderRight: "0.8cqw solid transparent",
-              borderTop: "0.8cqw solid #000000",
-            }}
-          />
+          <Tooltip hover={hover} />
         </div>
       )}
     </div>
