@@ -47,7 +47,7 @@ export default function Tooltip({
       <div className="whitespace-nowrap text-[1.5cqw] font-bold">
         {new Date(hover.time).toLocaleString()}
       </div>
-      <div>¥{hover.value.toFixed(2)}</div>
+      <div>¥{hover.value.toFixed(4)}</div>
       <div
         className="absolute left-1/2 top-full w-0 h-0 -translate-x-1/2"
         style={{
