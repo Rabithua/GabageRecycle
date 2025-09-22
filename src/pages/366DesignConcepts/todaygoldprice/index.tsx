@@ -197,9 +197,7 @@ export default function TodayGoldPrice(): JSX.Element {
               {/** delta and percent (assume hasData true) */}
               {(() => {
                 const last =
-                  chartDataCnyGram.length == 24
-                    ? chartDataCnyGram[0].value
-                    : 800;
+                  chartDataCnyGram[chartDataCnyGram.length - 1]?.value ?? 800;
                 const rawDelta = priceCnyGram! - last!;
                 const deltaSign = rawDelta > 0 ? "+" : rawDelta < 0 ? "-" : "";
                 const delta = Number(Math.abs(rawDelta));
