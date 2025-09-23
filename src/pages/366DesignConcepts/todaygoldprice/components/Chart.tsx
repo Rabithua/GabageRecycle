@@ -202,7 +202,7 @@ export default function Chart({
               <circle
                 cx={point.x}
                 cy={point.y}
-                r={isHovered ? size.width * 0.024 : size.width * 0.016}
+                r={isHovered ? size.width * 0.036 : size.width * 0.026}
                 fill="#9C9996"
                 stroke="none"
                 style={{
@@ -213,7 +213,7 @@ export default function Chart({
               <circle
                 cx={point.x}
                 cy={point.y}
-                r={isHovered ? size.width * 0.015 : size.width * 0.01}
+                r={isHovered ? size.width * 0.024 : size.width * 0.016}
                 fill="#E3E0DB"
                 stroke="none"
                 onMouseEnter={(e) => handlePointHover(point, e)}

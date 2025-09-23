@@ -4,7 +4,7 @@ import Chart from "./components/Chart";
 import Counter from "./components/Count";
 import { type ApiWrapper, type HistoryEntry, type HistoryWrapper } from "./lib";
 
-const HISTORYLIMIT = 12;
+const HISTORYLIMIT = 6;
 
 // Conversion notes:
 // - The gold API returns prices in USD per troy ounce (common market convention).
