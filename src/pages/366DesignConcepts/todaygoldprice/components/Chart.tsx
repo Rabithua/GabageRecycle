@@ -187,7 +187,7 @@ export default function Chart({
           d={linePath}
           fill="none"
           stroke="#9C9996"
-          strokeWidth="4"
+          strokeWidth={size.width * 0.01}
           strokeLinecap="round"
           strokeLinejoin="round"
         />
@@ -202,7 +202,7 @@ export default function Chart({
               <circle
                 cx={point.x}
                 cy={point.y}
-                r={isHovered ? "12" : "8"}
+                r={isHovered ? size.width * 0.024 : size.width * 0.016}
                 fill="#9C9996"
                 stroke="none"
                 style={{
@@ -213,7 +213,7 @@ export default function Chart({
               <circle
                 cx={point.x}
                 cy={point.y}
-                r={isHovered ? "8" : "5"}
+                r={isHovered ? size.width * 0.015 : size.width * 0.01}
                 fill="#E3E0DB"
                 stroke="none"
                 onMouseEnter={(e) => handlePointHover(point, e)}
