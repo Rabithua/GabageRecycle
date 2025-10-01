@@ -147,7 +147,7 @@ export default function RecentRote({
             href={`${baseUrl}/rote/${data.id}`}
             className="relative overflow-scroll grow flex flex-col gap-2"
           >
-            <div className=" grow overflow-hidden [mask-image:linear-gradient(180deg,#000_calc(100%-25%),transparent)]">
+            <div className=" grow overflow-hidden min-h-6 [mask-image:linear-gradient(180deg,#000_calc(100%-25%),transparent)]">
               <p className="text-base leading-snug opacity-90 break-words whitespace-pre-wrap">
                 {data.content}
               </p>
