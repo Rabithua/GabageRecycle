@@ -252,7 +252,7 @@ export default function DayOne({
   return (
     <section
       ref={containerRef}
-      className={`@container size-full bg-black/20 border-white/20 border-[0.5cqw] rounded-[17.5%] overflow-hidden [&_div]:selection:bg-[#ffffff] [&_div]:selection:text-[#000000]`}
+      className={`@container size-full bg-black/20 border-white/20 border-[0.2cqw] rounded-[17.5%] overflow-hidden [&_div]:selection:bg-[#ffffff] [&_div]:selection:text-[#000000]`}
     >
       {loading && (
         <div className="relative size-full flex flex-col items-center justify-end px-[12cqw] py-[8cqw] gap-[6cqw]">

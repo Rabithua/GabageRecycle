@@ -151,7 +151,7 @@ export default function Blocks() {
         {/* Grid container */}
         <div
           ref={gridContainer}
-          className="w-full font-['Noto_Serif_SC'] h-full grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 auto-rows-[80px] gap-4 grid-flow-dense pr-2"
+          className="w-full font-basic h-full grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 auto-rows-[80px] gap-4 grid-flow-dense pr-2"
         >
           {grids.map((grid, index) => {
             return <Block key={index} {...grid} containerRef={gridContainer} />;
