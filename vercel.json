@@ -2,49 +2,65 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
-  "redirects": [
-    {
-      "source": "/366DesignConcepts/:day",
-      "destination": "/366designconcepts/:day",
-      "permanent": true
-    },
-    {
-      "source": "/366/:day",
-      "destination": "/366designconcepts/:day",
-      "permanent": true
-    },
-    {
-      "source": "/366designconcepts-dayone",
-      "destination": "/366designconcepts/0",
-      "permanent": true
-    },
-    {
-      "source": "/timeline",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/zh/366DesignConcepts/:day",
-      "destination": "/zh/366designconcepts/:day",
-      "permanent": true
-    },
-    {
-      "source": "/zh/366/:day",
-      "destination": "/zh/366designconcepts/:day",
-      "permanent": true
-    },
-    {
-      "source": "/zh/366designconcepts-dayone",
-      "destination": "/zh/366designconcepts/0",
-      "permanent": true
-    },
-    {
-      "source": "/zh/timeline",
-      "destination": "/zh",
-      "permanent": true
-    }
-  ],
   "routes": [
+    {
+      "src": "/366DesignConcepts/([^/]+)",
+      "caseSensitive": true,
+      "headers": {
+        "Location": "/366designconcepts/$1"
+      },
+      "status": 308
+    },
+    {
+      "src": "/366/([^/]+)",
+      "headers": {
+        "Location": "/366designconcepts/$1"
+      },
+      "status": 308
+    },
+    {
+      "src": "/366designconcepts-dayone",
+      "headers": {
+        "Location": "/366designconcepts/0"
+      },
+      "status": 308
+    },
+    {
+      "src": "/timeline",
+      "headers": {
+        "Location": "/"
+      },
+      "status": 308
+    },
+    {
+      "src": "/zh/366DesignConcepts/([^/]+)",
+      "caseSensitive": true,
+      "headers": {
+        "Location": "/zh/366designconcepts/$1"
+      },
+      "status": 308
+    },
+    {
+      "src": "/zh/366/([^/]+)",
+      "headers": {
+        "Location": "/zh/366designconcepts/$1"
+      },
+      "status": 308
+    },
+    {
+      "src": "/zh/366designconcepts-dayone",
+      "headers": {
+        "Location": "/zh/366designconcepts/0"
+      },
+      "status": 308
+    },
+    {
+      "src": "/zh/timeline",
+      "headers": {
+        "Location": "/zh"
+      },
+      "status": 308
+    },
     {
       "handle": "filesystem"
     },
