@@ -1,5 +1,6 @@
 import { SunDim } from "lucide-react";
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export interface TimelineVideoProps {
   src: string;
@@ -21,6 +22,9 @@ export default function TimelineVideo({
   loop = false,
   muted = false,
 }: TimelineVideoProps) {
+  const { t } = useTranslation("translation", {
+    keyPrefix: "page.timeline",
+  });
   const ref = useRef<HTMLVideoElement>(null);
   const [, setPlaying] = useState(false);
   const toggle = () => {
@@ -52,7 +56,7 @@ export default function TimelineVideo({
         autoPlay={autoPlay}
         loop={loop}
         muted={muted}
-        aria-label="点击播放或暂停视频"
+        aria-label={t("videoToggle")}
       />
     </div>
   );

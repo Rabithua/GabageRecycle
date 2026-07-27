@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zzfw.cc/sitemap.xml
+Host: zzfw.cc

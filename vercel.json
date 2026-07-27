@@ -1,8 +1,62 @@
 {
-  "rewrites": [
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/366DesignConcepts/:day",
+      "destination": "/366designconcepts/:day",
+      "permanent": true
+    },
+    {
+      "source": "/366/:day",
+      "destination": "/366designconcepts/:day",
+      "permanent": true
+    },
+    {
+      "source": "/366designconcepts-dayone",
+      "destination": "/366designconcepts/0",
+      "permanent": true
+    },
+    {
+      "source": "/timeline",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/zh/366DesignConcepts/:day",
+      "destination": "/zh/366designconcepts/:day",
+      "permanent": true
+    },
+    {
+      "source": "/zh/366/:day",
+      "destination": "/zh/366designconcepts/:day",
+      "permanent": true
+    },
+    {
+      "source": "/zh/366designconcepts-dayone",
+      "destination": "/zh/366designconcepts/0",
+      "permanent": true
+    },
+    {
+      "source": "/zh/timeline",
+      "destination": "/zh",
+      "permanent": true
+    }
+  ],
+  "routes": [
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/zh(?:/.*)?",
+      "dest": "/zh/404",
+      "status": 404
+    },
+    {
+      "src": "/.*",
+      "dest": "/404",
+      "status": 404
     }
   ]
 }
