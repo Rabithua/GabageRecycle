@@ -2,13 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "routes": [
     {
-      "src": "/assets/(.*)",
-      "headers": {
-        "Cache-Control": "public, max-age=31536000, immutable"
-      },
-      "continue": true
-    },
-    {
       "src": "/366DesignConcepts/([^/]+)",
       "caseSensitive": true,
       "headers": {
@@ -63,6 +56,53 @@
       "src": "/zh/timeline",
       "headers": {
         "Location": "/zh"
+      },
+      "status": 308
+    },
+    {
+      "src": "/index\\.html",
+      "headers": {
+        "Location": "/"
+      },
+      "status": 308
+    },
+    {
+      "src": "/(blocks|scroll|home|tree|apple|apple2025)\\.html",
+      "caseSensitive": true,
+      "headers": {
+        "Location": "/$1"
+      },
+      "status": 308
+    },
+    {
+      "src": "/366designconcepts/([0-4])\\.html",
+      "caseSensitive": true,
+      "headers": {
+        "Location": "/366designconcepts/$1"
+      },
+      "status": 308
+    },
+    {
+      "src": "/zh\\.html",
+      "caseSensitive": true,
+      "headers": {
+        "Location": "/zh"
+      },
+      "status": 308
+    },
+    {
+      "src": "/zh/(blocks|scroll|home|tree|apple|apple2025)\\.html",
+      "caseSensitive": true,
+      "headers": {
+        "Location": "/zh/$1"
+      },
+      "status": 308
+    },
+    {
+      "src": "/zh/366designconcepts/([0-4])\\.html",
+      "caseSensitive": true,
+      "headers": {
+        "Location": "/zh/366designconcepts/$1"
       },
       "status": 308
     },
