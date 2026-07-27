@@ -9,6 +9,7 @@ import LanguageSwitch from "./components/LanguageSwitch";
 import LoadingFallback from "./components/LoadingFallback";
 import LocaleSync from "./components/LocaleSync";
 import NotFound from "./pages/notFound";
+import Timeline from "./pages/timeline";
 import {
   localizedPath,
   SUPPORTED_LOCALES,
@@ -24,7 +25,6 @@ const Apple2025 = lazy(() => import("./pages/apple2025"));
 const Block = lazy(() => import("./pages/blocks"));
 const Home = lazy(() => import("./pages/home"));
 const Scroll = lazy(() => import("./pages/scroll"));
-const Timeline = lazy(() => import("./pages/timeline"));
 const Tree = lazy(() => import("./pages/tree"));
 
 const canonicalPageRenderers: Record<

@@ -1,7 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "cleanUrls": true,
-  "trailingSlash": false,
   "routes": [
     {
       "src": "/366DesignConcepts/([^/]+)",
@@ -62,16 +60,95 @@
       "status": 308
     },
     {
+      "src": "/index\\.html",
+      "headers": {
+        "Location": "/"
+      },
+      "status": 308
+    },
+    {
+      "src": "/(blocks|scroll|home|tree|apple|apple2025)\\.html",
+      "caseSensitive": true,
+      "headers": {
+        "Location": "/$1"
+      },
+      "status": 308
+    },
+    {
+      "src": "/366designconcepts/([0-4])\\.html",
+      "caseSensitive": true,
+      "headers": {
+        "Location": "/366designconcepts/$1"
+      },
+      "status": 308
+    },
+    {
+      "src": "/zh\\.html",
+      "caseSensitive": true,
+      "headers": {
+        "Location": "/zh"
+      },
+      "status": 308
+    },
+    {
+      "src": "/zh/(blocks|scroll|home|tree|apple|apple2025)\\.html",
+      "caseSensitive": true,
+      "headers": {
+        "Location": "/zh/$1"
+      },
+      "status": 308
+    },
+    {
+      "src": "/zh/366designconcepts/([0-4])\\.html",
+      "caseSensitive": true,
+      "headers": {
+        "Location": "/zh/366designconcepts/$1"
+      },
+      "status": 308
+    },
+    {
+      "src": "/(.+)/",
+      "headers": {
+        "Location": "/$1"
+      },
+      "status": 308
+    },
+    {
+      "src": "/(blocks|scroll|home|tree|apple|apple2025)",
+      "caseSensitive": true,
+      "dest": "/$1.html"
+    },
+    {
+      "src": "/366designconcepts/([0-4])",
+      "caseSensitive": true,
+      "dest": "/366designconcepts/$1.html"
+    },
+    {
+      "src": "/zh",
+      "caseSensitive": true,
+      "dest": "/zh.html"
+    },
+    {
+      "src": "/zh/(blocks|scroll|home|tree|apple|apple2025)",
+      "caseSensitive": true,
+      "dest": "/zh/$1.html"
+    },
+    {
+      "src": "/zh/366designconcepts/([0-4])",
+      "caseSensitive": true,
+      "dest": "/zh/366designconcepts/$1.html"
+    },
+    {
       "handle": "filesystem"
     },
     {
       "src": "/zh(?:/.*)?",
-      "dest": "/zh/404",
+      "dest": "/zh/404.html",
       "status": 404
     },
     {
       "src": "/.*",
-      "dest": "/404",
+      "dest": "/404.html",
       "status": 404
     }
   ]
