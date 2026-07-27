@@ -1,14 +1,20 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
 
 import en from "@/i18n/en.json";
 import zh from "@/i18n/zh.json";
+import { getLocaleFromPath } from "@/seo/render";
+
+const routeLanguage =
+  typeof window === "undefined"
+    ? "en"
+    : getLocaleFromPath(window.location.pathname);
 
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
-  .use(LanguageDetector)
   .init({
+    lng: routeLanguage,
+    supportedLngs: ["en", "zh"],
     resources: {
       en: {
         translation: en,

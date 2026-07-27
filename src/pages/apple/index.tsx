@@ -4,8 +4,10 @@ import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import BackgroundText from "../home/components/BackgroudText";
 import SliderText from "../home/components/SliderText";
+import PageMeta from "@/components/PageMeta";
+import { appleMeta } from "./meta";
 
-export default function Apple() {
+export default function Apple({ withMeta = true }: { withMeta?: boolean }) {
   const { t } = useTranslation("translation", {
     keyPrefix: "page.apple",
   });
@@ -35,10 +37,12 @@ export default function Apple() {
     }
   );
   return (
-    <main
-      ref={containerRef}
-      className="w-dvw h-dvh flex flex-col items-center justify-center grid-background font-basic"
-    >
+    <>
+      {withMeta ? <PageMeta metadata={appleMeta} /> : null}
+      <main
+        ref={containerRef}
+        className="w-dvw h-dvh flex flex-col items-center justify-center grid-background font-basic"
+      >
       <BackgroundText text={t("background")} />
 
       <div className="space-y-4 w-4/5 sm:w-3/5 max-w-150 sm:mr-[20%] z-10">
@@ -58,6 +62,7 @@ export default function Apple() {
           className="h-dvh absolute -right-1/5 -bottom-2/5 cursor-pointer object-contain"
         />
       </div>
-    </main>
+      </main>
+    </>
   );
 }

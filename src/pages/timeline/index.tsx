@@ -6,8 +6,10 @@ import { SplitText } from "gsap/SplitText";
 
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
+import PageMeta from "@/components/PageMeta";
 import Timeline from "./components/Timeline";
 import PrimarySpan from "./components/timeline/PrimarySpan";
+import { timelineMeta } from "./meta";
 
 gsap.registerPlugin(SplitText);
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -54,22 +56,25 @@ export default function TimelinePage() {
   );
 
   return (
-    <main
-      ref={containerRef}
-      className="font-basic text-primary grid-background sm:[mask-image:linear-gradient(0deg,#000_calc(100%-10%),transparent)] sm:[-webkit-mask-image:linear-gradient(0deg,#000_calc(100%-10%),transparent)]"
-    >
-      <div ref={scrollContentRef} className="pt-24">
-        <Timeline t={t} />
-        <div className="w-dvw h-dvh flex flex-col items-center justify-center">
-          <h1
-            ref={descRef}
-            className="w-4/5 max-w-4xl text-2xl sm:text-5xl font-medium leading-tight"
-          >
-            {t("motto")}
-            <PrimarySpan>{t("mottoHighlight")}</PrimarySpan>
-          </h1>
+    <>
+      <PageMeta metadata={timelineMeta} />
+      <main
+        ref={containerRef}
+        className="font-basic text-primary grid-background sm:[mask-image:linear-gradient(0deg,#000_calc(100%-10%),transparent)] sm:[-webkit-mask-image:linear-gradient(0deg,#000_calc(100%-10%),transparent)]"
+      >
+        <div ref={scrollContentRef} className="pt-24">
+          <Timeline t={t} />
+          <div className="w-dvw h-dvh flex flex-col items-center justify-center">
+            <h1
+              ref={descRef}
+              className="w-4/5 max-w-4xl text-2xl sm:text-5xl font-medium leading-tight"
+            >
+              {t("motto")}
+              <PrimarySpan>{t("mottoHighlight")}</PrimarySpan>
+            </h1>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
