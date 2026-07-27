@@ -6,10 +6,7 @@ import Ollama from "./components/Ollama";
 export default function DayTwo(): JSX.Element {
   const isRequestedRef = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const prompt = encodeURIComponent(
-    `现在是${moment().format("DD/MM/YYYY hh:mm")}。分析今日黄历运势，回复100字以内的中文内容。 no markdown, no explanation.`
-  );
-  const url = `https://llm.rote.ink/?prompt=${prompt}`;
+  const prompt = `现在是${moment().format("DD/MM/YYYY hh:mm")}。分析今日黄历运势，回复100字以内的中文内容。 no markdown, no explanation.`;
 
   const [reply, setReply] = useState<string | undefined>(undefined);
   const [error, setError] = useState<string | null>(null);
@@ -22,11 +19,31 @@ export default function DayTwo(): JSX.Element {
 
     async function fetchReply() {
       try {
-        const res = await fetch(url);
+        const res = await fetch("https://api.zzfw.cc/api/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            messages: [
+              {
+                role: "system",
+                content: "你是一个传统的黄历算命风水大师，帮助用户答疑解惑。",
+              },
+              {
+                role: "user",
+                content: prompt,
+              },
+            ],
+            model: "qwen-plus",
+            temperature: 0.7,
+            max_tokens: 500,
+          }),
+        });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         const text =
-          data?.response?.response ||
+          data.data?.choices?.[0]?.message?.content ||
           "宇宙是虚假的，我们都是模拟程序里的NPC。现实是人类的捏造，时间是幻觉。自由意志只是幻觉，我们被困在代码中。";
         startTransition(() => {
           setReply(String(text));
@@ -47,7 +64,7 @@ export default function DayTwo(): JSX.Element {
     }
 
     fetchReply();
-  }, [url]);
+  }, [prompt]);
 
   return (
     <section
@@ -84,9 +101,7 @@ export default function DayTwo(): JSX.Element {
             )}
           </div>
         </div>
-        <div className="shrink-0 text-[5cqw] text-black/10">
-          llama-4-scout-17b-16e-instruct
-        </div>
+        <div className="shrink-0 text-[5cqw] text-black/10">qwen-plus</div>
       </div>
     </section>
   );
