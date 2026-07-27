@@ -1,35 +1,86 @@
 import "@/i18n/i18n";
-import { StrictMode } from "react";
+import type { JSX } from "react";
+import { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
 import "./index.css";
 
-import DesignConcepts from "./pages/366DesignConcepts";
-import Apple from "./pages/apple";
-import Block from "./pages/blocks";
-import Home from "./pages/home";
-import Scroll from "./pages/scroll";
-import Timeline from "./pages/timeline";
-import Tree from "./pages/tree";
-import Apple2025 from "./pages/apple2025";
+import LanguageSwitch from "./components/LanguageSwitch";
+import LoadingFallback from "./components/LoadingFallback";
+import LocaleSync from "./components/LocaleSync";
+import NotFound from "./pages/notFound";
+import {
+  localizedPath,
+  SUPPORTED_LOCALES,
+} from "./seo/render";
+import {
+  pageSeoRegistry,
+  type CanonicalPagePath,
+} from "./seo/registry";
+
+const DesignConcepts = lazy(() => import("./pages/366DesignConcepts"));
+const Apple = lazy(() => import("./pages/apple"));
+const Apple2025 = lazy(() => import("./pages/apple2025"));
+const Block = lazy(() => import("./pages/blocks"));
+const Home = lazy(() => import("./pages/home"));
+const Scroll = lazy(() => import("./pages/scroll"));
+const Timeline = lazy(() => import("./pages/timeline"));
+const Tree = lazy(() => import("./pages/tree"));
+
+const canonicalPageRenderers: Record<
+  CanonicalPagePath,
+  () => JSX.Element
+> = {
+  "/": () => <Timeline />,
+  "/blocks": () => <Block />,
+  "/scroll": () => <Scroll />,
+  "/home": () => <Home />,
+  "/tree": () => <Tree />,
+  "/apple": () => <Apple />,
+  "/apple2025": () => <Apple2025 />,
+  "/366designconcepts/0": () => <DesignConcepts day={0} />,
+  "/366designconcepts/1": () => <DesignConcepts day={1} />,
+  "/366designconcepts/2": () => <DesignConcepts day={2} />,
+  "/366designconcepts/3": () => <DesignConcepts day={3} />,
+  "/366designconcepts/4": () => <DesignConcepts day={4} />,
+};
+
+const routeAliases = [
+  { path: "/timeline", render: () => <Timeline /> },
+  {
+    path: "/366designconcepts-dayone",
+    render: () => <DesignConcepts day={0} />,
+  },
+  { path: "/366designconcepts/:day", render: () => <DesignConcepts /> },
+  { path: "/366/:day", render: () => <DesignConcepts /> },
+] as const;
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Timeline />} />
-        <Route path="/scroll" element={<Scroll />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/tree" element={<Tree />} />
-        <Route path="/apple" element={<Apple />} />
-        <Route path="/blocks" element={<Block />} />
-        <Route path="/timeline" element={<Timeline />} />
-        {/* 366 Design Concepts 兼容预留社媒链接 */}
-        <Route path="/366designconcepts-dayone" element={<DesignConcepts />} />
-        <Route path="/366designconcepts/:day" element={<DesignConcepts />} />
-        <Route path="/366/:day" element={<DesignConcepts />} />
-        <Route path="/apple2025" element={<Apple2025 />} />
-      </Routes>
+      <LocaleSync />
+      <LanguageSwitch />
+      <Suspense fallback={<LoadingFallback />}>
+        <Routes>
+          {SUPPORTED_LOCALES.flatMap((locale) => [
+            ...pageSeoRegistry.map((metadata) => (
+              <Route
+                key={`${locale}:${metadata.path}`}
+                path={localizedPath(metadata.path, locale)}
+                element={canonicalPageRenderers[metadata.path]()}
+              />
+            )),
+            ...routeAliases.map((alias) => (
+              <Route
+                key={`${locale}:${alias.path}`}
+                path={localizedPath(alias.path, locale)}
+                element={alias.render()}
+              />
+            )),
+          ])}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   </StrictMode>
 );

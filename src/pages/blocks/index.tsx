@@ -4,11 +4,13 @@ import {
   type BlockProps,
 } from "@/pages/blocks/components/blocks.types";
 import BackgroundText from "@/pages/home/components/BackgroudText";
+import PageMeta from "@/components/PageMeta";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { v4 as uuidv4 } from "uuid";
+import { blocksMeta } from "./meta";
 
-export default function Blocks() {
+export default function Blocks({ withMeta = true }: { withMeta?: boolean }) {
   const gridContainer = useRef<HTMLDivElement>(null!);
   const { t } = useTranslation("translation", {
     keyPrefix: "page.blocks",
@@ -53,8 +55,7 @@ export default function Blocks() {
     },
     {
       grid: { col: 4, row: 2 },
-      children:
-        "因为我始终相信人是知善恶、辨是非的，我们不要在白天高举火把，而是应该在黑夜成为明灯，如果天黑那就摸黑生存，如果发出声音危险，那就保持沉默，但是不要因为自己的苟且而洋洋自得，不要对那些勇敢的人不屑一顾，不要因为身处黑暗就为黑暗辩护，我们可以卑微如尘土，但是绝对不可以扭曲如蛆虫！",
+      children: t("quote"),
       blockData: {
         id: uuidv4(),
         type: BlockType.TEXT,
@@ -111,11 +112,11 @@ export default function Blocks() {
       className: "p-2",
       children: (
         <>
-          被生活困住了，哪位好心人能伸出圆手
+          {t("jobRequestLine1")}
           <br />
-          给我一份工作 🤕
+          {t("jobRequestLine2")}
           <br />
-          点击左侧图片滴滴我 &gt;&gt;
+          {t("jobRequestLine3")}
         </>
       ),
       blockData: {
@@ -135,7 +136,7 @@ export default function Blocks() {
     {
       grid: { col: 2, row: 1 },
       className: "p-2",
-      children: <>拖拽排序太难了，先摸了 🐟</>,
+      children: <>{t("dragNote")}</>,
       blockData: {
         id: uuidv4(),
         type: BlockType.NORMAL,
@@ -144,10 +145,13 @@ export default function Blocks() {
   ];
 
   return (
-    <main className="w-dvw min-h-dvh flex flex-col items-center lg:justify-center grid-background font-basic py-8">
-      <BackgroundText text={t("background")} />
+    <>
+      {withMeta ? <PageMeta metadata={blocksMeta} /> : null}
+      <main className="w-dvw min-h-dvh flex flex-col items-center lg:justify-center grid-background font-basic py-8">
+        <h1 className="sr-only">{t("title")}</h1>
+        <BackgroundText text={t("background")} />
 
-      <div className="w-9/10 max-w-6xl">
+        <div className="w-9/10 max-w-6xl">
         {/* Grid container */}
         <div
           ref={gridContainer}
@@ -157,7 +161,8 @@ export default function Blocks() {
             return <Block key={index} {...grid} containerRef={gridContainer} />;
           })}
         </div>
-      </div>
-    </main>
+        </div>
+      </main>
+    </>
   );
 }

@@ -3,6 +3,22 @@
     "scroll": {
       "scrollTip": "Scroll up to see the next"
     },
+    "blocks": {
+      "background": "About me",
+      "title": "Rabithua's work and contact",
+      "quote": "I have always believed that people can tell right from wrong and good from evil. We should not hold torches high in daylight, but become lights in the dark. We may be humble as dust, but we must never let darkness distort us.",
+      "jobRequestLine1": "Life has me stuck. Could someone lend a hand",
+      "jobRequestLine2": "and offer me a job? 🤕",
+      "jobRequestLine3": "Click the image on the left to reach me >>",
+      "dragNote": "Drag-to-sort is hard, so I'm taking a break 🐟"
+    },
+    "notFound": {
+      "message": "This page does not exist or has moved.",
+      "backHome": "Back to Rabithua's portfolio"
+    },
+    "apple2025": {
+      "title": "Apple 2025 color video motion study"
+    },
     "apple": {
       "title": "God threw me an apple, thank God, it was delicious!",
       "subtitle": "But next time, you'd better not smash it on my head 😵‍💫",
@@ -61,7 +77,14 @@
       "motto": "Trying hard to find a lifelong beloved career (or at least a job to make a living before savings run out).",
       "mottoHighlight": "I don't want to be confined to programming; exploring UI & interaction design, how to become a photographer or a chef, while also learning to organize my life.",
       "friendsTitle": "These are my friends 🪴",
-      "friendsNote": "* Some are old friends from the blogging era"
+      "friendsNote": "* Some are old friends from the blogging era",
+      "videoToggle": "Play or pause video",
+      "recentRote": {
+        "apiError": "The activity feed returned an error",
+        "loading": "Loading recent activity",
+        "loadingFailed": "Unable to load recent activity",
+        "noData": "No recent activity"
+      }
     }
   },
   "blocks": {

@@ -3,15 +3,17 @@ import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
+import PageMeta from "@/components/PageMeta";
 import BackgroundText from "./components/BackgroudText";
 import SliderText from "./components/SliderText";
+import { homeMeta } from "./meta";
 
 gsap.registerPlugin(SplitText);
 
 // 猫咪相关的 emojis
 const catEmojis = ["🐟", "🐾", "🐈", "😻", "🐠", "🧶", "🪴", "🐭"];
 
-export default function Home() {
+export default function Home({ withMeta = true }: { withMeta?: boolean }) {
   const { t } = useTranslation("translation", {
     keyPrefix: "page.home",
   });
@@ -65,10 +67,12 @@ export default function Home() {
   });
 
   return (
-    <main
-      ref={containerRef}
-      className="w-dvw h-dvh flex flex-col items-center justify-center grid-background font-basic"
-    >
+    <>
+      {withMeta ? <PageMeta metadata={homeMeta} /> : null}
+      <main
+        ref={containerRef}
+        className="w-dvw h-dvh flex flex-col items-center justify-center grid-background font-basic"
+      >
       {/* 背景元素 */}
       <BackgroundText text={t("background")} />
       {/* 前景元素，用于放置 treat */}
@@ -93,11 +97,14 @@ export default function Home() {
         >
           <img
             src="/pages/home/cat.png"
-            alt="Cat"
+            alt={t("background")}
+            width="512"
+            height="512"
             className="w-96 h-96 object-contain"
           />
         </div>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

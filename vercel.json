@@ -1,8 +1,78 @@
 {
-  "rewrites": [
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "/366DesignConcepts/([^/]+)",
+      "caseSensitive": true,
+      "headers": {
+        "Location": "/366designconcepts/$1"
+      },
+      "status": 308
+    },
+    {
+      "src": "/366/([^/]+)",
+      "headers": {
+        "Location": "/366designconcepts/$1"
+      },
+      "status": 308
+    },
+    {
+      "src": "/366designconcepts-dayone",
+      "headers": {
+        "Location": "/366designconcepts/0"
+      },
+      "status": 308
+    },
+    {
+      "src": "/timeline",
+      "headers": {
+        "Location": "/"
+      },
+      "status": 308
+    },
+    {
+      "src": "/zh/366DesignConcepts/([^/]+)",
+      "caseSensitive": true,
+      "headers": {
+        "Location": "/zh/366designconcepts/$1"
+      },
+      "status": 308
+    },
+    {
+      "src": "/zh/366/([^/]+)",
+      "headers": {
+        "Location": "/zh/366designconcepts/$1"
+      },
+      "status": 308
+    },
+    {
+      "src": "/zh/366designconcepts-dayone",
+      "headers": {
+        "Location": "/zh/366designconcepts/0"
+      },
+      "status": 308
+    },
+    {
+      "src": "/zh/timeline",
+      "headers": {
+        "Location": "/zh"
+      },
+      "status": 308
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/zh(?:/.*)?",
+      "dest": "/zh/404",
+      "status": 404
+    },
+    {
+      "src": "/.*",
+      "dest": "/404",
+      "status": 404
     }
   ]
 }
