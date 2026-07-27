@@ -1,12 +1,26 @@
 import AnimateText from "@/components/AnimateText";
+import PageMeta from "@/components/PageMeta";
 import { daysComponents } from "@/pages/366DesignConcepts/constants";
-import { useParams } from "react-router";
+import {
+  getLocaleFromPath,
+  localizedPath,
+} from "@/seo/render";
+import { useLocation, useParams } from "react-router";
+import { notFoundMeta } from "../notFound/meta";
+import { designConceptsMeta } from "./meta";
 
-export default function DesignConcepts() {
+export default function DesignConcepts({ day }: { day?: number }) {
   const params = useParams();
+  const { pathname } = useLocation();
+  const locale = getLocaleFromPath(pathname);
 
-  const dayIndex = params.day ? Number(params.day) : 0;
-  const isValidDay = dayIndex >= 0 && dayIndex < daysComponents.length;
+  const parameterDay =
+    params.day === undefined ? undefined : Number(params.day);
+  const dayIndex = day ?? parameterDay ?? 0;
+  const isValidDay =
+    Number.isInteger(dayIndex) &&
+    dayIndex >= 0 &&
+    dayIndex < daysComponents.length;
 
   const currentComponent = isValidDay
     ? daysComponents[dayIndex].component
@@ -18,6 +32,16 @@ export default function DesignConcepts() {
     <main
       className={`w-dvw h-dvh flex flex-col items-center justify-center grid-background`}
     >
+      <PageMeta
+        metadata={
+          isValidDay ? designConceptsMeta[dayIndex] : notFoundMeta
+        }
+      />
+      <h1 className="sr-only">
+        {isValidDay
+          ? `366 Design Concepts Day ${dayIndex}: ${daysComponents[dayIndex].title}`
+          : "366 Design Concepts 页面未找到"}
+      </h1>
       {daysComponents[dayIndex]?.slot}
       <div className="w-4/5 max-w-xl aspect-square z-1">
         {currentComponent || (
@@ -56,7 +80,10 @@ export default function DesignConcepts() {
           >
             Day {dayIndex}:&nbsp;
             <a
-              href={`/366DesignConcepts/${dayIndex}`}
+              href={localizedPath(
+                `/366designconcepts/${dayIndex}`,
+                locale
+              )}
               target="_blank"
               rel="noreferrer noopener"
             >

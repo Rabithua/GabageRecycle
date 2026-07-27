@@ -5,8 +5,10 @@ import { useTranslation } from "react-i18next";
 import { useRef } from "react";
 import BackgroundText from "../home/components/BackgroudText";
 import SliderText from "../home/components/SliderText";
+import PageMeta from "@/components/PageMeta";
+import { treeMeta } from "./meta";
 
-export default function Tree() {
+export default function Tree({ withMeta = true }: { withMeta?: boolean }) {
   const { t } = useTranslation("translation", {
     keyPrefix: "page.tree",
   });
@@ -25,10 +27,12 @@ export default function Tree() {
   );
 
   return (
-    <main
-      ref={containerRef}
-      className="w-dvw h-dvh flex flex-col items-center justify-center grid-background font-basic"
-    >
+    <>
+      {withMeta ? <PageMeta metadata={treeMeta} /> : null}
+      <main
+        ref={containerRef}
+        className="w-dvw h-dvh flex flex-col items-center justify-center grid-background font-basic"
+      >
       <BackgroundText text={t("background")} />
 
       <div className="space-y-4 w-4/5 sm:w-3/5 max-w-150 sm:mr-[20%] z-10">
@@ -47,6 +51,7 @@ export default function Tree() {
           className="h-dvh absolute right-0 cursor-pointer object-cover scale-110 blur-lg duration-1000 hover:scale-100 hover:blur-none"
         />
       </div>
-    </main>
+      </main>
+    </>
   );
 }

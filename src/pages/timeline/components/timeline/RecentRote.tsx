@@ -1,5 +1,5 @@
-import moment from "moment";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import AttachmentsGrid from "./AttachmentsGrid";
 
 // 基础类型
@@ -32,6 +32,32 @@ export interface RecentRoteProps {
   baseUrl?: string;
 }
 
+const relativeTimeUnits: Array<[Intl.RelativeTimeFormatUnit, number]> = [
+  ["year", 60 * 60 * 24 * 365],
+  ["month", 60 * 60 * 24 * 30],
+  ["week", 60 * 60 * 24 * 7],
+  ["day", 60 * 60 * 24],
+  ["hour", 60 * 60],
+  ["minute", 60],
+  ["second", 1],
+];
+
+function formatRelativeTime(date: string, locale: string): string {
+  const differenceInSeconds = (new Date(date).getTime() - Date.now()) / 1000;
+
+  if (!Number.isFinite(differenceInSeconds)) return date;
+
+  const [unit, seconds] =
+    relativeTimeUnits.find(
+      ([, unitSeconds]) => Math.abs(differenceInSeconds) >= unitSeconds
+    ) ?? relativeTimeUnits.at(-1)!;
+
+  return new Intl.RelativeTimeFormat(locale, { numeric: "auto" }).format(
+    Math.round(differenceInSeconds / seconds),
+    unit
+  );
+}
+
 export default function RecentRote({
   username = "rabithua",
   skip = 0,
@@ -40,10 +66,16 @@ export default function RecentRote({
   api,
   baseUrl = "https://rote.ink",
 }: RecentRoteProps) {
+  const { t, i18n } = useTranslation("translation", {
+    keyPrefix: "page.timeline.recentRote",
+  });
   const [data, setData] = useState<RoteItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const relativeTimeLocale = i18n.resolvedLanguage?.startsWith("zh")
+    ? "zh-CN"
+    : "en";
 
   useEffect(() => {
     const url =
@@ -58,17 +90,17 @@ export default function RecentRote({
       .then(async (res) => {
         if (!res.ok) throw new Error(res.status + " " + res.statusText);
         const json = await res.json();
-        if (json.code !== 0) throw new Error(json.message || "接口错误");
+        if (json.code !== 0) throw new Error(json.message || t("apiError"));
         setData(json.data?.[0] || null);
       })
       .catch((e: unknown) => {
         if (e instanceof DOMException && e.name === "AbortError") return;
         if (e instanceof Error) setError(e.message);
-        else setError("加载失败");
+        else setError(t("loadingFailed"));
       })
       .finally(() => setLoading(false));
     return () => controller.abort();
-  }, [username, skip, limit, api]);
+  }, [username, skip, limit, api, t]);
 
   return (
     <div
@@ -78,7 +110,7 @@ export default function RecentRote({
         <div
           className="absolute inset-0 p-3 flex flex-col gap-2 animate-pulse bg-gradient-to-br from-gray-50 to-gray-100"
           aria-busy="true"
-          aria-label="内容加载中"
+          aria-label={t("loading")}
         >
           <div className="flex items-center gap-2">
             <div className="size-10 rounded-md bg-gray-300/70" />
@@ -103,14 +135,14 @@ export default function RecentRote({
 
       {!loading && error && (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-red-500 text-xs p-4 text-center">
-          <span>加载失败</span>
+          <span>{t("loadingFailed")}</span>
           <span className="opacity-70 line-clamp-2">{error}</span>
         </div>
       )}
 
       {!loading && !error && !data && (
         <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-sm">
-          暂无数据
+          {t("noData")}
         </div>
       )}
 
@@ -136,7 +168,7 @@ export default function RecentRote({
                 </span>
               </div>
               <div className="font-medium text-sm text-gray-300 truncate">
-                {moment(data.createdAt).fromNow()}
+                {formatRelativeTime(data.createdAt, relativeTimeLocale)}
               </div>
             </div>
           </a>

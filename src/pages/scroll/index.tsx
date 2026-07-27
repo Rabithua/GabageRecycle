@@ -9,10 +9,17 @@ import Home from "@/pages/home";
 import Tree from "@/pages/tree";
 import { ChevronsUp } from "lucide-react";
 import Blocks from "../blocks";
+import PageMeta from "@/components/PageMeta";
+import { scrollMeta } from "./meta";
 
 gsap.registerPlugin(Observer);
 
-const pages = [<Home />, <Apple />, <Tree />, <Blocks />];
+const pages = [
+  <Home withMeta={false} />,
+  <Apple withMeta={false} />,
+  <Tree withMeta={false} />,
+  <Blocks withMeta={false} />,
+];
 
 export default function FadingScroll() {
   const { t } = useTranslation("translation", {
@@ -91,17 +98,20 @@ export default function FadingScroll() {
   );
 
   return (
-    <div ref={containerRef} className=" font-basic">
-      {pages[currentPageIndex]}
+    <>
+      <PageMeta metadata={scrollMeta} />
+      <div ref={containerRef} className=" font-basic">
+        {pages[currentPageIndex]}
 
-      <div
-        id="tip"
-        className={
-          "flex gap-2 items-center font-light text-sm text-primary justify-center fixed bottom-4 left-1/2 transform -translate-x-1/2 z-10 opacity-60"
-        }
-      >
-        <ChevronsUp className="size-4" /> {t("scrollTip")}
+        <div
+          id="tip"
+          className={
+            "flex gap-2 items-center font-light text-sm text-primary justify-center fixed bottom-4 left-1/2 transform -translate-x-1/2 z-10 opacity-60"
+          }
+        >
+          <ChevronsUp className="size-4" /> {t("scrollTip")}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
